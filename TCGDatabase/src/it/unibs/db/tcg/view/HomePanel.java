@@ -4,6 +4,9 @@ import java.awt.Button;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JPanel;
 import javax.swing.BorderFactory;
@@ -15,12 +18,18 @@ import javax.swing.JButton;
 
 public class HomePanel extends JPanel {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8768541615844025092L;
 	private static final int WIDTH = 800;
 	private static final int HEIGHT = 600;
 	private static Color backgroundColor = new Color(252, 186, 3);
 	private static Color secondaryBackgroundColor = new Color(156, 156, 156);
 	private static Color foregroundColor = Color.WHITE;
 	private static Font panelFont = new Font("Serif", 0, 18);
+	
+	private List<ActionListener> listenerList = new ArrayList<>();
 	
 	private JLabel lblAvatar;
 	private JLabel lblNickname;
@@ -77,5 +86,18 @@ public class HomePanel extends JPanel {
 		image = image.getScaledInstance(lblAvatar.getWidth(), lblAvatar.getHeight(), Image.SCALE_SMOOTH);
 		avatar = new ImageIcon(image);
 		lblAvatar.setIcon(avatar);
+	}
+	
+	public void addActionListener(ActionListener a) {
+		listenerList.add(a);
+	}
+	
+	public void addAccountListener(ActionListener a) {
+		btnViewProfile.addActionListener(a);
+		
+	}
+	
+	public void addSearchListener(ActionListener a) {
+		btnSearch.addActionListener(a);
 	}
 }

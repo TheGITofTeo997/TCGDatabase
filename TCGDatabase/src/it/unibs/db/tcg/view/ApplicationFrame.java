@@ -8,18 +8,22 @@ import javax.swing.JFrame;
 
 
 
-public class AppWindowTest {
-
-	private JFrame frame;
+public class ApplicationFrame extends JFrame{
 
 	/**
-	 * Launch the application.
+	 * 
 	 */
-	public static void main(String[] args) {
+	private static final long serialVersionUID = -773384933562082684L;
+	private JFrame frame;
+	
+	
+	
+	
+	public void showFrame() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					AppWindowTest window = new AppWindowTest();
+					ApplicationFrame window = new ApplicationFrame();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -31,7 +35,7 @@ public class AppWindowTest {
 	/**
 	 * Create the application.
 	 */
-	public AppWindowTest() {
+	public ApplicationFrame() {
 		initialize();
 	}
 
@@ -53,10 +57,6 @@ public class AppWindowTest {
 		ap.setMail("giacom@mail.it");
 		ap.setRegistrationDate("12/12/12");
 		lp.setBounds(0,0, 800, 600);
-		
-		//frame.add(ap); //guarda account panel
-		//frame.add(lp); //guarda login panel
-		frame.add(hp);
 		ap.setNickname("giuseppi");
 		
 		

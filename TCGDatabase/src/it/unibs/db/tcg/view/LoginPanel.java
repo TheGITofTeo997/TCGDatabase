@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -16,12 +18,18 @@ import java.awt.event.ActionEvent;
 
 public class LoginPanel extends JPanel implements KeyListener {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -125624121548476171L;
 	private static final int WIDTH = 800;
 	private static final int HEIGHT = 600;
 	private static Color backgroundColor = new Color(252, 186, 3);
 	private static Color secondaryBackgroundColor = new Color(156, 156, 156);
 	private static Color foregroundColor = Color.WHITE;
 	private static Font panelFont = new Font("Serif", 0, 18);
+	
+	private List<ActionListener> listenerList = new ArrayList<>();
 	
 	private JTextField loginTextField;
 	private JButton btnLogin;
@@ -47,29 +55,27 @@ public class LoginPanel extends JPanel implements KeyListener {
 		add(lblLogin);
 		
 		btnLogin = new JButton("Login");
-		btnLogin.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if(checkNickname(loginTextField.getText())) showErrorPopup();  //controllo su text
-			}
-		});
 		btnLogin.setFont(panelFont);
 		btnLogin.setBounds(WIDTH/2 - 100, HEIGHT/2 + 100, 200, 50);
 		add(btnLogin);
 
 	}
 	
-	private boolean checkNickname(String nickname) {
-		if(nickname != null && nickname.length() > 0) {
-			//operazioni su nickname per controllare che esista -> chiamata controller
-			return false;
-		}
-		return true;
+	
+	public String getLoginField() {
+		return loginTextField.getText();
 	}
 	
-	private void showErrorPopup() {
+	
+	@SuppressWarnings("static-access")
+	public void showErrorPopup() {
 		JOptionPane error = new JOptionPane();
 		error.setBounds(getBounds());
 		error.showMessageDialog(this, "Inserisci un nickname valido!", "Warning", JOptionPane.ERROR_MESSAGE);
+	}
+	
+	public void addHomeListener(ActionListener a) {
+		 btnLogin.addActionListener(a);
 	}
 
 	@Override
@@ -89,4 +95,5 @@ public class LoginPanel extends JPanel implements KeyListener {
 	public void keyReleased(KeyEvent e) {
 		
 	}
+	
 }

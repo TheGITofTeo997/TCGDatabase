@@ -17,7 +17,7 @@ public class Connector {
 	
 	public void openConnection() {
 		try {
-			Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
+			Class.forName("com.mysql.jdbc.Driver");
 			con = DriverManager.getConnection(url, user, password);
 		} catch (Exception e) {
 			e.printStackTrace();

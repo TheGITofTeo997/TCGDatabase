@@ -2,6 +2,8 @@ package it.unibs.db.tcg.view;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JPanel;
 import javax.swing.JLabel;
@@ -23,12 +25,18 @@ import java.awt.event.ActionEvent;
 
 public class AccountPanel extends JPanel{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4259378117098818102L;
 	private static final int WIDTH = 800;
 	private static final int HEIGHT = 600;
 	private static Color backgroundColor = new Color(252, 186, 3);
 	private static Color secondaryBackgroundColor = new Color(156, 156, 156);
 	private static Color foregroundColor = Color.WHITE;
 	private static Font panelFont = new Font("Serif", 0, 18);
+	
+	private List<ActionListener> listenerList = new ArrayList<>();
 
 	private JPanel informationPanel;
 	private JLabel lblAvatar;
