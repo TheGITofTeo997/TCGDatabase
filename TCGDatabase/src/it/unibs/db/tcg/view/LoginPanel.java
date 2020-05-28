@@ -38,7 +38,7 @@ public class LoginPanel extends JPanel implements KeyListener {
 		setFont(panelFont);
 		setLayout(null);
 		setBackground(backgroundColor);
-		
+
 		setFocusable(true);
 		addKeyListener(this);
 		
