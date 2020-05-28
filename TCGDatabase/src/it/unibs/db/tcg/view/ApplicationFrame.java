@@ -45,21 +45,7 @@ public class ApplicationFrame extends JFrame{
 	private void initialize() {
 		frame = new JFrame();
 		frame.setBounds(50, 50, 800, 600);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		AccountPanel ap = new AccountPanel();
-		LoginPanel lp = new LoginPanel();
-		HomePanel hp = new HomePanel();
-		
-		
-		ap.setBounds(0, 0, 800, 600);
-		ap.setNickname("Giakomyno12");
-		ap.setUserName("Giacomino");
-		ap.setMail("giacom@mail.it");
-		ap.setRegistrationDate("12/12/12");
-		lp.setBounds(0,0, 800, 600);
-		ap.setNickname("giuseppi");
-		
-		
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);			
 		frame.setVisible(true);
 	}
 

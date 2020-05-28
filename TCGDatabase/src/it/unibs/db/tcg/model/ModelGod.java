@@ -2,12 +2,11 @@ package it.unibs.db.tcg.model;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 
 public class ModelGod {
 	
-	private Connector connector = new Connector("jdbc:odbc:192.168.1.124:3306", "root", "R2mSDzoz"); 
+	private Connector connector = new Connector("jdbc:mysql://192.168.1.124:3306/TEST_MIKE", "root", "R2mSDzoz"); 
 	
 	public ModelGod() {
 		connector.openConnection();

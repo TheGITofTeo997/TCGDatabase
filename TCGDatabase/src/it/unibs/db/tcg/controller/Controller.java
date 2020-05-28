@@ -26,6 +26,7 @@ public class Controller {
 	
 	public void buildFrame() {
 		frame = new ApplicationFrame();
+		drawLoginPanel();
 	}
 	
 	
