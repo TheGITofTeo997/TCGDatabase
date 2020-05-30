@@ -16,6 +16,8 @@ public class ModelGod {
 		connector.openConnection();
 	}
 	
+	
+	//Questo metodo deve anche riempire le collezioni dell'utente
 	public Utente getUser(String nickname) {
 		ResultSet set = connector.executeQuery(QueryBuilder.GET_USER_ATTRIBUTES(nickname));
 		String _nickname=null;

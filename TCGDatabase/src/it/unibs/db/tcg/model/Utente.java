@@ -60,6 +60,14 @@ public class Utente {
 		return collezioni.size();
 	}
 	
+	public DefaultListModel<String> getListModel(){
+		DefaultListModel<String> listModel = new DefaultListModel<>();
+		for(Collezione c : collezioni) {
+			listModel.addElement(c.getNomeCollezione());
+		}
+		return listModel;
+	}
+	
 	public Collezione getCollezioneByNome(String nomeCollezione) {
 		for(int i=0; i<collezioni.size();i++) {
 			if (collezioni.get(i).getNomeCollezione().equals(nomeCollezione))

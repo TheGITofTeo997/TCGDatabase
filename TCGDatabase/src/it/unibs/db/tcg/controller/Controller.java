@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import it.unibs.db.tcg.model.*;
 import it.unibs.db.tcg.view.*;
@@ -87,6 +89,19 @@ public class Controller {
 		acPan.setAvatar(user.getAvatar());
 		acPan.setUserName(user.getNomeUtente());
 		acPan.setRegistrationDate(user.getDataRegistrazione().toString());
+		acPan.setCollections(user.getListModel());
+		
+		
+		acPan.addCollectionListener(new ListSelectionListener() {
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				if (!e.getValueIsAdjusting()) {
+					String collection = user.getListModel().get(acPan.getListSelectedIndex());
+					Collezione c = user.getCollezioneByNome(collection);
+					//drawCollectionPanel(user, c);
+				}
+			}
+        });
 		
 	}
 	
