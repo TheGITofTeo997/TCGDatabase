@@ -36,6 +36,7 @@ public class EditPanel extends JPanel {
 		setForeground(foregroundColor);
 		setFont(panelFont);
 		
+		
 		lblAvatar = new JLabel("");
 		lblAvatar.setBounds(5, 5, 250, 300);
 		ImageIcon icon = new ImageIcon("resources//iLTd4oI.png");
