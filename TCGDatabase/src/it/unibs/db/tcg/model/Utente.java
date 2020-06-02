@@ -60,7 +60,7 @@ public class Utente {
 		return collezioni.size();
 	}
 	
-	public DefaultListModel<String> getListModel(){
+	public DefaultListModel<String> getDefaultListModelCollections(){
 		DefaultListModel<String> listModel = new DefaultListModel<>();
 		for(Collezione c : collezioni) {
 			listModel.addElement(c.getNomeCollezione());
@@ -81,6 +81,11 @@ public class Utente {
 		if(getCollezioneByNome(nomeCollezione) == null)
 			res = false;
 		return res;
+	}
+	
+	public void setCollections(List<String> collections) {
+		for(String s : collections)
+			collezioni.add(new Collezione(s));
 	}
 	
 	public void addCollezione(Collezione c) {

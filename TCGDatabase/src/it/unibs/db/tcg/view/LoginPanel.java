@@ -45,6 +45,7 @@ public class LoginPanel extends JPanel implements KeyListener {
 		loginTextField = new JTextField();
 		loginTextField.setBounds(WIDTH/2 - 100, HEIGHT/2 - 25, 200, 50);
 		add(loginTextField);
+		loginTextField.addKeyListener(this);
 		loginTextField.setFont(panelFont);
 		loginTextField.setColumns(10);
 		
@@ -77,7 +78,7 @@ public class LoginPanel extends JPanel implements KeyListener {
 	public void addHomeListener(ActionListener a) {
 		 btnLogin.addActionListener(a);
 	}
-
+	
 	@Override
 	public void keyTyped(KeyEvent e) {
 		

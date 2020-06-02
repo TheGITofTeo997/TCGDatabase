@@ -2,6 +2,7 @@ package it.unibs.db.tcg.model;
 
 import java.sql.Date;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Collezione {
 	private String nomeCollezione;
@@ -66,6 +67,10 @@ public class Collezione {
 			if (carte.get(i).getNumero() == numCarta && carte.get(i).getAbbrEspansione().equals(espCarta))
 				carte.remove(i);
 		}
+	}
+	
+	public List<String> getCardsListName(){
+		return carte.stream().map(carte -> carte.getNome()).collect(Collectors.toList());
 	}
 	
 }

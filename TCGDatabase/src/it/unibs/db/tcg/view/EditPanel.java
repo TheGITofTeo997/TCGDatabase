@@ -28,7 +28,7 @@ public class EditPanel extends JPanel {
 	private JButton btnEditAvatar;
 	private JButton btnEditName;
 	private JButton btnEditMail;
-	private JButton btnSave;
+	private JButton btnBack;
 	
 	public EditPanel() {
 		setLayout(null);
@@ -88,9 +88,9 @@ public class EditPanel extends JPanel {
 		btnEditMail.setBounds(700, 115, 90, 50);
 		add(btnEditMail);
 		
-		btnSave = new JButton("Salva");
-		btnSave.setBounds(700, 500, 90, 50);
-		add(btnSave);
+		btnBack = new JButton("Back");
+		btnBack.setBounds(650, 450, 90, 50);
+		add(btnBack);
 		
 	}
 	
@@ -129,7 +129,7 @@ public class EditPanel extends JPanel {
 		btnEditAvatar.addActionListener(a);
 	}
 	
-	public void addSaveListener(ActionListener a) {
-		btnSave.addActionListener(a);
+	public void addBackListener(ActionListener a) {
+		btnBack.addActionListener(a);
 	}
 }

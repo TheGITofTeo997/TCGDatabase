@@ -11,9 +11,11 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.ActionEvent;
 
-public class AccountPanel extends JPanel {
+public class AccountPanel extends JPanel{
 
 	/**
 	 * 
@@ -35,6 +37,7 @@ public class AccountPanel extends JPanel {
 	private JLabel lblMail;
 	private JLabel lblRegistrationDate;
 	private JButton btnEdit;
+	private JButton btnBack;
 	private JList list;
 
 	private JPanel collectionsPanel;
@@ -50,6 +53,7 @@ public class AccountPanel extends JPanel {
 		JPanel menuPanel = new JPanel();
 		menuPanel.setBounds(0, 0, WIDTH, 30);
 		add(menuPanel);
+		menuPanel.setFocusable(false);
 		menuPanel.setLayout(null);
 
 		JButton btnInfo = new JButton("Informazioni");
@@ -93,6 +97,7 @@ public class AccountPanel extends JPanel {
 		informationPanel.setBounds(0, 30, WIDTH, HEIGHT - 30);
 		informationPanel.setLayout(null);
 		informationPanel.setBackground(null);
+		informationPanel.setFocusable(true);
 		add(informationPanel);
 
 		lblAvatar = new JLabel("");
@@ -158,6 +163,7 @@ public class AccountPanel extends JPanel {
 		collectionsPanel.setBounds(0, 30, WIDTH, HEIGHT - 30);
 		collectionsPanel.setLayout(null);
 		collectionsPanel.setBackground(null);
+		collectionsPanel.setFocusable(true);
 		add(collectionsPanel);
 
 		lblAvatarSmall = new JLabel("");
@@ -180,6 +186,10 @@ public class AccountPanel extends JPanel {
 		lblcollection.setBounds(300, 5, 400, 50);
 		lblcollection.setFont(panelFont.deriveFont(Font.BOLD));
 		collectionsPanel.add(lblcollection);
+		
+		btnBack = new JButton("Back");
+		btnBack.setBounds(650, 450, 90, 50);
+		informationPanel.add(btnBack);
 
 	}
 
@@ -222,14 +232,20 @@ public class AccountPanel extends JPanel {
 		list.setFixedCellHeight(50);
 		collectionsPanel.add(list);
 	}
-	
+
 	public int getListSelectedIndex() {
 		return list.getSelectedIndex();
 	}
-	
-	
+
 	public void addCollectionListener(ListSelectionListener a) {
 		list.addListSelectionListener(a);
 	}
 	
+	public void addEditListener(ActionListener a) {
+		btnEdit.addActionListener(a);
+	}
+	
+	public void addBackListener(ActionListener a) {
+		btnBack.addActionListener(a);
+	}
 }
