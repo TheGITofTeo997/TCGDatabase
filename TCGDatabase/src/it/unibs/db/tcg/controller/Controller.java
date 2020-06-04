@@ -5,7 +5,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JFrame;
@@ -25,6 +24,7 @@ public class Controller {
 	private HomePanel homePan = null;
 	private LoginPanel logPan = null;
 	private SearchPanel srcPan = null;
+	private CardsPanel crdsPan = null;
 	private CartaPanel carPan = null;
 	private EditPanel edPan = null;
 
@@ -116,8 +116,9 @@ public class Controller {
 				if (!e.getValueIsAdjusting()) {
 					String collection = user.getDefaultListModelCollections().get(acPan.getListSelectedIndex());
 					Collezione c = new Collezione(collection);
-					//c.setCards(user.getDefaultListModelCards);
-					drawCardsPanel("titolo", c.getCardsListName());
+					c.setCarteCollezione(model.getCardsFromCollection(user.getNickname(), collection));
+					acPan.setVisible(false);
+					drawCardsPanel(user, "Carte della Collezione " + collection, c.getCardsList());
 				}
 			}
 		});
@@ -184,10 +185,34 @@ public class Controller {
 		});
 	}
 	
-	public void drawCardsPanel(String title, List<String> cardsName) {
-		//titolo da mostrare sopra 
-		//lista di carte da mostrare
+	public void drawCardsPanel(Utente user, String title, List<Carta> cardsName) {
+		crdsPan = new CardsPanel();
+		crdsPan.setBounds(0,0,800,600);
+		crdsPan.setTitleText(title);
+		crdsPan.setCardList(cardsName);
+		frame.getContentPane().add(crdsPan);
 		
+		crdsPan.addCardListener(new ListSelectionListener() {
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				if (!e.getValueIsAdjusting()) {
+					Carta c = cardsName.get(crdsPan.getListSelectedIndex());
+					drawCartaPanel(c);
+				}
+			}
+		});
+		
+		crdsPan.addBackListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				crdsPan.setVisible(false);
+				drawAccountPanel(user);
+			}
+		});
+	}
+	
+	public void drawCartaPanel(Carta c) {
+		System.out.println("La carta è" + c.getNome());
 	}
 
 }

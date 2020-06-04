@@ -32,7 +32,7 @@ public class ModelGod {
 				_nickname = set.getString("Nickname");
 				_name = set.getString("Nome_Utente");
 				_mail = set.getString("Mail");
-				Blob b = set.getBlob(4);
+				Blob b = set.getBlob("Avatar");
 				byte[] imageByte = b.getBytes(1, (int) b.length());
 				InputStream is = new ByteArrayInputStream(imageByte);
 				BufferedImage imag = ImageIO.read(is);
@@ -73,6 +73,35 @@ public class ModelGod {
 			e.printStackTrace();
 		}
 		return true;
+	}
+	
+	public List<Carta> getCardsFromCollection(String nickname, String collectionName){
+		List<Carta> cardsList = new ArrayList<>();
+		ResultSet set = connector.executeQuery(QueryBuilder.GET_COLLECTION_CARDS(nickname, collectionName));
+		String _abbreviation = null;
+		int _number = 0;
+		String _nomeCarta = null;
+		ImageIcon _immagine = null;
+		try {
+			while (set.next()) {
+				_abbreviation = set.getString("Abbr_Espansione");
+				_number = set.getInt("Numero");
+				_nomeCarta = set.getString("Nome_Carta");
+				Blob b = set.getBlob("Immagine");
+				byte[] imageByte = b.getBytes(1, (int) b.length());
+				InputStream is = new ByteArrayInputStream(imageByte);
+				BufferedImage imag = ImageIO.read(is);
+				Image i = imag;
+				_immagine = new ImageIcon(i);
+				Carta c = new Carta(_number, _abbreviation);
+				c.setImmagine(_immagine);
+				c.setNome(_nomeCarta);
+				cardsList.add(c);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return cardsList;
 	}
 	
 }

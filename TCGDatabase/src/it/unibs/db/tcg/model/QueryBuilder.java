@@ -2,7 +2,7 @@ package it.unibs.db.tcg.model;
 
 public class QueryBuilder {
 	
-	protected static String GET_USER_ATTRIBUTES (String nickname) {
+	protected static String GET_USER_ATTRIBUTES(String nickname) {
 		return "SELECT *" + 
 				" FROM Utente AS U" + 
 				" WHERE U.Nickname = " + "'" + nickname + "'";
@@ -10,24 +10,18 @@ public class QueryBuilder {
 	
 	protected static String GET_USER_COLLECTIONS(String nickname) {
 		return "SELECT Nome_Collezione" +
-		" FROM POSSIEDE AS P" +
+		" FROM Possiede AS P" +
 		" WHERE P.Nickname = " + "'" + nickname + "'";
 	}
 	
-	//da aggiungere a lista query
-	protected static String GET_USER_COLLECTION_ABBR_EXPANSION(String nickname, String collezione) {
-		return " SELECT Abbreviazione" +
-		" FROM POSSIEDE, COMPOSTA, CARTA, ESPANSIONE " +
-		" WHERE POSSIEDE.Nickname = " + "'" + nickname + "'" + " AND COMPOSTA.Nome_Collezione = " + "'" + collezione + "'" +
-			" AND COMPOSTA.N_Carta = CARTA.Numero AND CARTA.Abbr_Espansione = ESPANSIONE.Abbreviazione";
+	protected static String GET_COLLECTION_CARDS(String nickname, String collectionName) {
+		return "SELECT Abbr_Espansione, Numero, Nome_Carta, Immagine" +
+				" FROM Possiede, Composta, Carta" +
+				" WHERE Possiede.Nickname = " + "'" + nickname + "'" + " AND Possiede.Nome_Collezione = " + "'" + collectionName + "'" +
+				" ORDER BY Abbr_Espansione, Numero";
+
 	}
 	
-	//da modificare in lista query
-	protected static String GET_USER_COLLECTION_EXPANSION_CARDS(String nickname, String collezione, String abbr_esp) {
-		return " SELECT Nome_Carta, Immagine" +
-		" FROM POSSIEDE, COMPOSTA, CARTA, ESPANSIONE " +
-		" WHERE POSSIEDE.Nickname =" +"'" + nickname + "AND COMPOSTA.Nome_Collezione = " + "'" + collezione + "'" +
-			"AND CARTA.Abbr_Espansione = " + "'" + abbr_esp + "'";
-	}
+	
 		
 }

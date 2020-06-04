@@ -38,7 +38,7 @@ public class AccountPanel extends JPanel{
 	private JLabel lblRegistrationDate;
 	private JButton btnEdit;
 	private JButton btnBack;
-	private JList list;
+	private JList<String> list;
 
 	private JPanel collectionsPanel;
 	private JLabel lblAvatarSmall;

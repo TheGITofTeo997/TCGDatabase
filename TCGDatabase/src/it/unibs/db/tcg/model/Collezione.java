@@ -4,11 +4,13 @@ import java.sql.Date;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import javax.swing.DefaultListModel;
+
 public class Collezione {
 	private String nomeCollezione;
 	private boolean visibile;
 	private Date dataInizio;
-	private ArrayList<Carta> carte;
+	private List<Carta> carte;
 	
 	public Collezione(String nomeCollezione) {
 		this.nomeCollezione=nomeCollezione;
@@ -71,6 +73,14 @@ public class Collezione {
 	
 	public List<String> getCardsListName(){
 		return carte.stream().map(carte -> carte.getNome()).collect(Collectors.toList());
+	}
+	
+	public void setCarteCollezione(List<Carta> cardsList) {
+		carte = cardsList;
+	}
+	
+	public List<Carta> getCardsList(){
+		return carte;
 	}
 	
 }
