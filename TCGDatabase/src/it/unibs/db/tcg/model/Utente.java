@@ -11,6 +11,7 @@ public class Utente {
 	private Date dataRegistrazione;
 	private ImageIcon avatar;
 	private ArrayList<Collezione> collezioni;
+	private double totalCardsValue;
 	
 	public Utente() {
 		collezioni = new ArrayList<>();
@@ -98,4 +99,14 @@ public class Utente {
 			collezioni.remove(i);
  		}
 	}
+
+	public double getTotalCardsValue() {
+		return totalCardsValue;
+	}
+
+	public void setTotalCardsValue(double total_cards_value) {
+		this.totalCardsValue = total_cards_value;
+	}
+	
+	
 }

@@ -6,6 +6,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.JFrame;
 import javax.swing.event.ListSelectionEvent;
@@ -66,7 +68,9 @@ public class Controller {
 					logPan.showErrorPopup();
 				else {
 					logPan.setVisible(false);
-					drawHomePanel(model.getUser(logPan.getLoginField()));
+					Utente user = model.getUser(logPan.getLoginField());
+					user.setCollections(model.getUserCollections(user.getNickname()));
+					drawHomePanel(user);
 				}
 			}
 		});
@@ -84,14 +88,15 @@ public class Controller {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				homePan.setVisible(false);
+				user.setTotalCardsValue(model.getUserTotalCardsValue(user.getNickname()));
 				drawAccountPanel(user);
 			}
 		});
-		
+
 		homePan.addBackListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(homePan.showConfirmDialog() == 0) {
+				if (homePan.showConfirmDialog() == 0) {
 					homePan.setVisible(false);
 					drawLoginPanel();
 				}
@@ -108,6 +113,7 @@ public class Controller {
 		acPan.setAvatar(user.getAvatar());
 		acPan.setUserName(user.getNomeUtente());
 		acPan.setRegistrationDate(user.getDataRegistrazione().toString());
+		acPan.setTotalValue(user.getTotalCardsValue());
 		acPan.setCollections(user.getDefaultListModelCollections());
 
 		acPan.addCollectionListener(new ListSelectionListener() {
@@ -130,7 +136,7 @@ public class Controller {
 				drawEditPanel(user);
 			}
 		});
-		
+
 		acPan.addBackListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -140,7 +146,7 @@ public class Controller {
 		});
 
 	}
-	
+
 	public void drawEditPanel(Utente user) {
 		edPan = new EditPanel();
 		edPan.setBounds(0, 0, 800, 600);
@@ -150,32 +156,49 @@ public class Controller {
 		edPan.setMail(user.getMail());
 		edPan.setName(user.getNomeUtente());
 		edPan.setAvatar(user.getAvatar());
-		
-		
+
 		edPan.addEditNameListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String result = edPan.showEditPopup();
-				//check result consistency, add new name then call drawEditPanel(user);
-				user.setNomeUtente(result);
-				drawEditPanel(user);
+				if (result != null) {
+					if (result.matches(Strings.USERNAME_REGEX) && result.length() > 2) {
+						model.updateUserName(user.getNickname(), result);
+						user.setNomeUtente(result);
+						edPan.setUserName(result);
+						edPan.showCorrectPopup();
+					} else
+						edPan.showErrorPopup();
+				}
 			}
 		});
-		
+
 		edPan.addEditMailListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String result = edPan.showEditPopup();
+				if (result != null) {
+					Pattern p = Pattern.compile(Strings.MAIL_REGEX, Pattern.CASE_INSENSITIVE);
+					Matcher matcher = p.matcher(result);
+					if(matcher.find()) {
+						model.updateMail(user.getNickname(), result);
+						user.setMail(result);
+						edPan.setMail(result);
+						edPan.showCorrectPopup();
+					}else
+						edPan.showErrorPopup();
+				}
+
 			}
 		});
-		
+
 		edPan.addEditAvatarListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String result = edPan.showEditPopup();
 			}
 		});
-		
+
 		edPan.addBackListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -184,24 +207,26 @@ public class Controller {
 			}
 		});
 	}
-	
+
 	public void drawCardsPanel(Utente user, String title, List<Carta> cardsName) {
 		crdsPan = new CardsPanel();
-		crdsPan.setBounds(0,0,800,600);
+		crdsPan.setBounds(0, 0, 800, 600);
 		crdsPan.setTitleText(title);
 		crdsPan.setCardList(cardsName);
 		frame.getContentPane().add(crdsPan);
-		
+
 		crdsPan.addCardListener(new ListSelectionListener() {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
 				if (!e.getValueIsAdjusting()) {
 					Carta c = cardsName.get(crdsPan.getListSelectedIndex());
-					drawCartaPanel(c);
+					Carta card = model.getCardFromNumberAndAbbrEspansione(c.getNumero(), c.getAbbrEspansione());
+					crdsPan.setVisible(false);
+					drawCartaPanel(user, title, cardsName, card);
 				}
 			}
 		});
-		
+
 		crdsPan.addBackListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -210,9 +235,37 @@ public class Controller {
 			}
 		});
 	}
-	
-	public void drawCartaPanel(Carta c) {
-		System.out.println("La carta è" + c.getNome());
+
+	public void drawCartaPanel(Utente user, String title, List<Carta> cardsName, Carta c) {
+		carPan = new CartaPanel();
+		carPan.setBounds(0, 0, 800, 600);
+		frame.getContentPane().add(carPan);
+
+		String cardType = model.getCardType(c.getNumero(), c.getAbbrEspansione());
+		switch (cardType) {
+		case Strings.CARTA_POKEMON_BASE:
+			carPan.setSpecsCartaPokemon((CartaPokemonBase) c);
+			break;
+		case Strings.CARTA_POKEMON_SPECIALE:
+			carPan.setSpecsCartaPokemon((CartaPokemonSpeciale) c);
+			break;
+		case Strings.CARTA_STRUMENTO:
+			carPan.setSpecsCartaStrumento((CartaStrumento) c);
+			break;
+		case Strings.CARTA_ENERGIA:
+			carPan.setSpecsCartaEnergia((CartaEnergia) c);
+			break;
+
+		}
+
+		carPan.addBackListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				carPan.setVisible(false);
+				drawCardsPanel(user, title, cardsName);
+			}
+		});
+
 	}
 
 }

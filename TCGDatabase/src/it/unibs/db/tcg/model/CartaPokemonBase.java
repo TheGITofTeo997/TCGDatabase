@@ -15,7 +15,5 @@ public class CartaPokemonBase extends CartaPokemon{
 	public void setAbilita(String abilita) {
 		this.abilita = abilita;
 	}
-	
-	
 
 }

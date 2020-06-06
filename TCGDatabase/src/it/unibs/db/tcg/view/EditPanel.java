@@ -117,6 +117,18 @@ public class EditPanel extends JPanel {
 		return JOptionPane.showInputDialog("Inserisci il nuovo valore:");
 	}
 	
+	public void showErrorPopup() {
+		JOptionPane error = new JOptionPane();
+		error.setBounds(getBounds());
+		error.showMessageDialog(this, "Attenzione, campo non valido!", "Warning", JOptionPane.ERROR_MESSAGE);
+	}
+	
+	public void showCorrectPopup() {
+		JOptionPane correct = new JOptionPane();
+		correct.setBounds(getBounds());
+		correct.showMessageDialog(this, "Modifica effettuata correttamente!", "Correct", JOptionPane.INFORMATION_MESSAGE);
+	}
+	
 	public void addEditNameListener(ActionListener a) {
 		btnEditName.addActionListener(a);
 	}
