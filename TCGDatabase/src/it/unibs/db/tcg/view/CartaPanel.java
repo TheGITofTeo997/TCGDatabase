@@ -17,6 +17,7 @@ import it.unibs.db.tcg.model.CartaPokemon;
 import it.unibs.db.tcg.model.CartaPokemonBase;
 import it.unibs.db.tcg.model.CartaPokemonSpeciale;
 import it.unibs.db.tcg.model.CartaStrumento;
+import it.unibs.db.tcg.model.Strings;
 
 public class CartaPanel extends JPanel {
 	private static final long serialVersionUID = 3990277761264013805L;
@@ -25,7 +26,7 @@ public class CartaPanel extends JPanel {
 	private static Color backgroundColor = new Color(252, 186, 3);
 	private static Color secondaryBackgroundColor = new Color(156, 156, 156);
 	private static Color foregroundColor = Color.WHITE;
-	private static Font panelFont = new Font("Serif", 0, 15);
+	private Font panelFont;
 
 	private JButton btnBack;
 	private JLabel lblPic;
@@ -77,10 +78,13 @@ public class CartaPanel extends JPanel {
 
 	public CartaPanel() {
 		setLayout(null);
+		secondaryBackgroundColor = Preferences.getSecondaryBackgroundColor();
+		backgroundColor = Preferences.getBackgroundColor();
 		setBackground(backgroundColor);
+		foregroundColor = Preferences.getForegroundColor();
 		setForeground(foregroundColor);
+		panelFont = Preferences.getFont().deriveFont(Strings.DEFAULT_SIZE_FONT - 3);
 		setFont(panelFont);
-		setVisible(true);
 
 		pokemonPanel = new JPanel();
 		pokemonPanel.setBounds(320, 0, 480, 500);

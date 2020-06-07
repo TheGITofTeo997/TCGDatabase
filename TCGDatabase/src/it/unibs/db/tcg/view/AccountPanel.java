@@ -23,10 +23,10 @@ public class AccountPanel extends JPanel{
 	private static final long serialVersionUID = -4259378117098818102L;
 	private static final int WIDTH = 800;
 	private static final int HEIGHT = 600;
-	private static Color backgroundColor = new Color(252, 186, 3);
-	private static Color secondaryBackgroundColor = new Color(156, 156, 156);
-	private static Color foregroundColor = Color.WHITE;
-	private static Font panelFont = new Font("Serif", 0, 18);
+	private static Color backgroundColor;
+	private static Color secondaryBackgroundColor;
+	private static Color foregroundColor;
+	private Font panelFont;
 
 	private List<ActionListener> listenerList = new ArrayList<>();
 
@@ -48,8 +48,12 @@ public class AccountPanel extends JPanel{
 
 	public AccountPanel() {
 		setLayout(null);
+		secondaryBackgroundColor = Preferences.getSecondaryBackgroundColor();
+		backgroundColor = Preferences.getBackgroundColor();
 		setBackground(backgroundColor);
+		foregroundColor = Preferences.getForegroundColor();
 		setForeground(foregroundColor);
+		panelFont = Preferences.getFont();
 		setFont(panelFont);
 
 		JPanel menuPanel = new JPanel();
@@ -196,6 +200,7 @@ public class AccountPanel extends JPanel{
 		
 		btnBack = new JButton("Back");
 		btnBack.setBounds(650, 450, 90, 50);
+		btnBack.setFont(panelFont);
 		informationPanel.add(btnBack);
 		
 		JLabel lblfourth = new JLabel("Valore tot.");

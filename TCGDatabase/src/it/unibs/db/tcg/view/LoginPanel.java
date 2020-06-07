@@ -27,10 +27,10 @@ public class LoginPanel extends JPanel implements KeyListener {
 	private static final long serialVersionUID = -125624121548476171L;
 	private static final int WIDTH = 800;
 	private static final int HEIGHT = 600;
-	private static Color backgroundColor = new Color(252, 186, 3);
-	private static Color secondaryBackgroundColor = new Color(156, 156, 156);
-	private static Color foregroundColor = Color.WHITE;
-	private static Font panelFont = new Font("Serif", 0, 18);
+	private static Color backgroundColor;
+	private static Color secondaryBackgroundColor;
+	private static Color foregroundColor;
+	private static Font panelFont;
 	
 	private List<ActionListener> listenerList = new ArrayList<>();
 	
@@ -38,9 +38,14 @@ public class LoginPanel extends JPanel implements KeyListener {
 	private JButton btnLogin;
 
 	public LoginPanel() {
-		setFont(panelFont);
 		setLayout(null);
+		secondaryBackgroundColor = Preferences.getSecondaryBackgroundColor();
+		backgroundColor = Preferences.getBackgroundColor();
 		setBackground(backgroundColor);
+		foregroundColor = Preferences.getForegroundColor();
+		setForeground(foregroundColor);
+		panelFont = Preferences.getFont();
+		setFont(panelFont);
 
 		setFocusable(true);
 		addKeyListener(this);

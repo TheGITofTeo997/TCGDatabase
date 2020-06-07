@@ -16,10 +16,10 @@ public class EditPanel extends JPanel {
 	
 	private static final int WIDTH = 800;
 	private static final int HEIGHT = 600;
-	private static Color backgroundColor = new Color(252, 186, 3);
-	private static Color secondaryBackgroundColor = new Color(156, 156, 156);
-	private static Color foregroundColor = Color.WHITE;
-	private static Font panelFont = new Font("Serif", 0, 18);
+	private static Color backgroundColor;
+	private static Color secondaryBackgroundColor;
+	private static Color foregroundColor;
+	private Font panelFont;
 	
 	private JLabel lblAvatar;
 	private JLabel lblName;
@@ -32,8 +32,12 @@ public class EditPanel extends JPanel {
 	
 	public EditPanel() {
 		setLayout(null);
+		secondaryBackgroundColor = Preferences.getSecondaryBackgroundColor();
+		backgroundColor = Preferences.getBackgroundColor();
 		setBackground(backgroundColor);
+		foregroundColor = Preferences.getForegroundColor();
 		setForeground(foregroundColor);
+		panelFont = Preferences.getFont();
 		setFont(panelFont);
 		
 		
