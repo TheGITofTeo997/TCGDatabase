@@ -10,6 +10,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.swing.JFrame;
+import javax.swing.UIManager;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -100,6 +101,15 @@ public class Controller {
 					homePan.setVisible(false);
 					drawLoginPanel();
 				}
+			}
+		});
+		
+		homePan.addSearchListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+					homePan.setVisible(false);
+					drawSearchPanel(user);
+				
 			}
 		});
 	}
@@ -266,6 +276,52 @@ public class Controller {
 			}
 		});
 
+	}
+	
+	public void drawSearchPanel(Utente user) {
+		srcPan = new SearchPanel();
+		srcPan.setBounds(0, 0, 800, 600);
+		frame.getContentPane().add(srcPan);
+		
+		srcPan.addBackListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				srcPan.setVisible(false);
+				drawHomePanel(user);
+			}
+		});
+		
+		srcPan.addUserSearchListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String name = srcPan.getUserNameField();
+				//do things ....
+			}
+		});
+		
+		srcPan.addCardSearchListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String cardName = srcPan.getCardNameField();
+				String exp = srcPan.getCardExpField();
+				String cardIllustrator = srcPan.getCardIllustratorField();
+				int lowerPSValue = srcPan.getPSBarLowerValue();
+				int upperPSValue = srcPan.getPSBarUpperValue();
+				int lowerValueBarValue = srcPan.getValueBarLowerValue();
+				int upperValueBarValue = srcPan.getValueBarUpperValue();
+				List<String> cardType = srcPan.getCardTypeSelected();
+				List<String> energyType = srcPan.getEnergyTypeSelected();
+				List<String> rarityType = srcPan.getRaritySelected();
+				//if cardType.size == 0, non bisogna fare query
+				//if energyType.size == 0, non bisogna fare query ecc...
+				//if rarityType.size == 0, non bisogna fare query ecc...
+				//Fare le query singole ed intersecare i risultati
+				//List<Carta> carte_trovate = model.(....);
+				//drawCardPanel(user, "carte trovate", carte_trovate);
+				
+				
+			}
+		});
 	}
 
 }

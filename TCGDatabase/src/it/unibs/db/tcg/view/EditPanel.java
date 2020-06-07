@@ -90,6 +90,7 @@ public class EditPanel extends JPanel {
 		
 		btnBack = new JButton("Back");
 		btnBack.setBounds(650, 450, 90, 50);
+		btnBack.setFont(panelFont);
 		add(btnBack);
 		
 	}

@@ -42,5 +42,59 @@ public class QueryBuilder {
 				 "WHERE Nickname = "+ "'" + nickname + "'";
 	}
 	
+	protected static String GET_CARDS_BY_NAME(String name) {
+		return "SELECT Nome_Carta, Immagine " + 
+				" FROM CARTA " + 
+				" WHERE CARTA.Nome_Carta LIKE '" + name + "%'";
+	}
+	
+	protected static String GET_CARDS_BY_RARITY(String rarity) {
+		return "SELECT Nome_Carta, Immagine" + 
+				" FROM CARTA" + 
+				" WHERE CARTA.Rarita = '" + rarity + "'";
+	}
+	
+	protected static String GET_CARDS_BY_ILLUSTRATOR(String illustrator) {
+		return "SELECT Nome_Carta, Immagine" + 
+				" FROM CARTA" + 
+				" WHERE CARTA.Illustratore = '" + illustrator + "'";
+	}
+	
+	protected static String GET_CARDS_BY_ECONOMIC_VALU(int minValue, int maxValue) {
+		return "SELECT Nome_Carta, Immagine" + 
+				" FROM CARTA" + 
+				" WHERE CARTA.Valore >= '" + minValue + "' AND CARTA.Valore <= '"+  maxValue +"'";
+	}
+	
+	protected static String GET_CARDS_BY_ENERGY_TYPE(String energyType) {
+		return "SELECT Nome_Carta, Immagine" + 
+				" FROM CARTA" + 
+				" WHERE CARTA.Tipo_Energia = '" + energyType + "'";
+	}
+	
+	protected static String GET_CARDS_BY_PS(int minPS, int maxPS) {
+		return "SELECT Nome_Carta, Immagine" + 
+				" FROM CARTA" + 
+				" WHERE CARTA.PS >= '" + minPS + "' AND CARTA.PS <= '" + maxPS + "'";
+	}
+	
+	protected static String GET_CARDS_POKEMON_TYPE() {
+		return "SELECT Nome_Carta, Immagine" + 
+				" FROM CARTA" + 
+				" WHERE CARTA.Sel_Carta = 0 OR CARTA.Sel_Carta = 1";
+	}
+	
+	protected static String GET_CARDS_ITEM_TYPE() {
+		return "SELECT Nome_Carta, Immagine" + 
+				" FROM CARTA" + 
+				" WHERE CARTA.Sel_Carta = 2";
+	}
+	
+	protected static String GET_CARDS_ENERGY_TYPE() {
+		return "SELECT Nome_Carta, Immagine" + 
+				" FROM CARTA" + 
+				" WHERE CARTA.Sel_Carta = 3";
+	}
+	
 
 }

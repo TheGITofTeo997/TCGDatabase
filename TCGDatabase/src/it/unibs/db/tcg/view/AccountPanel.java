@@ -78,7 +78,7 @@ public class AccountPanel extends JPanel{
 				btnInfo.setBackground(backgroundColor);
 				btnCollections.setBackground(secondaryBackgroundColor);
 				btnInfo.setFont(panelFont.deriveFont(Font.BOLD));
-				btnCollections.setFont(panelFont.deriveFont(Font.BOLD));
+				btnCollections.setFont(panelFont);
 				collectionsPanel.setFocusable(false);
 				collectionsPanel.setVisible(false);
 				informationPanel.setFocusable(true);

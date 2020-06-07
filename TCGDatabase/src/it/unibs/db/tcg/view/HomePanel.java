@@ -57,7 +57,7 @@ public class HomePanel extends JPanel {
 
 		btnViewProfile = new JButton("Profilo");
 		btnViewProfile.setBounds(10, 220, WIDTH / 4 - WIDTH / 40, 30);
-		btnViewProfile.setForeground(foregroundColor);
+		btnViewProfile.setFont(panelFont);
 		add(btnViewProfile);
 
 		lblNickname = new JLabel("Nickname");
@@ -81,6 +81,7 @@ public class HomePanel extends JPanel {
 
 		btnBack = new JButton("Back");
 		btnBack.setBounds(650, 450, 90, 50);
+		btnBack.setFont(panelFont);
 		add(btnBack);
 
 	}

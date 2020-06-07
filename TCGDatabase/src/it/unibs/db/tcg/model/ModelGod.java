@@ -18,11 +18,11 @@ public class ModelGod {
 	private Connector connector = new Connector("jdbc:mysql://localhost:3306/TEST_MIKE", "root", "");
 
 	public ModelGod() {
-		connector.openConnection();
 	}
 
 	// close ResultSet???
 	public Utente getUser(String nickname) {
+		connector.openConnection();
 		ResultSet set = connector.executeQuery(QueryBuilder.GET_USER_ATTRIBUTES(nickname));
 		String _nickname = null;
 		String _name = null;
@@ -44,6 +44,15 @@ public class ModelGod {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				if (set != null)
+					set.close();
+				connector.closeStatement();
+				connector.closeConnection();
+			} catch (SQLException sqle) {
+				sqle.printStackTrace();
+			}
 		}
 
 		Utente user = new Utente();
@@ -56,6 +65,7 @@ public class ModelGod {
 	}
 
 	public List<String> getUserCollections(String nickname) {
+		connector.openConnection();
 		ArrayList<String> collections = new ArrayList<String>();
 		ResultSet set = connector.executeQuery(QueryBuilder.GET_USER_COLLECTIONS(nickname));
 		try {
@@ -64,24 +74,44 @@ public class ModelGod {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				if (set != null)
+					set.close();
+				connector.closeStatement();
+				connector.closeConnection();
+			} catch (SQLException sqle) {
+				sqle.printStackTrace();
+			}
 		}
 		return collections;
 
 	}
 
 	public boolean isUserExistant(String nickname) {
+		connector.openConnection();
 		ResultSet set = connector.executeQuery(QueryBuilder.GET_USER_ATTRIBUTES(nickname));
 		try (set) {
 			if (set.next() == false)
 				return false;
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				if (set != null)
+					set.close();
+				connector.closeStatement();
+				connector.closeConnection();
+			} catch (SQLException sqle) {
+				sqle.printStackTrace();
+			}
 		}
 		return true;
 	}
-	
-	//da cambiare tipo Valore in TABLE Carta nel DB
+
+	// da cambiare tipo Valore in TABLE Carta nel DB
 	public double getUserTotalCardsValue(String nickname) {
+		connector.openConnection();
 		ResultSet set = connector.executeQuery(QueryBuilder.GET_USER_TOTAL_CARDS_VALUE(nickname));
 		double value = 0;
 		try (set) {
@@ -90,11 +120,21 @@ public class ModelGod {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				if (set != null)
+					set.close();
+				connector.closeStatement();
+				connector.closeConnection();
+			} catch (SQLException sqle) {
+				sqle.printStackTrace();
+			}
 		}
 		return value;
 	}
 
 	public List<Carta> getCardsFromCollection(String nickname, String collectionName) {
+		connector.openConnection();
 		List<Carta> cardsList = new ArrayList<>();
 		ResultSet set = connector.executeQuery(QueryBuilder.GET_COLLECTION_CARDS(nickname, collectionName));
 		String _abbreviation = null;
@@ -119,39 +159,68 @@ public class ModelGod {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				if (set != null)
+					set.close();
+				connector.closeStatement();
+				connector.closeConnection();
+			} catch (SQLException sqle) {
+				sqle.printStackTrace();
+			}
 		}
 		return cardsList;
 	}
 
 	public String getCardType(int number, String abbr_espansione) {
+		connector.openConnection();
 		ResultSet set = connector.executeQuery(QueryBuilder.GET_CARD(number, abbr_espansione));
 		Carta c = null;
 		String type = "";
 		try {
 			while (set.next()) {
 				int sel_carta = set.getInt("SEL_Carta");
-				if (sel_carta == 0) {
-					int sel_pkmn = set.getInt("SEL_PKMN");
-					if (sel_pkmn == 0)
-						type = Strings.CARTA_POKEMON_BASE;
-					else
-						type = Strings.CARTA_POKEMON_SPECIALE;
-				}
-
+				if (sel_carta == 0)
+					type = Strings.CARTA_POKEMON_BASE;
 				else if (sel_carta == 1)
-					type = Strings.CARTA_STRUMENTO;
+					type = Strings.CARTA_POKEMON_SPECIALE;
 				else if (sel_carta == 2)
+					type = Strings.CARTA_STRUMENTO;
+				else if (sel_carta == 3)
 					type = Strings.CARTA_ENERGIA;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				if (set != null)
+					set.close();
+				connector.closeStatement();
+				connector.closeConnection();
+			} catch (SQLException sqle) {
+				sqle.printStackTrace();
+			}
 		}
 		return type;
 	}
 
 	public Carta getCardFromNumberAndAbbrEspansione(int number, String abbr_espansione) {
+		connector.openConnection();
 		ResultSet set = connector.executeQuery(QueryBuilder.GET_CARD(number, abbr_espansione));
 		Carta c = null;
+		CartaPokemon c1;
+		String _descr_pkmn;
+		String _tipo_energia;
+		int _ps;
+		int _costo_ritirata;
+		int _resistenza;
+		int _debolezza;
+		int _stage;
+		int _n_stage_succ;
+		int sel_pkmn;
+		String _abilita;
+		String _attr_spec;
+		String _regola;
 
 		try {
 			while (set.next()) {
@@ -180,20 +249,20 @@ public class ModelGod {
 				int sel_carta = set.getInt("SEL_Carta");
 				switch (sel_carta) {
 				case 0:
-					String _descr_pkmn = set.getString("Descrizione_PKMN");
-					String _tipo_energia = set.getString("Tipo_Energia");
-					int _ps = set.getInt("PS");
-					int _costo_ritirata = set.getInt("Costo_Ritirata");
-					int _resistenza = set.getInt("Resistenza");
-					int _debolezza = set.getInt("Debolezza");
-					int _stage = set.getInt("Stage");
-					int _n_stage_succ = set.getInt("N_Stage_Successivo");
-					int sel_pkmn = set.getInt("SEL_PKMN");
-					String _abilita = set.getString("Abilita");
-					String _attr_spec = set.getString("Attributo_Speciale");
-					String _regola = set.getString("Regola");
+					_descr_pkmn = set.getString("Descrizione_PKMN");
+					_tipo_energia = set.getString("Tipo_Energia");
+					_ps = set.getInt("PS");
+					_costo_ritirata = set.getInt("Costo_Ritirata");
+					_resistenza = set.getInt("Resistenza");
+					_debolezza = set.getInt("Debolezza");
+					_stage = set.getInt("Stage");
+					_n_stage_succ = set.getInt("N_Stage_Successivo");
+					sel_pkmn = set.getInt("SEL_PKMN");
+					_abilita = set.getString("Abilita");
+					_attr_spec = set.getString("Attributo_Speciale");
+					_regola = set.getString("Regola");
 
-					CartaPokemon c1 = createCartaPokemon(c);
+					c1 = createCartaPokemon(c);
 					c1.setDescrizione(_descr_pkmn);
 					c1.setTipoEnergia(_tipo_energia);
 					c1.setPS(_ps);
@@ -202,44 +271,80 @@ public class ModelGod {
 					// c1.setDebolezza(_debolezza); debolezza è string o int??
 					c1.setStage(_stage);
 					c1.setStage_successivo(_n_stage_succ);
-
-					if (sel_pkmn == 0) {
-						CartaPokemonBase c2 = createCartaPokemonBase(c1);
-						c2.setAbilita(_abilita);
-						return c2;
-					} else {
-						CartaPokemonSpeciale c3 = createCartaPokemonSpeciale(c1);
-						c3.setAttributoSpeciale(_attr_spec);
-						c3.setRegola(_regola);
-						return c3;
-					}
+					CartaPokemonBase c2 = createCartaPokemonBase(c1);
+					c2.setAbilita(_abilita);
+					return c2;
 
 				case 1:
+					_descr_pkmn = set.getString("Descrizione_PKMN");
+					_tipo_energia = set.getString("Tipo_Energia");
+					_ps = set.getInt("PS");
+					_costo_ritirata = set.getInt("Costo_Ritirata");
+					_resistenza = set.getInt("Resistenza");
+					_debolezza = set.getInt("Debolezza");
+					_stage = set.getInt("Stage");
+					_n_stage_succ = set.getInt("N_Stage_Successivo");
+					sel_pkmn = set.getInt("SEL_PKMN");
+					_abilita = set.getString("Abilita");
+					_attr_spec = set.getString("Attributo_Speciale");
+					_regola = set.getString("Regola");
+
+					c1 = createCartaPokemon(c);
+					c1.setDescrizione(_descr_pkmn);
+					c1.setTipoEnergia(_tipo_energia);
+					c1.setPS(_ps);
+					c1.setCostoRitirata(_costo_ritirata);
+					// c1.setResistenza(_resistenza); resistenza è string o int??
+					// c1.setDebolezza(_debolezza); debolezza è string o int??
+					c1.setStage(_stage);
+					c1.setStage_successivo(_n_stage_succ);
+					CartaPokemonSpeciale c3 = createCartaPokemonSpeciale(c1);
+					c3.setAttributoSpeciale(_attr_spec);
+					c3.setRegola(_regola);
+					return c3;
+				case 2:
 					CartaStrumento c4 = createCartaStrumento(c);
 					String _descr_strumento = set.getString("Descrizione_Strumento");
 					String _effetto_strumento = set.getString("Effetto_Strum");
 					c4.setDescrizione(_descr_strumento);
 					c4.setEffetto(_effetto_strumento);
+					return c4;
 
-				case 2:
+				case 3:
 					CartaEnergia c5 = createCartaEnergia(c);
 					String _tipo_carta_energia = set.getString("Tipo_Carta_Energia");
 					c5.setTipo(_tipo_carta_energia);
+					return c5;
 				}
 
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				if (set != null)
+					set.close();
+				connector.closeStatement();
+				connector.closeConnection();
+			} catch (SQLException sqle) {
+				sqle.printStackTrace();
+			}
 		}
 		return c;
 	}
-	
+
 	public void updateUserName(String nickname, String newName) {
+		connector.openConnection();
 		connector.execute(QueryBuilder.UPDATE_USERNAME(nickname, newName));
+		connector.closeStatement();
+		connector.closeConnection();
 	}
-	
+
 	public void updateMail(String nickname, String newMail) {
+		connector.openConnection();
 		connector.execute(QueryBuilder.UPDATE_MAIL(nickname, newMail));
+		connector.closeStatement();
+		connector.closeConnection();
 	}
 
 	private CartaEnergia createCartaEnergia(Carta c) {
