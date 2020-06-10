@@ -4,6 +4,7 @@ import java.awt.Color;
 
 public class Strings {
 	
+	//VIEW STRINGS
 	public static final String FRAME_TITLE = "TCG Database";
 	
 	//DEFAULT USER PREFERENCES
