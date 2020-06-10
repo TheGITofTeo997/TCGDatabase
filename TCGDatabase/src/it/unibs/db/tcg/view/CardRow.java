@@ -6,7 +6,7 @@ public class CardRow {
 	private String numberAbbr;
 	private ImageIcon immagine;
 	private String nome;
-	
+
 	public CardRow(String numberAbbr, ImageIcon immagine, String nome) {
 		this.numberAbbr = numberAbbr;
 		this.immagine = immagine;
@@ -36,10 +36,5 @@ public class CardRow {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	
-	
-	
-	
-	
-	
+
 }

@@ -2,10 +2,6 @@ package it.unibs.db.tcg.view;
 
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.ListSelectionModel;
-import javax.swing.UIManager;
-
-import it.unibs.db.tcg.model.Carta;
 import it.unibs.db.tcg.model.Strings;
 
 import java.awt.Color;
@@ -14,14 +10,11 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Map;
 import java.util.*;
-import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
 
 public class SearchPanel extends JPanel {
@@ -94,7 +87,7 @@ public class SearchPanel extends JPanel {
 		setForeground(foregroundColor);
 		panelFont = Preferences.getFont();
 		setFont(panelFont);
-		
+
 		JPanel menuPanel = new JPanel();
 		menuPanel.setBounds(0, 0, WIDTH, 30);
 		add(menuPanel);

@@ -67,8 +67,6 @@ public class CartaPokemon extends Carta {
 	public void setCostoRitirata(int costoRitirata) {
 		this.costoRitirata = costoRitirata;
 	}
-	
-	
 
 	public int getStage() {
 		return stage;

@@ -5,6 +5,8 @@ import java.util.Collection;
 import java.util.List;
 
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
 import javax.swing.event.ListSelectionListener;
 
 import java.awt.Color;
@@ -15,7 +17,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.ActionEvent;
 
-public class AccountPanel extends JPanel{
+public class AccountPanel extends JPanel {
 
 	/**
 	 * 
@@ -44,7 +46,6 @@ public class AccountPanel extends JPanel{
 	private JPanel collectionsPanel;
 	private JLabel lblAvatarSmall;
 	private JLabel lblNickname2;
-	
 
 	public AccountPanel() {
 		setLayout(null);
@@ -197,18 +198,18 @@ public class AccountPanel extends JPanel{
 		lblcollection.setBounds(300, 5, 400, 50);
 		lblcollection.setFont(panelFont.deriveFont(Font.BOLD));
 		collectionsPanel.add(lblcollection);
-		
+
 		btnBack = new JButton("Back");
 		btnBack.setBounds(650, 450, 90, 50);
 		btnBack.setFont(panelFont);
 		informationPanel.add(btnBack);
-		
+
 		JLabel lblfourth = new JLabel("Valore tot.");
 		lblfourth.setForeground(Color.WHITE);
-		lblfourth.setFont(new Font("Serif", Font.PLAIN, 18));
+		lblfourth.setFont(panelFont);
 		lblfourth.setBounds(290, 230, 100, 50);
 		informationPanel.add(lblfourth);
-		
+
 		lblTotalValue = new JLabel("0");
 		lblTotalValue.setForeground(Color.WHITE);
 		lblTotalValue.setFont(new Font("Serif", Font.PLAIN, 18));
@@ -247,16 +248,16 @@ public class AccountPanel extends JPanel{
 
 	public void setCollections(DefaultListModel<String> collectionsName) {
 		list = new JList(collectionsName);
-		list.setBounds(165, 50, 600, 500);
+		list.setBounds(165, 50, 600, 350);
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		list.setBackground(backgroundColor);
+		list.setBackground(null);
 		list.setFont(panelFont);
 		list.setForeground(foregroundColor);
 		list.setFixedCellWidth(list.getWidth());
-		list.setFixedCellHeight(50);
+		list.setBorder(new LineBorder(Color.BLACK));
 		collectionsPanel.add(list);
 	}
-	
+
 	public void setTotalValue(double value) {
 		lblTotalValue.setText(String.valueOf(value) + " €");
 	}
@@ -268,11 +269,11 @@ public class AccountPanel extends JPanel{
 	public void addCollectionListener(ListSelectionListener a) {
 		list.addListSelectionListener(a);
 	}
-	
+
 	public void addEditListener(ActionListener a) {
 		btnEdit.addActionListener(a);
 	}
-	
+
 	public void addBackListener(ActionListener a) {
 		btnBack.addActionListener(a);
 	}

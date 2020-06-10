@@ -1,9 +1,11 @@
 package it.unibs.db.tcg.view;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.Image;
 
+import javax.swing.BorderFactory;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.ImageIcon;
 import javax.swing.JList;
@@ -23,6 +25,8 @@ public class Renderer extends DefaultListCellRenderer implements ListCellRendere
 		setIcon(scaledIcon);
 		setEnabled(true);
 		setFont(panelFont);
+		this.setBackground(Color.WHITE);
+		this.setBorder(BorderFactory.createMatteBorder(1, 0, 1, 0, Color.BLACK));
 		return this;
 		
 	}

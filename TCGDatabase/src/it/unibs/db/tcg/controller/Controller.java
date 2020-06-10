@@ -39,7 +39,7 @@ public class Controller {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					frame = new JFrame("TCG Database");
+					frame = new JFrame(Strings.FRAME_TITLE);
 					frame.setResizable(false);
 					frame.setBounds(0, 0, 800, 600);
 					frame.setLocationRelativeTo(null);
@@ -103,13 +103,13 @@ public class Controller {
 				}
 			}
 		});
-		
+
 		homePan.addSearchListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-					homePan.setVisible(false);
-					drawSearchPanel(user);
-				
+				homePan.setVisible(false);
+				drawSearchPanel(user);
+
 			}
 		});
 	}
@@ -190,12 +190,12 @@ public class Controller {
 				if (result != null) {
 					Pattern p = Pattern.compile(Strings.MAIL_REGEX, Pattern.CASE_INSENSITIVE);
 					Matcher matcher = p.matcher(result);
-					if(matcher.find()) {
+					if (matcher.find()) {
 						model.updateMail(user.getNickname(), result);
 						user.setMail(result);
 						edPan.setMail(result);
 						edPan.showCorrectPopup();
-					}else
+					} else
 						edPan.showErrorPopup();
 				}
 
@@ -277,12 +277,12 @@ public class Controller {
 		});
 
 	}
-	
+
 	public void drawSearchPanel(Utente user) {
 		srcPan = new SearchPanel();
 		srcPan.setBounds(0, 0, 800, 600);
 		frame.getContentPane().add(srcPan);
-		
+
 		srcPan.addBackListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -290,15 +290,15 @@ public class Controller {
 				drawHomePanel(user);
 			}
 		});
-		
+
 		srcPan.addUserSearchListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String name = srcPan.getUserNameField();
-				//do things ....
+				// do things ....
 			}
 		});
-		
+
 		srcPan.addCardSearchListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -312,14 +312,10 @@ public class Controller {
 				List<String> cardType = srcPan.getCardTypeSelected();
 				List<String> energyType = srcPan.getEnergyTypeSelected();
 				List<String> rarityType = srcPan.getRaritySelected();
-				//if cardType.size == 0, non bisogna fare query
-				//if energyType.size == 0, non bisogna fare query ecc...
-				//if rarityType.size == 0, non bisogna fare query ecc...
-				//Fare le query singole ed intersecare i risultati
-				//List<Carta> carte_trovate = model.(....);
-				//drawCardPanel(user, "carte trovate", carte_trovate);
-				
-				
+				// Fare le query singole ed intersecare i risultati?
+				// List<Carta> carte_trovate = model.(....);
+				// drawCardPanel(user, "carte trovate", carte_trovate);
+
 			}
 		});
 	}

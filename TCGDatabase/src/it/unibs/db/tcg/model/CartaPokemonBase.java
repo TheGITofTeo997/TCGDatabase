@@ -1,11 +1,11 @@
 package it.unibs.db.tcg.model;
 
-public class CartaPokemonBase extends CartaPokemon{
+public class CartaPokemonBase extends CartaPokemon {
 	private String abilita;
-	
+
 	public CartaPokemonBase(int numero, String abbrEspansione) {
 		super(numero, abbrEspansione);
-		this.abilita="";
+		this.abilita = "";
 	}
 
 	public String getAbilita() {

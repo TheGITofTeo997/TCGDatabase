@@ -517,7 +517,6 @@ public class CartaPanel extends JPanel {
 		nrglblValue.setText(String.valueOf(carta.getValore()) + " €");
 		nrglblEnergyType.setText(carta.getTipo());
 
-
 	}
 
 	public void setSpecsCartaPokemon(CartaPokemonBase carta) {

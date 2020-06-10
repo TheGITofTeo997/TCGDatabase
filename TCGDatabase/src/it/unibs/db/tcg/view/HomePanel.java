@@ -19,6 +19,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 
 import it.unibs.db.tcg.model.Strings;
@@ -47,6 +48,7 @@ public class HomePanel extends JPanel {
 	private JButton btnViewProfile;
 	private JButton btnOption;
 	private JButton btnBack;
+	private JButton btnNewCollection;
 	private JPanel optionPanel;
 
 	public HomePanel() {
@@ -92,13 +94,20 @@ public class HomePanel extends JPanel {
 		btnSearch.setFont(panelFont.deriveFont(Font.BOLD));
 		add(btnSearch);
 
+		btnNewCollection = new JButton("Nuova collezione");
+		btnNewCollection.setBounds(WIDTH / 4 + 20, 40, 540, 80);
+		btnNewCollection.setBackground(new Color(27, 232, 16));
+		btnNewCollection.setForeground(foregroundColor);
+		btnNewCollection.setFont(panelFont.deriveFont(Font.BOLD));
+		add(btnNewCollection);
+
 		btnBack = new JButton("Back");
-		btnBack.setBounds(650, 450, 90, 50);
+		btnBack.setBounds(650, 480, 90, 50);
 		btnBack.setFont(panelFont);
 		add(btnBack);
 
 		btnOption = new JButton("");
-		btnOption.setBounds(700, 250, 75, 75);
+		btnOption.setBounds(675, 400, 75, 75);
 		btnOption.setBackground(null);
 		btnOption.setBorder(null);
 		btnOption.setIcon(new ImageIcon(
@@ -180,7 +189,7 @@ public class HomePanel extends JPanel {
 	}
 
 	private Color showColorChooser() {
-		Color newColor = JColorChooser.showDialog(null, "Choose a color", Color.RED);
+		Color newColor = JColorChooser.showDialog(null, "Scegli un colore", Color.RED);
 		return newColor;
 	}
 

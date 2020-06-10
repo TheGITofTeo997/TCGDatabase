@@ -3,7 +3,6 @@ package it.unibs.db.tcg.view;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JPanel;
@@ -13,14 +12,15 @@ import javax.swing.JOptionPane;
 import javax.swing.JButton;
 
 public class EditPanel extends JPanel {
-	
+
+	private static final long serialVersionUID = 1663931555261779174L;
 	private static final int WIDTH = 800;
 	private static final int HEIGHT = 600;
 	private static Color backgroundColor;
 	private static Color secondaryBackgroundColor;
 	private static Color foregroundColor;
 	private Font panelFont;
-	
+
 	private JLabel lblAvatar;
 	private JLabel lblName;
 	private JLabel lblNickname;
@@ -29,7 +29,7 @@ public class EditPanel extends JPanel {
 	private JButton btnEditName;
 	private JButton btnEditMail;
 	private JButton btnBack;
-	
+
 	public EditPanel() {
 		setLayout(null);
 		secondaryBackgroundColor = Preferences.getSecondaryBackgroundColor();
@@ -39,8 +39,7 @@ public class EditPanel extends JPanel {
 		setForeground(foregroundColor);
 		panelFont = Preferences.getFont();
 		setFont(panelFont);
-		
-		
+
 		lblAvatar = new JLabel("");
 		lblAvatar.setBounds(5, 5, 250, 300);
 		ImageIcon icon = new ImageIcon("resources//iLTd4oI.png");
@@ -49,11 +48,11 @@ public class EditPanel extends JPanel {
 		image = image.getScaledInstance(lblAvatar.getWidth(), lblAvatar.getHeight(), Image.SCALE_SMOOTH);
 		lblAvatar.setIcon(icon);
 		add(lblAvatar);
-		
+
 		btnEditAvatar = new JButton("Edit Avatar");
 		btnEditAvatar.setBounds(5, 325, 250, 25);
 		add(btnEditAvatar);
-		
+
 		lblNickname = new JLabel("Nickname");
 		lblNickname.setForeground(foregroundColor);
 		lblNickname.setBounds(400, 5, 400, 50);
@@ -71,7 +70,7 @@ public class EditPanel extends JPanel {
 		lblMail.setFont(panelFont);
 		lblMail.setBounds(400, 115, 300, 50);
 		add(lblMail);
-		
+
 		JLabel lblfirst = new JLabel("Nome ");
 		lblfirst.setFont(panelFont);
 		lblfirst.setForeground(foregroundColor);
@@ -83,22 +82,22 @@ public class EditPanel extends JPanel {
 		lblsecond.setForeground(foregroundColor);
 		lblsecond.setBounds(290, 115, 100, 50);
 		add(lblsecond);
-		
+
 		btnEditName = new JButton("Edit Nome");
 		btnEditName.setBounds(700, 60, 90, 50);
 		add(btnEditName);
-		
+
 		btnEditMail = new JButton("Edit Mail");
 		btnEditMail.setBounds(700, 115, 90, 50);
 		add(btnEditMail);
-		
+
 		btnBack = new JButton("Back");
-		btnBack.setBounds(650, 450, 90, 50);
+		btnBack.setBounds(650, 480, 90, 50);
 		btnBack.setFont(panelFont);
 		add(btnBack);
-		
+
 	}
-	
+
 	public void setNickname(String nickname) {
 		lblNickname.setText(nickname);
 	}
@@ -117,35 +116,36 @@ public class EditPanel extends JPanel {
 		avatar = new ImageIcon(image);
 		lblAvatar.setIcon(avatar);
 	}
-	
+
 	public String showEditPopup() {
 		return JOptionPane.showInputDialog("Inserisci il nuovo valore:");
 	}
-	
+
 	public void showErrorPopup() {
 		JOptionPane error = new JOptionPane();
 		error.setBounds(getBounds());
 		error.showMessageDialog(this, "Attenzione, campo non valido!", "Warning", JOptionPane.ERROR_MESSAGE);
 	}
-	
+
 	public void showCorrectPopup() {
 		JOptionPane correct = new JOptionPane();
 		correct.setBounds(getBounds());
-		correct.showMessageDialog(this, "Modifica effettuata correttamente!", "Correct", JOptionPane.INFORMATION_MESSAGE);
+		correct.showMessageDialog(this, "Modifica effettuata correttamente!", "Correct",
+				JOptionPane.INFORMATION_MESSAGE);
 	}
-	
+
 	public void addEditNameListener(ActionListener a) {
 		btnEditName.addActionListener(a);
 	}
-	
+
 	public void addEditMailListener(ActionListener a) {
 		btnEditMail.addActionListener(a);
 	}
-	
+
 	public void addEditAvatarListener(ActionListener a) {
 		btnEditAvatar.addActionListener(a);
 	}
-	
+
 	public void addBackListener(ActionListener a) {
 		btnBack.addActionListener(a);
 	}
