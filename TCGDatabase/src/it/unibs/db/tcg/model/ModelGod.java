@@ -302,7 +302,7 @@ public class ModelGod {
 					return c3;
 				case 2:
 					CartaStrumento c4 = createCartaStrumento(c);
-					String _descr_strumento = set.getString("Descrizione_Strumento");
+					String _descr_strumento = set.getString("Descrizione_Strum");
 					String _effetto_strumento = set.getString("Effetto_Strum");
 					c4.setDescrizione(_descr_strumento);
 					c4.setEffetto(_effetto_strumento);

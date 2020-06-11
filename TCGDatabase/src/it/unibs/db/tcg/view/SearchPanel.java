@@ -73,6 +73,7 @@ public class SearchPanel extends JPanel {
 	private JCheckBox olograficaRaraGXBox;
 	private JCheckBox leggendaBox;
 	private JCheckBox olograficaRaraLivXBox;
+	private JCheckBox olograficaRaraVBox;
 	private List<JCheckBox> typeCheckBox;
 	private List<JCheckBox> rarityCheckBox;
 
@@ -488,6 +489,11 @@ public class SearchPanel extends JPanel {
 
 		turboRaraBox = new JCheckBox(Strings.TURBO_RARA);
 		turboRaraBox.setBounds(0, 325, 200, 20);
+		rarityPanel.add(turboRaraBox);
+		rarityCheckBox.add(turboRaraBox);
+		
+		olograficaRaraVBox = new JCheckBox(Strings.OLOGRAFICA_RARA_V);
+		olograficaRaraVBox.setBounds(0, 325, 200, 20);
 		rarityPanel.add(turboRaraBox);
 		rarityCheckBox.add(turboRaraBox);
 
