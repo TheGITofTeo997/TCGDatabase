@@ -31,74 +31,74 @@ public class QueryBuilder {
 	
 	protected static String GET_USER_TOTAL_CARDS_VALUE(String nickname) {
 		return "SELECT sum(Valore) " + 
-				" FROM possiede,composta,carta" + 
+				" FROM Possiede, Composta, Carta" + 
 				" WHERE Possiede.Nickname = " + "'" + nickname + "'";
 	}
 	
 	protected static String UPDATE_USERNAME(String nickname, String newName) {
-		return "UPDATE UTENTE " +
+		return "UPDATE Utente " +
 				"SET Nome_Utente = " + "'" + newName + "'" +
 				 "WHERE Nickname = "+ "'" + nickname + "'";
 	}
 	
 	protected static String UPDATE_MAIL(String nickname, String newMail) {
-		return "UPDATE UTENTE " +
+		return "UPDATE Utente " +
 				"SET Mail = " + "'" + newMail + "'" +
 				 "WHERE Nickname = "+ "'" + nickname + "'";
 	}
 	
 	protected static String GET_CARDS_BY_NAME(String name) {
 		return "SELECT Nome_Carta, Immagine " + 
-				" FROM CARTA " + 
-				" WHERE CARTA.Nome_Carta LIKE '" + name + "%'";
+				" FROM Carta " + 
+				" WHERE Carta.Nome_Carta LIKE '" + name + "%'";
 	}
 	
 	protected static String GET_CARDS_BY_RARITY(String rarity) {
 		return "SELECT Nome_Carta, Immagine" + 
-				" FROM CARTA" + 
-				" WHERE CARTA.Rarita = '" + rarity + "'";
+				" FROM Carta" + 
+				" WHERE Carta.Rarita = '" + rarity + "'";
 	}
 	
 	protected static String GET_CARDS_BY_ILLUSTRATOR(String illustrator) {
 		return "SELECT Nome_Carta, Immagine" + 
-				" FROM CARTA" + 
-				" WHERE CARTA.Illustratore = '" + illustrator + "'";
+				" FROM Carta" + 
+				" WHERE Carta.Illustratore = '" + illustrator + "'";
 	}
 	
 	protected static String GET_CARDS_BY_ECONOMIC_VALU(int minValue, int maxValue) {
 		return "SELECT Nome_Carta, Immagine" + 
-				" FROM CARTA" + 
-				" WHERE CARTA.Valore >= '" + minValue + "' AND CARTA.Valore <= '"+  maxValue +"'";
+				" FROM Carta" + 
+				" WHERE Carta.Valore >= '" + minValue + "' AND Carta.Valore <= '"+  maxValue +"'";
 	}
 	
 	protected static String GET_CARDS_BY_ENERGY_TYPE(String energyType) {
 		return "SELECT Nome_Carta, Immagine" + 
-				" FROM CARTA" + 
-				" WHERE CARTA.Tipo_Energia = '" + energyType + "'";
+				" FROM Carta" + 
+				" WHERE Carta.Tipo_Energia = '" + energyType + "'";
 	}
 	
 	protected static String GET_CARDS_BY_PS(int minPS, int maxPS) {
 		return "SELECT Nome_Carta, Immagine" + 
-				" FROM CARTA" + 
-				" WHERE CARTA.PS >= '" + minPS + "' AND CARTA.PS <= '" + maxPS + "'";
+				" FROM Carta" + 
+				" WHERE Carta.PS >= '" + minPS + "' AND Carta.PS <= '" + maxPS + "'";
 	}
 	
 	protected static String GET_CARDS_POKEMON_TYPE() {
 		return "SELECT Nome_Carta, Immagine" + 
-				" FROM CARTA" + 
-				" WHERE CARTA.Sel_Carta = 0 OR CARTA.Sel_Carta = 1";
+				" FROM Carta" + 
+				" WHERE Carta.Sel_Carta = 0 OR Carta.Sel_Carta = 1";
 	}
 	
 	protected static String GET_CARDS_ITEM_TYPE() {
 		return "SELECT Nome_Carta, Immagine" + 
-				" FROM CARTA" + 
-				" WHERE CARTA.Sel_Carta = 2";
+				" FROM Carta" + 
+				" WHERE Carta.Sel_Carta = 2";
 	}
 	
 	protected static String GET_CARDS_ENERGY_TYPE() {
 		return "SELECT Nome_Carta, Immagine" + 
-				" FROM CARTA" + 
-				" WHERE CARTA.Sel_Carta = 3";
+				" FROM Carta" + 
+				" WHERE Carta.Sel_Carta = 3";
 	}
 	
 

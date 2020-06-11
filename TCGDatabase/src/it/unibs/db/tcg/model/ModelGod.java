@@ -13,9 +13,9 @@ import javax.swing.ImageIcon;
 
 public class ModelGod {
 
-	// private Connector connector = new
-	// Connector("jdbc:mysql://192.168.1.124:3306/TEST_MIKE", "root", "R2mSDzoz");
-	private Connector connector = new Connector("jdbc:mysql://localhost:3306/TEST_MIKE", "root", "");
+	private Connector connector = new
+	Connector("jdbc:mysql://192.168.1.124:3306/TCG_DB", "root", "R2mSDzoz");
+	//private Connector connector = new Connector("jdbc:mysql://localhost:3306/TCG_DB", "root", "");
 
 	public ModelGod() {
 	}
@@ -213,8 +213,8 @@ public class ModelGod {
 		String _tipo_energia;
 		int _ps;
 		int _costo_ritirata;
-		int _resistenza;
-		int _debolezza;
+		String _resistenza;
+		String _debolezza;
 		int _stage;
 		int _n_stage_succ;
 		int sel_pkmn;
@@ -253,11 +253,10 @@ public class ModelGod {
 					_tipo_energia = set.getString("Tipo_Energia");
 					_ps = set.getInt("PS");
 					_costo_ritirata = set.getInt("Costo_Ritirata");
-					_resistenza = set.getInt("Resistenza");
-					_debolezza = set.getInt("Debolezza");
+					_resistenza = set.getString("Resistenza");
+					_debolezza = set.getString("Debolezza");
 					_stage = set.getInt("Stage");
 					_n_stage_succ = set.getInt("N_Stage_Successivo");
-					sel_pkmn = set.getInt("SEL_PKMN");
 					_abilita = set.getString("Abilita");
 					_attr_spec = set.getString("Attributo_Speciale");
 					_regola = set.getString("Regola");
@@ -267,8 +266,8 @@ public class ModelGod {
 					c1.setTipoEnergia(_tipo_energia);
 					c1.setPS(_ps);
 					c1.setCostoRitirata(_costo_ritirata);
-					// c1.setResistenza(_resistenza); resistenza è string o int??
-					// c1.setDebolezza(_debolezza); debolezza è string o int??
+					c1.setResistenza(_resistenza);
+					c1.setDebolezza(_debolezza); 
 					c1.setStage(_stage);
 					c1.setStage_successivo(_n_stage_succ);
 					CartaPokemonBase c2 = createCartaPokemonBase(c1);
@@ -280,11 +279,10 @@ public class ModelGod {
 					_tipo_energia = set.getString("Tipo_Energia");
 					_ps = set.getInt("PS");
 					_costo_ritirata = set.getInt("Costo_Ritirata");
-					_resistenza = set.getInt("Resistenza");
-					_debolezza = set.getInt("Debolezza");
+					_resistenza = set.getString("Resistenza");
+					_debolezza = set.getString("Debolezza");
 					_stage = set.getInt("Stage");
 					_n_stage_succ = set.getInt("N_Stage_Successivo");
-					sel_pkmn = set.getInt("SEL_PKMN");
 					_abilita = set.getString("Abilita");
 					_attr_spec = set.getString("Attributo_Speciale");
 					_regola = set.getString("Regola");
@@ -294,8 +292,8 @@ public class ModelGod {
 					c1.setTipoEnergia(_tipo_energia);
 					c1.setPS(_ps);
 					c1.setCostoRitirata(_costo_ritirata);
-					// c1.setResistenza(_resistenza); resistenza è string o int??
-					// c1.setDebolezza(_debolezza); debolezza è string o int??
+					c1.setResistenza(_resistenza); 
+					c1.setDebolezza(_debolezza); 
 					c1.setStage(_stage);
 					c1.setStage_successivo(_n_stage_succ);
 					CartaPokemonSpeciale c3 = createCartaPokemonSpeciale(c1);
