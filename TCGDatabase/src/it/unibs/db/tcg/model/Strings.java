@@ -46,6 +46,7 @@ public class Strings {
 	public static final String RARA = "Rara";
 	public static final String OLOGRAFICA_RARA = "Olografica rara";
 	public static final String OLOGRAFICA_RARA_LIVX = "Olografica rara LIV.X";
+	public static final String OLOGRAFICA_RARA_V = "Olografica rara V";
 	public static final String ULTRARARA = "Ultrarara";
 	public static final String ARCOBALENO_RARA = "Arcobaleno rara";
 	public static final String COMUNE = "Comune";
