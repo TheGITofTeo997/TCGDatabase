@@ -15,7 +15,7 @@ public class QueryBuilder {
 	}
 
 	protected static String GET_COLLECTION_CARDS(String nickname, String collectionName) {
-		return "SELECT Abbr_Espansione, Numero, Nome_Carta, Immagine " + 
+		return "SELECT Composta.Abbr_Espansione, Numero, Nome_Carta, Immagine " + 
 				" FROM Possiede JOIN Composta ON Possiede.Nome_Collezione = Composta.Nome_Collezione JOIN Carta ON Composta.N_Carta = Carta.Numero " + 
 				" WHERE Possiede.Nickname = '" + nickname + "' AND Possiede.Nome_Collezione = '" + collectionName +"' ORDER BY Abbr_Espansione, Numero";
 
