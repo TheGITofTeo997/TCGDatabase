@@ -333,6 +333,40 @@ public class ModelGod {
 		return c;
 	}
 
+	public List<Carta> getSearchResult(CardSearchObject s){
+		connector.openConnection();
+		String query = "";
+		if(s.hasCardName())
+			query += QueryBuilder.GET_CARDS_BY_NAME(s.getCardName()) + " INTERSECT ";
+		if(s.hasExp())
+			query += QueryBuilder.GET_CARDS_BY_EXP(s.getExp());
+		if(s.hasCardIllustrator())
+			query += QueryBuilder.GET_CARDS_BY_ILLUSTRATOR(s.getCardIllustrator()) + " INTERSECT ";
+		if(s.hasCardType()) {
+			for(String type : s.getCardType()) {
+				switch(type) {
+				case "Pokemon": query += QueryBuilder.GET_CARDS_TYPE(0) + " INTERSECT " + QueryBuilder.GET_CARDS_TYPE(1) + " INTERSECT ";
+					break;
+				case "Strumento": query += QueryBuilder.GET_CARDS_TYPE(2) + " INTERSECT ";
+					break;
+				case "Energia": query += QueryBuilder.GET_CARDS_TYPE(3) + " INTERSECT ";
+					break;
+				}
+			}
+		}
+		if(s.hasEnergyType()) {
+			for(String type : s.getEnergyType())
+				query += QueryBuilder.GET_CARDS_BY_ENERGY_TYPE(type) + " INTERSECT ";
+		}
+		if(s.hasRarityType()) {
+			for(String type : s.getRarityType())
+				query += QueryBuilder.GET_CARDS_BY_RARITY(type) + " INTERSECT ";
+		}
+		
+		return new ArrayList<Carta>();
+		
+	}
+
 	public void updateUserName(String nickname, String newName) {
 		connector.openConnection();
 		connector.execute(QueryBuilder.UPDATE_USERNAME(nickname, newName));

@@ -312,6 +312,23 @@ public class Controller {
 				List<String> cardType = srcPan.getCardTypeSelected();
 				List<String> energyType = srcPan.getEnergyTypeSelected();
 				List<String> rarityType = srcPan.getRaritySelected();
+				
+				CardSearchObject s = new CardSearchObject();
+				s.setCardName(cardName);
+				s.setExp(exp);
+				s.setCardIllustrator(cardIllustrator);
+				s.setLowerPSValue(lowerPSValue);
+				s.setUpperPSValue(upperPSValue);
+				s.setLowerValueBarValue(lowerValueBarValue);
+				s.setUpperValueBarValue(upperValueBarValue);
+				s.setCardType(cardType);
+				s.setEnergyType(energyType);
+				s.setRarityType(rarityType);
+				
+				List<Carta> carte_trovate = model.getSearchResult(s);
+				
+				
+				
 				// Fare le query singole ed intersecare i risultati?
 				// List<Carta> carte_trovate = model.(....);
 				// drawCardPanel(user, "carte trovate", carte_trovate);

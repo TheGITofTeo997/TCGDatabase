@@ -83,22 +83,16 @@ public class QueryBuilder {
 				" WHERE CARTA.PS >= '" + minPS + "' AND CARTA.PS <= '" + maxPS + "'";
 	}
 	
-	protected static String GET_CARDS_POKEMON_TYPE() {
+	protected static String GET_CARDS_TYPE(int num) {
 		return "SELECT Nome_Carta, Immagine" + 
 				" FROM CARTA" + 
-				" WHERE CARTA.Sel_Carta = 0 OR CARTA.Sel_Carta = 1";
+				" WHERE CARTA.Sel_Carta = '" + num + "'";
 	}
 	
-	protected static String GET_CARDS_ITEM_TYPE() {
+	protected static String GET_CARDS_BY_EXP(String exp) {
 		return "SELECT Nome_Carta, Immagine" + 
 				" FROM CARTA" + 
-				" WHERE CARTA.Sel_Carta = 2";
-	}
-	
-	protected static String GET_CARDS_ENERGY_TYPE() {
-		return "SELECT Nome_Carta, Immagine" + 
-				" FROM CARTA" + 
-				" WHERE CARTA.Sel_Carta = 3";
+				" WHERE CARTA.Abbr_Espansione = '" + exp + "'";
 	}
 	
 
