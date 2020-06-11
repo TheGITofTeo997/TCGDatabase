@@ -13,9 +13,9 @@ import javax.swing.ImageIcon;
 
 public class ModelGod {
 
+	//private Connector connector = new Connector("jdbc:mysql://192.168.1.124:3306/TCG_DB", "root", "R2mSDzoz");
 	private Connector connector = new
-	Connector("jdbc:mysql://192.168.1.124:3306/TCG_DB", "root", "R2mSDzoz");
-	//private Connector connector = new Connector("jdbc:mysql://localhost:3306/TCG_DB", "root", "");
+	Connector("jdbc:mysql://localhost:3306/TCG_DB", "root", "");
 
 	public ModelGod() {
 	}
@@ -267,7 +267,7 @@ public class ModelGod {
 					c1.setPS(_ps);
 					c1.setCostoRitirata(_costo_ritirata);
 					c1.setResistenza(_resistenza);
-					c1.setDebolezza(_debolezza); 
+					c1.setDebolezza(_debolezza);
 					c1.setStage(_stage);
 					c1.setStage_successivo(_n_stage_succ);
 					CartaPokemonBase c2 = createCartaPokemonBase(c1);
@@ -292,8 +292,8 @@ public class ModelGod {
 					c1.setTipoEnergia(_tipo_energia);
 					c1.setPS(_ps);
 					c1.setCostoRitirata(_costo_ritirata);
-					c1.setResistenza(_resistenza); 
-					c1.setDebolezza(_debolezza); 
+					c1.setResistenza(_resistenza);
+					c1.setDebolezza(_debolezza);
 					c1.setStage(_stage);
 					c1.setStage_successivo(_n_stage_succ);
 					CartaPokemonSpeciale c3 = createCartaPokemonSpeciale(c1);
@@ -330,39 +330,135 @@ public class ModelGod {
 		}
 		return c;
 	}
-
-	public List<Carta> getSearchResult(CardSearchObject s){
+	
+	public List<Utente> getSearchResult(String name){
 		connector.openConnection();
+		List<Utente> usersList = new ArrayList<>();
+		ResultSet set = connector.executeQuery(QueryBuilder.GET_USERS_BY_NAME(name));
+		String _nickname = null;
+		String _name = null;
+		String _mail = null;
+		ImageIcon _avatar = null;
+		Date _dataRegistrazione = null;
+		try {
+			while (set.next()) {
+				_nickname = set.getString("Nickname");
+				_name = set.getString("Nome_Utente");
+				_mail = set.getString("Mail");
+				Blob b = set.getBlob("Avatar");
+				byte[] imageByte = b.getBytes(1, (int) b.length());
+				InputStream is = new ByteArrayInputStream(imageByte);
+				BufferedImage imag = ImageIO.read(is);
+				Image i = imag;
+				_avatar = new ImageIcon(i);
+				_dataRegistrazione = set.getDate("Data_Registrazione");
+				Utente user = new Utente();
+				user.setNickname(_nickname);
+				user.setNomeUtente(_name);
+				user.setMail(_mail);
+				user.setAvatar(_avatar);
+				user.setDataRegistrazione(_dataRegistrazione);
+				usersList.add(user);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (set != null)
+					set.close();
+				connector.closeStatement();
+				connector.closeConnection();
+			} catch (SQLException sqle) {
+				sqle.printStackTrace();
+			}
+		}
+
+
+		return usersList;
+		
+	}
+
+	public List<Carta> getSearchResult(CardSearchObject s) {
+		connector.openConnection();
+		String query = createCardSearchQuery(s);
+
+		List<Carta> cardsList = new ArrayList<>();
+		ResultSet set = connector.executeQuery(query);
+		String _abbreviation = null;
+		int _number = 0;
+		String _nomeCarta = null;
+		ImageIcon _immagine = null;
+		try {
+			while (set.next()) {
+				_abbreviation = set.getString("Abbr_Espansione");
+				_number = set.getInt("Numero");
+				_nomeCarta = set.getString("Nome_Carta");
+				Blob b = set.getBlob("Immagine");
+				byte[] imageByte = b.getBytes(1, (int) b.length());
+				InputStream is = new ByteArrayInputStream(imageByte);
+				BufferedImage imag = ImageIO.read(is);
+				Image i = imag;
+				_immagine = new ImageIcon(i);
+				Carta c = new Carta(_number, _abbreviation);
+				c.setImmagine(_immagine);
+				c.setNome(_nomeCarta);
+				cardsList.add(c);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (set != null)
+					set.close();
+				connector.closeStatement();
+				connector.closeConnection();
+			} catch (SQLException sqle) {
+				sqle.printStackTrace();
+			}
+		}
+		return cardsList;
+
+	}
+
+	private String createCardSearchQuery(CardSearchObject s) {
 		String query = "";
-		if(s.hasCardName())
+		if (s.hasCardName())
 			query += QueryBuilder.GET_CARDS_BY_NAME(s.getCardName()) + " INTERSECT ";
-		if(s.hasExp())
-			query += QueryBuilder.GET_CARDS_BY_EXP(s.getExp());
-		if(s.hasCardIllustrator())
+		if (s.hasExp())
+			query += QueryBuilder.GET_CARDS_BY_EXP(s.getExp()) + " INTERSECT ";
+		if (s.hasCardIllustrator())
 			query += QueryBuilder.GET_CARDS_BY_ILLUSTRATOR(s.getCardIllustrator()) + " INTERSECT ";
-		if(s.hasCardType()) {
-			for(String type : s.getCardType()) {
-				switch(type) {
-				case "Pokemon": query += QueryBuilder.GET_CARDS_TYPE(0) + " INTERSECT " + QueryBuilder.GET_CARDS_TYPE(1) + " INTERSECT ";
+		if (s.hasCardType()) {
+			for (String type : s.getCardType()) {
+				switch (type) {
+				case "Pokemon":
+					query += QueryBuilder.GET_CARDS_TYPE(0) + " UNION " + QueryBuilder.GET_CARDS_TYPE(1)
+							+ " INTERSECT ";
+					query += QueryBuilder.GET_CARDS_BY_PS(s.getLowerPSValue(), s.getUpperPSValue()) + " INTERSECT ";
 					break;
-				case "Strumento": query += QueryBuilder.GET_CARDS_TYPE(2) + " INTERSECT ";
+				case "Strumento":
+					query += QueryBuilder.GET_CARDS_TYPE(2) + " INTERSECT ";
 					break;
-				case "Energia": query += QueryBuilder.GET_CARDS_TYPE(3) + " INTERSECT ";
+				case "Energia":
+					query += QueryBuilder.GET_CARDS_TYPE(3) + " INTERSECT ";
 					break;
 				}
 			}
 		}
-		if(s.hasEnergyType()) {
-			for(String type : s.getEnergyType())
-				query += QueryBuilder.GET_CARDS_BY_ENERGY_TYPE(type) + " INTERSECT ";
+		if (s.hasEnergyType()) {
+			for (String type : s.getEnergyType())
+				query += QueryBuilder.GET_CARDS_BY_ENERGY_TYPE(type) + " UNION ";
+			query = query.substring(0, query.length() - 7);
+			query += " INTERSECT ";
 		}
-		if(s.hasRarityType()) {
-			for(String type : s.getRarityType())
-				query += QueryBuilder.GET_CARDS_BY_RARITY(type) + " INTERSECT ";
+		if (s.hasRarityType()) {
+			for (String type : s.getRarityType())
+				query += QueryBuilder.GET_CARDS_BY_RARITY(type) + " UNION ";
+			query = query.substring(0, query.length() - 7);
+			query += " INTERSECT ";
 		}
-		
-		return new ArrayList<Carta>();
-		
+		query += QueryBuilder.GET_CARDS_BY_ECONOMIC_VALUE(s.getLowerValueBarValue(), s.getUpperValueBarValue());
+		return query;
 	}
 
 	public void updateUserName(String nickname, String newName) {

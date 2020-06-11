@@ -29,6 +29,7 @@ public class Controller {
 	private CardsPanel crdsPan = null;
 	private CartaPanel carPan = null;
 	private EditPanel edPan = null;
+	private UsersPanel usPan = null;
 
 	public Controller() {
 		model = new ModelGod();
@@ -216,6 +217,30 @@ public class Controller {
 			}
 		});
 	}
+	
+	public void drawUsersPanel(Utente user, List<Utente> utenti) {
+		usPan = new UsersPanel();
+		usPan.setBounds(0, 0, 800, 600);
+		usPan.setUserList(utenti);
+		frame.getContentPane().add(usPan);
+		
+		usPan.addUsersListener(new ListSelectionListener() {
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				if (!e.getValueIsAdjusting()) {
+					Utente u = utenti.get(usPan.getListSelectedIndex());
+					//Carta card = model.getCardFromNumberAndAbbrEspansione(c.getNumero(), c.getAbbrEspansione());
+					usPan.setVisible(false);
+					String nickname = u.getNickname();
+					u.setTotalCardsValue(model.getUserTotalCardsValue(nickname));
+					u.setCollections(model.getUserCollections(nickname));
+
+					drawAccountPanel(u);
+				}
+			}
+		});
+		
+	}
 
 	public void drawCardsPanel(Utente user, String title, List<Carta> cardsName) {
 		crdsPan = new CardsPanel();
@@ -241,6 +266,34 @@ public class Controller {
 			public void actionPerformed(ActionEvent e) {
 				crdsPan.setVisible(false);
 				drawAccountPanel(user);
+			}
+		});
+	}
+	
+	public void drawCardsPanelFromSearch(Utente user, String title, List<Carta> cardsName) {
+		crdsPan = new CardsPanel();
+		crdsPan.setBounds(0, 0, 800, 600);
+		crdsPan.setTitleText(title);
+		crdsPan.setCardList(cardsName);
+		frame.getContentPane().add(crdsPan);
+
+		crdsPan.addCardListener(new ListSelectionListener() {
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				if (!e.getValueIsAdjusting()) {
+					Carta c = cardsName.get(crdsPan.getListSelectedIndex());
+					Carta card = model.getCardFromNumberAndAbbrEspansione(c.getNumero(), c.getAbbrEspansione());
+					crdsPan.setVisible(false);
+					drawCartaPanel(user, title, cardsName, card);
+				}
+			}
+		});
+
+		crdsPan.addBackListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				crdsPan.setVisible(false);
+				drawSearchPanel(user);
 			}
 		});
 	}
@@ -294,7 +347,8 @@ public class Controller {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String name = srcPan.getUserNameField();
-				// do things ....
+				srcPan.setVisible(false);
+				drawUsersPanel(user, model.getSearchResult(name));
 			}
 		});
 
@@ -311,7 +365,7 @@ public class Controller {
 				List<String> cardType = srcPan.getCardTypeSelected();
 				List<String> energyType = srcPan.getEnergyTypeSelected();
 				List<String> rarityType = srcPan.getRaritySelected();
-				
+
 				CardSearchObject s = new CardSearchObject();
 				s.setCardName(cardName);
 				s.setExp(exp);
@@ -323,11 +377,13 @@ public class Controller {
 				s.setCardType(cardType);
 				s.setEnergyType(energyType);
 				s.setRarityType(rarityType);
-				
+
 				List<Carta> carte_trovate = model.getSearchResult(s);
-				
-				
-				
+				/*for(Carta c : carte_trovate)
+					System.out.println(c.getNome());*/
+				srcPan.setVisible(false);
+				drawCardsPanelFromSearch(user, "Carte trovate", carte_trovate);
+
 				// Fare le query singole ed intersecare i risultati?
 				// List<Carta> carte_trovate = model.(....);
 				// drawCardPanel(user, "carte trovate", carte_trovate);

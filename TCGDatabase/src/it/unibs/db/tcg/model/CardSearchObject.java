@@ -103,7 +103,7 @@ public class CardSearchObject {
 	}
 	
 	public boolean hasCardIllustrator() {
-		return cardIllustrator != null;
+		return cardIllustrator.length() != 0;
 	}
 	
 	public boolean hasCardType() {

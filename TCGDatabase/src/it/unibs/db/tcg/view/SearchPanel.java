@@ -10,6 +10,8 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.*;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -162,16 +164,18 @@ public class SearchPanel extends JPanel {
 		cardNameField.setFont(panelFont);
 		cardPanel.add(cardNameField);
 
-		JLabel cardSLbPS = new JLabel("PS");
-		cardSLbPS.setBounds(360, 0, 30, 50);
-		cardSLbPS.setForeground(foregroundColor);
-		cardSLbPS.setFont(panelFont);
-		cardPanel.add(cardSLbPS);
+		JLabel cardSLblPS = new JLabel("PS");
+		cardSLblPS.setBounds(360, 0, 30, 50);
+		cardSLblPS.setForeground(foregroundColor);
+		cardSLblPS.setFont(panelFont);
+		cardSLblPS.setVisible(false);
+		cardPanel.add(cardSLblPS);
 
 		lblPSUpperRange = new JLabel("500");
 		lblPSUpperRange.setBounds(740, 0, 30, 50);
 		lblPSUpperRange.setForeground(foregroundColor);
 		lblPSUpperRange.setFont(panelFont);
+		lblPSUpperRange.setVisible(false);
 		cardPanel.add(lblPSUpperRange);
 
 		PSRange = new RangeSlider(0, 500);
@@ -180,12 +184,14 @@ public class SearchPanel extends JPanel {
 		PSRange.setBackground(null);
 		PSRange.setUpperValue(500);
 		cardPanel.add(PSRange);
+		PSRange.setVisible(false);
 		PSRange.addChangeListener(e -> PSSliderChanged());
 
 		lblPSLowerRange = new JLabel("0");
 		lblPSLowerRange.setBounds(390, 0, 30, 50);
 		lblPSLowerRange.setForeground(foregroundColor);
 		lblPSLowerRange.setFont(panelFont);
+		lblPSLowerRange.setVisible(false);
 		cardPanel.add(lblPSLowerRange);
 
 		JLabel cardSLblExp = new JLabel("Espansione");
@@ -287,6 +293,23 @@ public class SearchPanel extends JPanel {
 		cardIllustratorField.setFont(panelFont);
 		cardPanel.add(cardIllustratorField);
 
+		pkmnCheckBox.addItemListener(new ItemListener() {
+
+			public void itemStateChanged(ItemEvent e) {
+				if (e.getStateChange() == ItemEvent.SELECTED) {
+					cardSLblPS.setVisible(true);
+					PSRange.setVisible(true);
+					lblPSLowerRange.setVisible(true);
+					lblPSUpperRange.setVisible(true);
+				} else {
+					cardSLblPS.setVisible(false);
+					PSRange.setVisible(false);
+					lblPSLowerRange.setVisible(false);
+					lblPSUpperRange.setVisible(false);
+				}
+			}
+		});
+
 		btnEnergyType.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				showEnergyTypeCheckBox();
@@ -358,7 +381,7 @@ public class SearchPanel extends JPanel {
 		List<String> result = new ArrayList<>();
 		for (JCheckBox c : rarityCheckBox) {
 			if (c.isSelected())
-				result.add(c.getName());
+				result.add(c.getText());
 		}
 		return result;
 	}
@@ -367,7 +390,7 @@ public class SearchPanel extends JPanel {
 		List<String> result = new ArrayList<>();
 		for (JCheckBox c : typeCheckBox) {
 			if (c.isSelected())
-				result.add(c.getName());
+				result.add(c.getText());
 		}
 		return result;
 	}
@@ -419,7 +442,7 @@ public class SearchPanel extends JPanel {
 		rarityPanel.setLayout(null);
 		rarityPanel.setForeground(foregroundColor);
 		rarityPanel.setFont(panelFont);
-		rarityPanel.setPreferredSize(new Dimension(200, 350));
+		rarityPanel.setPreferredSize(new Dimension(200, 400));
 		rarityCheckBox = new ArrayList<JCheckBox>();
 
 		raraBox = new JCheckBox(Strings.RARA);
@@ -491,11 +514,11 @@ public class SearchPanel extends JPanel {
 		turboRaraBox.setBounds(0, 325, 200, 20);
 		rarityPanel.add(turboRaraBox);
 		rarityCheckBox.add(turboRaraBox);
-		
+
 		olograficaRaraVBox = new JCheckBox(Strings.OLOGRAFICA_RARA_V);
-		olograficaRaraVBox.setBounds(0, 325, 200, 20);
-		rarityPanel.add(turboRaraBox);
-		rarityCheckBox.add(turboRaraBox);
+		olograficaRaraVBox.setBounds(0, 350, 200, 20);
+		rarityPanel.add(olograficaRaraVBox);
+		rarityCheckBox.add(olograficaRaraVBox);
 
 	}
 
@@ -535,7 +558,8 @@ public class SearchPanel extends JPanel {
 
 		JLabel lblErba = new JLabel("");
 		lblErba.setBounds(0, 0, 20, 20);
-		img = getEnergyTypeIcon("grass").getImage().getScaledInstance(lblErba.getWidth(), lblErba.getHeight(), Image.SCALE_SMOOTH);
+		img = getEnergyTypeIcon("grass").getImage().getScaledInstance(lblErba.getWidth(), lblErba.getHeight(),
+				Image.SCALE_SMOOTH);
 		ico = new ImageIcon(img);
 		lblErba.setIcon(ico);
 		energyTypePanel.add(lblErba);
@@ -547,7 +571,8 @@ public class SearchPanel extends JPanel {
 
 		JLabel lblFuoco = new JLabel("");
 		lblFuoco.setBounds(0, 25, 20, 20);
-		img = getEnergyTypeIcon("fire").getImage().getScaledInstance(lblFuoco.getWidth(), lblFuoco.getHeight(), Image.SCALE_SMOOTH);
+		img = getEnergyTypeIcon("fire").getImage().getScaledInstance(lblFuoco.getWidth(), lblFuoco.getHeight(),
+				Image.SCALE_SMOOTH);
 		ico = new ImageIcon(img);
 		lblFuoco.setIcon(ico);
 		energyTypePanel.add(lblFuoco);
@@ -559,7 +584,8 @@ public class SearchPanel extends JPanel {
 
 		JLabel lblAcqua = new JLabel("");
 		lblAcqua.setBounds(0, 50, 20, 20);
-		img = getEnergyTypeIcon("water").getImage().getScaledInstance(lblAcqua.getWidth(), lblAcqua.getHeight(), Image.SCALE_SMOOTH);
+		img = getEnergyTypeIcon("water").getImage().getScaledInstance(lblAcqua.getWidth(), lblAcqua.getHeight(),
+				Image.SCALE_SMOOTH);
 		ico = new ImageIcon(img);
 		lblAcqua.setIcon(ico);
 		energyTypePanel.add(lblAcqua);
@@ -571,7 +597,8 @@ public class SearchPanel extends JPanel {
 
 		JLabel lblLampo = new JLabel("");
 		lblLampo.setBounds(0, 75, 20, 20);
-		img = getEnergyTypeIcon("lightning").getImage().getScaledInstance(lblLampo.getWidth(), lblLampo.getHeight(), Image.SCALE_SMOOTH);
+		img = getEnergyTypeIcon("lightning").getImage().getScaledInstance(lblLampo.getWidth(), lblLampo.getHeight(),
+				Image.SCALE_SMOOTH);
 		ico = new ImageIcon(img);
 		lblLampo.setIcon(ico);
 		energyTypePanel.add(lblLampo);
@@ -583,7 +610,8 @@ public class SearchPanel extends JPanel {
 
 		JLabel lblPsico = new JLabel("");
 		lblPsico.setBounds(0, 100, 20, 20);
-		img = getEnergyTypeIcon("psychic").getImage().getScaledInstance(lblPsico.getWidth(), lblPsico.getHeight(), Image.SCALE_SMOOTH);
+		img = getEnergyTypeIcon("psychic").getImage().getScaledInstance(lblPsico.getWidth(), lblPsico.getHeight(),
+				Image.SCALE_SMOOTH);
 		ico = new ImageIcon(img);
 		lblPsico.setIcon(ico);
 		energyTypePanel.add(lblPsico);
@@ -595,7 +623,8 @@ public class SearchPanel extends JPanel {
 
 		JLabel lblLotta = new JLabel("");
 		lblLotta.setBounds(0, 125, 20, 20);
-		img = getEnergyTypeIcon("fighting").getImage().getScaledInstance(lblLotta.getWidth(), lblLotta.getHeight(), Image.SCALE_SMOOTH);
+		img = getEnergyTypeIcon("fighting").getImage().getScaledInstance(lblLotta.getWidth(), lblLotta.getHeight(),
+				Image.SCALE_SMOOTH);
 		ico = new ImageIcon(img);
 		lblLotta.setIcon(ico);
 		energyTypePanel.add(lblLotta);
@@ -607,7 +636,8 @@ public class SearchPanel extends JPanel {
 
 		JLabel lblOscurita = new JLabel("");
 		lblOscurita.setBounds(0, 150, 20, 20);
-		img = getEnergyTypeIcon("darkness").getImage().getScaledInstance(lblOscurita.getWidth(), lblOscurita.getHeight(), Image.SCALE_SMOOTH);
+		img = getEnergyTypeIcon("darkness").getImage().getScaledInstance(lblOscurita.getWidth(),
+				lblOscurita.getHeight(), Image.SCALE_SMOOTH);
 		ico = new ImageIcon(img);
 		lblOscurita.setIcon(ico);
 		energyTypePanel.add(lblOscurita);
@@ -619,7 +649,8 @@ public class SearchPanel extends JPanel {
 
 		JLabel lblMetallo = new JLabel("");
 		lblMetallo.setBounds(0, 175, 20, 20);
-		img = getEnergyTypeIcon("metal").getImage().getScaledInstance(lblMetallo.getWidth(), lblMetallo.getHeight(), Image.SCALE_SMOOTH);
+		img = getEnergyTypeIcon("metal").getImage().getScaledInstance(lblMetallo.getWidth(), lblMetallo.getHeight(),
+				Image.SCALE_SMOOTH);
 		ico = new ImageIcon(img);
 		lblMetallo.setIcon(ico);
 		energyTypePanel.add(lblMetallo);
@@ -631,7 +662,8 @@ public class SearchPanel extends JPanel {
 
 		JLabel lblFolletto = new JLabel("");
 		lblFolletto.setBounds(0, 200, 20, 20);
-		img = getEnergyTypeIcon("fairy").getImage().getScaledInstance(lblFolletto.getWidth(), lblFolletto.getHeight(), Image.SCALE_SMOOTH);
+		img = getEnergyTypeIcon("fairy").getImage().getScaledInstance(lblFolletto.getWidth(), lblFolletto.getHeight(),
+				Image.SCALE_SMOOTH);
 		ico = new ImageIcon(img);
 		lblFolletto.setIcon(ico);
 		energyTypePanel.add(lblFolletto);
@@ -643,7 +675,8 @@ public class SearchPanel extends JPanel {
 
 		JLabel lblIncolore = new JLabel("");
 		lblIncolore.setBounds(0, 225, 20, 20);
-		img = getEnergyTypeIcon("colorless").getImage().getScaledInstance(lblIncolore.getWidth(), lblIncolore.getHeight(), Image.SCALE_SMOOTH);
+		img = getEnergyTypeIcon("colorless").getImage().getScaledInstance(lblIncolore.getWidth(),
+				lblIncolore.getHeight(), Image.SCALE_SMOOTH);
 		ico = new ImageIcon(img);
 		lblIncolore.setIcon(ico);
 		energyTypePanel.add(lblIncolore);
@@ -655,7 +688,8 @@ public class SearchPanel extends JPanel {
 
 		JLabel lblDrago = new JLabel("");
 		lblDrago.setBounds(0, 250, 20, 20);
-		img = getEnergyTypeIcon("dragon").getImage().getScaledInstance(lblDrago.getWidth(), lblDrago.getHeight(), Image.SCALE_SMOOTH);
+		img = getEnergyTypeIcon("dragon").getImage().getScaledInstance(lblDrago.getWidth(), lblDrago.getHeight(),
+				Image.SCALE_SMOOTH);
 		ico = new ImageIcon(img);
 		lblDrago.setIcon(ico);
 		energyTypePanel.add(lblDrago);

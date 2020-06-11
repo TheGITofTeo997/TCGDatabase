@@ -18,9 +18,9 @@ public class Renderer extends DefaultListCellRenderer implements ListCellRendere
 	
 	@Override
 	public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
-		CardRow cardRow = (CardRow) value;
-		setText(cardRow.getNumberAbbr() + " " + cardRow.getNome());
-		Image scaledImg = cardRow.getImmagine().getImage().getScaledInstance(35, 50, Image.SCALE_SMOOTH);
+		ResultRow resultRow = (ResultRow) value;
+		setText(resultRow.getText());
+		Image scaledImg = resultRow.getImmagine().getImage().getScaledInstance(35, 50, Image.SCALE_SMOOTH);
 		ImageIcon scaledIcon = new ImageIcon(scaledImg);
 		setIcon(scaledIcon);
 		setEnabled(true);

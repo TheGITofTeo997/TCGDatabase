@@ -2,15 +2,10 @@ package it.unibs.db.tcg.view;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Image;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.List;
 
 import javax.swing.DefaultListModel;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -21,12 +16,12 @@ import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.event.ListSelectionListener;
 
-import it.unibs.db.tcg.main.TCGMain;
 import it.unibs.db.tcg.model.Carta;
+import it.unibs.db.tcg.model.Utente;
 
-public class CardsPanel extends JPanel {
+public class UsersPanel extends JPanel {
 
-	private static final long serialVersionUID = -7455653311848409614L;
+	private static final long serialVersionUID = 8151797203093846063L;
 	private static final int WIDTH = 800;
 	private static final int HEIGHT = 600;
 	private static Color backgroundColor;
@@ -37,10 +32,7 @@ public class CardsPanel extends JPanel {
 	private JList<Carta> list;
 	private JButton btnBack;
 
-	/**
-	 * Create the panel.
-	 */
-	public CardsPanel() {
+	public UsersPanel() {
 		setLayout(null);
 		secondaryBackgroundColor = Preferences.getSecondaryBackgroundColor();
 		backgroundColor = Preferences.getBackgroundColor();
@@ -50,7 +42,7 @@ public class CardsPanel extends JPanel {
 		panelFont = Preferences.getFont();
 		setFont(panelFont);
 
-		lblTitle = new JLabel("default");
+		lblTitle = new JLabel("Utenti trovati");
 		lblTitle.setForeground(foregroundColor);
 		lblTitle.setFont(panelFont.deriveFont(Font.BOLD));
 		lblTitle.setBounds(0, 0, WIDTH, 50);
@@ -63,14 +55,14 @@ public class CardsPanel extends JPanel {
 		add(btnBack);
 	}
 
-	public void setCardList(List<Carta> carte) {
-		if (carte.size() == 0)
-			showNoCardsFoundImage();
+	public void setUserList(List<Utente> utenti) {
+		if (utenti.size() == 0)
+			showNoUsersFoundPanel();
 
 		list = new JList();
 		DefaultListModel dm = new DefaultListModel();
-		for (Carta c : carte) {
-			dm.addElement(new ResultRow(c.getImmagine(), c.getNumero() + "/" + c.getAbbrEspansione() + " " + c.getNome()));
+		for (Utente u : utenti) {
+			dm.addElement(new ResultRow(u.getAvatar(),u.getNickname() + " " + u.getNomeUtente()));
 		}
 		list.setCellRenderer(new Renderer());
 		list.setModel(dm);
@@ -92,7 +84,7 @@ public class CardsPanel extends JPanel {
 		//add(list);
 	}
 
-	private void showNoCardsFoundImage() {
+	private void showNoUsersFoundPanel() {
 		JLabel lblNoCards = new JLabel();
 		lblNoCards.setBounds(50, 50, 700, 350);
 		ImageIcon icon = new ImageIcon("resources/john.gif");
@@ -108,11 +100,7 @@ public class CardsPanel extends JPanel {
 		add(lblNoCards);
 	}
 
-	public void setTitleText(String title) {
-		lblTitle.setText(title);
-	}
-
-	public void addCardListener(ListSelectionListener a) {
+	public void addUsersListener(ListSelectionListener a) {
 		if (list != null)
 			list.addListSelectionListener(a);
 	}
