@@ -105,21 +105,26 @@ public class Controller {
 			public void actionPerformed(ActionEvent e) {
 				String nickname = regPan.getNicknameText();
 				if(nickname.length() == 0 || model.isUserExistant(nickname)) {
-					regPan.showErrorPopup();
+					regPan.showNicknameErrorPopup();
 				}
 				else {
 					Utente user = new Utente();
 					String name = regPan.getNameText();
 					String mail = regPan.getMailText();
 					Icon icon = regPan.getAvatarImage();
-					user.setNickname(nickname);
-					user.setNomeUtente(name);
-					user.setMail(mail);
-					user.setAvatar(((ImageIcon)icon));
-					model.createUser(user);
-					regPan.setVisible(false);
-					drawAccountPanel(user);
-					
+					if(!name.matches(Strings.USERNAME_REGEX)) {
+						regPan.showNameErrorPopup();
+					}else if(!mail.matches(Strings.MAIL_REGEX)) {
+						regPan.showMailErrorPopup();
+					}else {
+						user.setNickname(nickname);
+						user.setNomeUtente(name);
+						user.setMail(mail);
+						user.setAvatar(((ImageIcon)icon));
+						model.createUser(user);
+						regPan.setVisible(false);
+						drawAccountPanel(user);
+					}
 				}
 			}
 		});

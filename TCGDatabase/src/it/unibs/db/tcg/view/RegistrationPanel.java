@@ -44,7 +44,7 @@ public class RegistrationPanel extends JPanel {
 		panelFont = Preferences.getFont();
 		setFont(panelFont);
 
-		JLabel lblNickname = new JLabel("Nickname");
+		JLabel lblNickname = new JLabel("Nickname *");
 		lblNickname.setForeground(foregroundColor);
 		lblNickname.setBounds(50, 50, 100, 25);
 		lblNickname.setForeground(foregroundColor);
@@ -88,7 +88,7 @@ public class RegistrationPanel extends JPanel {
 		add(lblSAvatar);
 
 		lblAvatar = new JLabel();
-		lblAvatar.setBounds(50, 210, 250, 300);
+		lblAvatar.setBounds(50, 225, 250, 300);
 		ImageIcon icon = new ImageIcon("resources//default_avatar.jpg");
 		Image image = icon.getImage();
 		icon = new ImageIcon(image);
@@ -97,7 +97,7 @@ public class RegistrationPanel extends JPanel {
 		add(lblAvatar);
 
 		JButton btnChooser = new JButton("Scegli file");
-		btnChooser.setBounds(50, 520, 250, 25);
+		btnChooser.setBounds(50, 535, 250, 25);
 		btnChooser.setFont(panelFont);
 		add(btnChooser);
 
@@ -161,11 +161,26 @@ public class RegistrationPanel extends JPanel {
 		return lblAvatar.getIcon();
 	}
 
-	public void showErrorPopup() {
+	public void showNicknameErrorPopup() {
 		JOptionPane error = new JOptionPane();
 		error.setBounds(getBounds());
-		error.showMessageDialog(this, "Errore registrazione, nickname già presente",
+		error.showMessageDialog(this, "Errore registrazione, nickname già presente o non valido",
 				"Warning", JOptionPane.ERROR_MESSAGE);
 	}
+	
+	public void showNameErrorPopup() {
+		JOptionPane error = new JOptionPane();
+		error.setBounds(getBounds());
+		error.showMessageDialog(this, "Errore registrazione, inserisci un nome corretto",
+				"Warning", JOptionPane.ERROR_MESSAGE);
+	}
+
+	public void showMailErrorPopup() {
+		JOptionPane error = new JOptionPane();
+		error.setBounds(getBounds());
+		error.showMessageDialog(this, "Errore registrazione, inserisci una mail corretta",
+				"Warning", JOptionPane.ERROR_MESSAGE);
+	}
+
 
 }
