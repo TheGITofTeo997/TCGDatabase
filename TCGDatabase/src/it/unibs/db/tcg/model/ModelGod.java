@@ -14,9 +14,9 @@ import javax.swing.ImageIcon;
 
 public class ModelGod {
 
-	private Connector connector = new Connector("jdbc:mysql://192.168.1.124:3306/TCG_DB", "root", "R2mSDzoz");
-	// private Connector connector = new
-	// Connector("jdbc:mysql://localhost:3306/TCG_DB", "root", "");
+	//private Connector connector = new Connector("jdbc:mysql://192.168.1.124:3306/TCG_DB", "root", "R2mSDzoz");
+	 private Connector connector = new
+		Connector("jdbc:mysql://localhost:3306/TCG_DB", "root", "");
 	// private Connector connector = new
 	// Connector("jdbc:mysql://localhost:4040/TCG_DB", "root", "");
 
@@ -561,6 +561,30 @@ public class ModelGod {
 		connector.submitParametrizedQuery(QueryBuilder.UPDATE_MAIL);
 		connector.setStringParameter(1, newMail);
 		connector.setStringParameter(2, nickname);
+		connector.execute();
+		connector.closeStatement();
+		connector.closeConnection();
+	}
+	
+	public void createUser(Utente user) {
+		connector.openConnection();
+		connector.submitParametrizedQuery(QueryBuilder.CREATE_USER);
+		connector.setStringParameter(1, user.getNickname());
+		if(user.getNomeUtente().length() > 0) {
+			connector.setStringParameter(2, user.getNomeUtente());
+		}else {
+			connector.setStringParameter(2, "");
+		}
+		if(user.getMail().length() > 0) {
+			connector.setStringParameter(3, user.getMail());
+		}else {
+			connector.setStringParameter(3, "");
+		}
+		connector.setImageParameter(4, user.getAvatar());
+		Timestamp timestamp =  new Timestamp(System.currentTimeMillis());
+		Date date = new Date(timestamp.getTime());
+		user.setDataRegistrazione(date);
+		connector.setCurrentDateParameter(5,timestamp);
 		connector.execute();
 		connector.closeStatement();
 		connector.closeConnection();

@@ -1,6 +1,16 @@
 package it.unibs.db.tcg.model;
 
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.*;
+
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 
 public class Connector {
 
@@ -42,6 +52,51 @@ public class Connector {
 			e.printStackTrace();
 		}
 	}
+	
+	public void setCurrentDateParameter(int position, Timestamp timestamp) {
+		try {
+			stmt.setTimestamp(position,timestamp);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void setImageParameter(int position, ImageIcon imageIcon) {
+		try {
+			BufferedImage bi = getBufferedImage(imageIcon.getImage());
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			try {
+				ImageIO.write(bi, "png" , baos);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
+			byte[] byteArray= baos.toByteArray();
+			stmt.setBytes(position, byteArray);
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private static BufferedImage getBufferedImage(Image img)
+	{
+	    if (img instanceof BufferedImage)
+	    {
+	       return (BufferedImage) img;
+	    }
+
+	    BufferedImage bimage = new BufferedImage(img.getWidth(null), 
+	                    img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+
+	    Graphics2D bGr = bimage.createGraphics();
+	    bGr.drawImage(img, 0, 0, null);
+	    bGr.dispose();
+
+	    // Return the buffered image
+	    return bimage;
+	}
+
 	
 	public void setStringParameter(int position, String parameter) {
 		try {

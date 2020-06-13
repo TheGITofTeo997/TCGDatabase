@@ -18,7 +18,9 @@ public class QueryBuilder {
 			+ " WHERE Nickname = ?";
 
 	protected static String UPDATE_MAIL = "UPDATE Utente " + "SET Mail = ? WHERE Nickname = ?";
-
+	
+	protected static String CREATE_USER = "INSERT INTO UTENTE(utente.Nickname, utente.Nome_Utente, utente.Mail, utente.Avatar , utente.Data_Registrazione)" +
+				"VALUES(?,?,?,?,?)";
 	protected static String GET_CARDS_BY_NAME = "SELECT Nome_Carta, Immagine, Abbr_Espansione, Numero" + " FROM Carta "
 			+ " WHERE Carta.Nome_Carta LIKE ?";
 

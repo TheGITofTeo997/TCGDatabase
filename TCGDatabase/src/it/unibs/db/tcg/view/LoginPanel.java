@@ -1,6 +1,7 @@
 package it.unibs.db.tcg.view;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -11,6 +12,9 @@ import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JButton;
+import javax.swing.JDialog;
+
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class LoginPanel extends JPanel implements KeyListener {
@@ -27,6 +31,7 @@ public class LoginPanel extends JPanel implements KeyListener {
 
 	private JTextField loginTextField;
 	private JButton btnLogin;
+	private JButton btnRegister;
 
 	public LoginPanel() {
 		setLayout(null);
@@ -58,9 +63,15 @@ public class LoginPanel extends JPanel implements KeyListener {
 		btnLogin.setFont(panelFont);
 		btnLogin.setBounds(WIDTH / 2 - 100, HEIGHT / 2 + 100, 200, 50);
 		add(btnLogin);
+		
+		btnRegister = new JButton("Nuovo utente");
+		btnRegister.setFont(panelFont);
+		btnRegister.setBounds(300, 500, 200, 50);
+		add(btnRegister);
+	
 
 	}
-
+	
 	public String getLoginField() {
 		return loginTextField.getText();
 	}
@@ -75,12 +86,16 @@ public class LoginPanel extends JPanel implements KeyListener {
 	public void addHomeListener(ActionListener a) {
 		btnLogin.addActionListener(a);
 	}
+	
+	public void addRegistrationListener(ActionListener a) {
+		btnRegister.addActionListener(a);
+	}
 
 	@Override
 	public void keyTyped(KeyEvent e) {
 
 	}
-
+	
 	@Override
 	public void keyPressed(KeyEvent e) {
 		if (e.getExtendedKeyCode() == KeyEvent.VK_ENTER) {

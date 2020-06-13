@@ -109,7 +109,7 @@ public class AccountPanel extends JPanel {
 
 		lblAvatar = new JLabel("");
 		lblAvatar.setBounds(5, 5, 250, 300);
-		ImageIcon icon = new ImageIcon("resources//iLTd4oI.png");
+		ImageIcon icon = new ImageIcon("resources//default_avatar.jpeg");
 		Image image = icon.getImage();
 		icon = new ImageIcon(image);
 		image = image.getScaledInstance(lblAvatar.getWidth(), lblAvatar.getHeight(), Image.SCALE_SMOOTH);

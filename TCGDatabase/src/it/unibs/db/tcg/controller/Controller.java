@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -30,6 +32,7 @@ public class Controller {
 	private CartaPanel carPan = null;
 	private EditPanel edPan = null;
 	private UsersPanel usPan = null;
+	private RegistrationPanel regPan = null;
 
 	public Controller() {
 		model = new ModelGod();
@@ -75,6 +78,52 @@ public class Controller {
 				}
 			}
 		});
+		logPan.addRegistrationListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				logPan.setVisible(false);
+				drawRegistrationPanel();
+			}
+		});
+	}
+	
+	public void drawRegistrationPanel() {
+		regPan = new RegistrationPanel();
+		regPan.setBounds(0,0,800,600);
+		frame.getContentPane().add(regPan);
+		
+		regPan.addBackListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				regPan.setVisible(false);
+				drawLoginPanel();
+			}
+		});
+		
+		regPan.addRegisterListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String nickname = regPan.getNicknameText();
+				if(nickname.length() == 0 || model.isUserExistant(nickname)) {
+					regPan.showErrorPopup();
+				}
+				else {
+					Utente user = new Utente();
+					String name = regPan.getNameText();
+					String mail = regPan.getMailText();
+					Icon icon = regPan.getAvatarImage();
+					user.setNickname(nickname);
+					user.setNomeUtente(name);
+					user.setMail(mail);
+					user.setAvatar(((ImageIcon)icon));
+					model.createUser(user);
+					regPan.setVisible(false);
+					drawAccountPanel(user);
+					
+				}
+			}
+		});
+		
 	}
 
 	public void drawHomePanel(Utente user) {
