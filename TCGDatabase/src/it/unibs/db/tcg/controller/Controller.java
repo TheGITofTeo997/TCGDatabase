@@ -185,6 +185,13 @@ public class Controller {
 				}
 			}
 		});
+		
+		homePan.addRandomCardListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				homePan.showRandomCardPopup(model.getRandomCard());
+			}
+		});
 	}
 
 	public void drawAccountPanel(Utente user) {

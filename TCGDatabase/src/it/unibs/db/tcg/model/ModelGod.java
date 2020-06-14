@@ -600,7 +600,6 @@ public class ModelGod {
 	}
 	
 	public boolean isThereCardInCollection(String nickname, String collectionName, int num_card, String abbr_esp) {
-		//da fare
 		connector.openConnection();
 		connector.submitParametrizedQuery(QueryBuilder.IS_THERE_CARD_IN_COLLECTION);
 		connector.setStringParameter(1, nickname);
@@ -635,6 +634,35 @@ public class ModelGod {
 		connector.execute();
 		connector.closeStatement();
 		connector.closeConnection();
+	}
+	
+	public ImageIcon getRandomCard() {
+		connector.openConnection();
+		connector.submitParametrizedQuery(QueryBuilder.GET_RANDOM_CARD);
+		ImageIcon _immagine = null;
+		ResultSet set = connector.executeQuery();
+		try {
+			while (set.next()) {
+			Blob b = set.getBlob("Immagine");
+			byte[] imageByte = b.getBytes(1, (int) b.length());
+			InputStream is = new ByteArrayInputStream(imageByte);
+			BufferedImage imag = ImageIO.read(is);
+			Image i = imag;
+			_immagine = new ImageIcon(i);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (set != null)
+					set.close();
+				connector.closeStatement();
+				connector.closeConnection();
+			} catch (SQLException sqle) {
+				sqle.printStackTrace();
+			}
+		}
+		return _immagine;
 	}
 
 	public void createCollection(String nickname, String nameCollection, int visible) {

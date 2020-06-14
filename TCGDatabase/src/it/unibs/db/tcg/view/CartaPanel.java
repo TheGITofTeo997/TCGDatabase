@@ -524,12 +524,12 @@ public class CartaPanel extends JPanel {
 			collectionsPanel.add(scrollPane);
 		}
 	}
-
+	
 	public String showCollectionsListPopup() {
 		JOptionPane.showMessageDialog(this, collectionsPanel, "Scegli la collezione", JOptionPane.QUESTION_MESSAGE);
 		return (String) collectionsList.getSelectedValue();
 	}
-
+	
 	public void showNoSelectedPopup() {
 		JOptionPane.showMessageDialog(this, "Attenzione, non hai selezionato alcuna collezione");
 	}

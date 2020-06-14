@@ -12,8 +12,13 @@ public class QueryBuilder {
 			" FROM composta JOIN possiede on composta.Nome_Collezione = possiede.Nome_Collezione" + 
 			" WHERE possiede.Nickname = ? AND composta.Nome_Collezione = ?" + 
 			" AND composta.N_Carta = ? AND composta.Abbr_Espansione = ?";
+	
 	protected static String GET_COLLECTION_CARDS = "SELECT Carta.Abbr_Espansione, Numero, Nome_Carta, Immagine FROM Possiede JOIN Composta ON Possiede.Nome_Collezione = Composta.Nome_Collezione JOIN Carta ON Composta.N_Carta = Carta.Numero WHERE Possiede.Nickname = ? AND Possiede.Nome_Collezione = ? ORDER BY Abbr_Espansione, Numero";
-
+	
+	protected static String GET_RANDOM_CARD = "SELECT Carta.Immagine FROM Carta" + 
+			" ORDER BY RAND()" + 
+			" LIMIT 1";
+	
 	protected static String GET_PUBLIC_USER_COLLECTIONS = " SELECT possiede.Nome_Collezione"
 			+ " FROM Possiede JOIN Collezione ON possiede.Nome_Collezione = collezione.Nome_Collezione"
 			+ " WHERE Possiede.Nickname = ? AND collezione.Visibile = 1";

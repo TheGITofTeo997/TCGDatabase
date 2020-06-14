@@ -51,6 +51,7 @@ public class HomePanel extends JPanel {
 	private JButton btnOption;
 	private JButton btnBack;
 	private JButton btnNewCollection;
+	private JButton btnRandomCard;
 	private JPanel optionPanel;
 	private JPanel newCollectionPanel;
 	private JComboBox visibleList;
@@ -105,6 +106,13 @@ public class HomePanel extends JPanel {
 		btnNewCollection.setForeground(foregroundColor);
 		btnNewCollection.setFont(panelFont.deriveFont(Font.BOLD));
 		add(btnNewCollection);
+
+		btnRandomCard = new JButton("Mostra carta random");
+		btnRandomCard.setBounds(WIDTH / 4 + 20, 130, 540, 80);
+		btnRandomCard.setBackground(new Color(27, 232, 16));
+		btnRandomCard.setForeground(foregroundColor);
+		btnRandomCard.setFont(panelFont.deriveFont(Font.BOLD));
+		add(btnRandomCard);
 
 		btnBack = new JButton("Back");
 		btnBack.setBounds(650, 480, 90, 50);
@@ -205,6 +213,19 @@ public class HomePanel extends JPanel {
 		avatar = new ImageIcon(image);
 		lblAvatar.setIcon(avatar);
 	}
+	
+	public void showRandomCardPopup(ImageIcon card) {
+		JPanel panel = new JPanel();
+		panel.setPreferredSize(new Dimension(250,300));
+		Image image = card.getImage();
+		image = image.getScaledInstance(250, 300, Image.SCALE_SMOOTH);
+		ImageIcon icon = new ImageIcon(image);
+		JLabel lblCard = new JLabel(icon);
+		lblCard.setBounds(0,0,250,300);
+		panel.add(lblCard);
+		JOptionPane.showOptionDialog(null, panel, "Carta Random", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, new Object[]{"Ok"}, null);
+
+	}
 
 	public int showConfirmDialog() {
 		JOptionPane confirm = new JOptionPane();
@@ -216,6 +237,10 @@ public class HomePanel extends JPanel {
 
 	public void addNewCollectionListener(ActionListener a) {
 		btnNewCollection.addActionListener(a);
+	}
+
+	public void addRandomCardListener(ActionListener a) {
+		btnRandomCard.addActionListener(a);
 	}
 
 	private void createNewCollectionPopup() {
