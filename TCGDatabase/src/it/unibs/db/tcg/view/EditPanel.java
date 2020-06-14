@@ -1,15 +1,19 @@
 package it.unibs.db.tcg.view;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JPanel;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 
 public class EditPanel extends JPanel {
 
@@ -25,10 +29,12 @@ public class EditPanel extends JPanel {
 	private JLabel lblName;
 	private JLabel lblNickname;
 	private JLabel lblMail;
-	private JButton btnEditAvatar;
 	private JButton btnEditName;
 	private JButton btnEditMail;
 	private JButton btnBack;
+
+	private JButton btnChangeAvatar;
+	private JButton btnDeleteAvatar;
 
 	public EditPanel() {
 		setLayout(null);
@@ -49,9 +55,13 @@ public class EditPanel extends JPanel {
 		lblAvatar.setIcon(icon);
 		add(lblAvatar);
 
-		btnEditAvatar = new JButton("Edit Avatar");
-		btnEditAvatar.setBounds(5, 325, 250, 25);
-		add(btnEditAvatar);
+		btnDeleteAvatar = new JButton("Cancella avatar");
+		btnDeleteAvatar.setBounds(5, 360, 250, 25);
+		add(btnDeleteAvatar);
+
+		btnChangeAvatar = new JButton("Carica...");
+		btnChangeAvatar.setBounds(5, 325, 250, 25);
+		add(btnChangeAvatar);
 
 		lblNickname = new JLabel("Nickname");
 		lblNickname.setForeground(foregroundColor);
@@ -133,6 +143,25 @@ public class EditPanel extends JPanel {
 		correct.showMessageDialog(this, "Modifica effettuata correttamente!", "Correct",
 				JOptionPane.INFORMATION_MESSAGE);
 	}
+	
+	public ImageIcon chooseAvatar() {
+		JFileChooser chooser = new JFileChooser();
+		FileNameExtensionFilter filter = new FileNameExtensionFilter("File jpeg, jpg, png", "jpeg", "jpg", "png");
+		chooser.setFileFilter(filter);
+		int returnVal = chooser.showOpenDialog(this);
+		if (returnVal == JFileChooser.APPROVE_OPTION) {
+			ImageIcon icon = new ImageIcon(chooser.getSelectedFile().getPath());
+			Image image = icon.getImage();
+			image = image.getScaledInstance(250, 300, Image.SCALE_SMOOTH);
+			icon = new ImageIcon(image);
+			return icon;
+		}
+		return null;
+	}
+	
+	public boolean showConfirmPopup() {
+		return (JOptionPane.showConfirmDialog(this, "Questa operazione eliminerà la tua foto profilo corrente. Vuoi procedere?") == 0);
+	}
 
 	public void addEditNameListener(ActionListener a) {
 		btnEditName.addActionListener(a);
@@ -143,7 +172,11 @@ public class EditPanel extends JPanel {
 	}
 
 	public void addEditAvatarListener(ActionListener a) {
-		btnEditAvatar.addActionListener(a);
+		btnChangeAvatar.addActionListener(a);
+	}
+	
+	public void addDeleteAvatarListener(ActionListener a) {
+		btnDeleteAvatar.addActionListener(a);
 	}
 
 	public void addBackListener(ActionListener a) {

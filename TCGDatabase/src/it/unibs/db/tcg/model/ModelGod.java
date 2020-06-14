@@ -14,9 +14,9 @@ import javax.swing.ImageIcon;
 
 public class ModelGod {
 
-	//private Connector connector = new Connector("jdbc:mysql://192.168.1.124:3306/TCG_DB", "root", "R2mSDzoz");
-	 private Connector connector = new
-		Connector("jdbc:mysql://localhost:3306/TCG_DB", "root", "");
+	// private Connector connector = new
+	// Connector("jdbc:mysql://192.168.1.124:3306/TCG_DB", "root", "R2mSDzoz");
+	private Connector connector = new Connector("jdbc:mysql://localhost:3306/TCG_DB", "root", "");
 	// private Connector connector = new
 	// Connector("jdbc:mysql://localhost:4040/TCG_DB", "root", "");
 
@@ -47,18 +47,15 @@ public class ModelGod {
 				_avatar = new ImageIcon(i);
 				_dataRegistrazione = set.getDate("Data_Registrazione");
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-		}
-		finally {
+		} finally {
 			try {
 				if (set != null)
 					set.close();
 				connector.closeStatement();
 				connector.closeConnection();
-			}
-			catch (SQLException sqle) {
+			} catch (SQLException sqle) {
 				sqle.printStackTrace();
 			}
 		}
@@ -72,6 +69,32 @@ public class ModelGod {
 		return user;
 	}
 
+	public List<String> getPublicUserCollections(String nickname) {
+		connector.openConnection();
+		ArrayList<String> collections = new ArrayList<String>();
+		connector.submitParametrizedQuery(QueryBuilder.GET_PUBLIC_USER_COLLECTIONS);
+		connector.setStringParameter(1, nickname);
+		ResultSet set = connector.executeQuery();
+		try {
+			while (set.next()) {
+				collections.add(set.getString("Nome_Collezione"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (set != null)
+					set.close();
+				connector.closeStatement();
+				connector.closeConnection();
+			} catch (SQLException sqle) {
+				sqle.printStackTrace();
+			}
+		}
+		return collections;
+
+	}
+
 	public List<String> getUserCollections(String nickname) {
 		connector.openConnection();
 		ArrayList<String> collections = new ArrayList<String>();
@@ -82,18 +105,15 @@ public class ModelGod {
 			while (set.next()) {
 				collections.add(set.getString("Nome_Collezione"));
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-		}
-		finally {
+		} finally {
 			try {
 				if (set != null)
 					set.close();
 				connector.closeStatement();
 				connector.closeConnection();
-			}
-			catch (SQLException sqle) {
+			} catch (SQLException sqle) {
 				sqle.printStackTrace();
 			}
 		}
@@ -109,24 +129,45 @@ public class ModelGod {
 		try (set) {
 			if (set.next() == false)
 				return false;
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-		}
-		finally {
+		} finally {
 			try {
 				if (set != null)
 					set.close();
 				connector.closeStatement();
 				connector.closeConnection();
-			}
-			catch (SQLException sqle) {
+			} catch (SQLException sqle) {
 				sqle.printStackTrace();
 			}
 		}
 		return true;
 	}
 
+	public boolean hasUserCollection(String nickname, String collection) {
+		connector.openConnection();
+		connector.submitParametrizedQuery(QueryBuilder.GET_USER_COLLECTION);
+		connector.setStringParameter(1, nickname);
+		connector.setStringParameter(2, collection);
+		ResultSet set = connector.executeQuery();
+		try (set) {
+			if (set.next() == false)
+				return false;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (set != null)
+					set.close();
+				connector.closeStatement();
+				connector.closeConnection();
+			} catch (SQLException sqle) {
+				sqle.printStackTrace();
+			}
+		}
+		return true;
+	}
+	
 	// da cambiare tipo Valore in TABLE Carta nel DB
 	public double getUserTotalCardsValue(String nickname) {
 		connector.openConnection();
@@ -138,18 +179,15 @@ public class ModelGod {
 			while (set.next()) {
 				value += set.getInt(1);
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-		}
-		finally {
+		} finally {
 			try {
 				if (set != null)
 					set.close();
 				connector.closeStatement();
 				connector.closeConnection();
-			}
-			catch (SQLException sqle) {
+			} catch (SQLException sqle) {
 				sqle.printStackTrace();
 			}
 		}
@@ -183,18 +221,15 @@ public class ModelGod {
 				c.setNome(_nomeCarta);
 				cardsList.add(c);
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-		}
-		finally {
+		} finally {
 			try {
 				if (set != null)
 					set.close();
 				connector.closeStatement();
 				connector.closeConnection();
-			}
-			catch (SQLException sqle) {
+			} catch (SQLException sqle) {
 				sqle.printStackTrace();
 			}
 		}
@@ -221,18 +256,15 @@ public class ModelGod {
 				else if (sel_carta == 3)
 					type = Strings.CARTA_ENERGIA;
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-		}
-		finally {
+		} finally {
 			try {
 				if (set != null)
 					set.close();
 				connector.closeStatement();
 				connector.closeConnection();
-			}
-			catch (SQLException sqle) {
+			} catch (SQLException sqle) {
 				sqle.printStackTrace();
 			}
 		}
@@ -285,86 +317,83 @@ public class ModelGod {
 
 				int sel_carta = set.getInt("SEL_Carta");
 				switch (sel_carta) {
-					case 0:
-						_descr_pkmn = set.getString("Descrizione_PKMN");
-						_tipo_energia = set.getString("Tipo_Energia");
-						_ps = set.getInt("PS");
-						_costo_ritirata = set.getInt("Costo_Ritirata");
-						_resistenza = set.getString("Resistenza");
-						_debolezza = set.getString("Debolezza");
-						_stage = set.getInt("Stage");
-						_n_stage_succ = set.getInt("N_Stage_Successivo");
-						_abilita = set.getString("Abilita");
-						_attr_spec = set.getString("Attributo_Speciale");
-						_regola = set.getString("Regola");
+				case 0:
+					_descr_pkmn = set.getString("Descrizione_PKMN");
+					_tipo_energia = set.getString("Tipo_Energia");
+					_ps = set.getInt("PS");
+					_costo_ritirata = set.getInt("Costo_Ritirata");
+					_resistenza = set.getString("Resistenza");
+					_debolezza = set.getString("Debolezza");
+					_stage = set.getInt("Stage");
+					_n_stage_succ = set.getInt("N_Stage_Successivo");
+					_abilita = set.getString("Abilita");
+					_attr_spec = set.getString("Attributo_Speciale");
+					_regola = set.getString("Regola");
 
-						c1 = createCartaPokemon(c);
-						c1.setDescrizione(_descr_pkmn);
-						c1.setTipoEnergia(_tipo_energia);
-						c1.setPS(_ps);
-						c1.setCostoRitirata(_costo_ritirata);
-						c1.setResistenza(_resistenza);
-						c1.setDebolezza(_debolezza);
-						c1.setStage(_stage);
-						c1.setStage_successivo(_n_stage_succ);
-						CartaPokemonBase c2 = createCartaPokemonBase(c1);
-						c2.setAbilita(_abilita);
-						return c2;
+					c1 = createCartaPokemon(c);
+					c1.setDescrizione(_descr_pkmn);
+					c1.setTipoEnergia(_tipo_energia);
+					c1.setPS(_ps);
+					c1.setCostoRitirata(_costo_ritirata);
+					c1.setResistenza(_resistenza);
+					c1.setDebolezza(_debolezza);
+					c1.setStage(_stage);
+					c1.setStage_successivo(_n_stage_succ);
+					CartaPokemonBase c2 = createCartaPokemonBase(c1);
+					c2.setAbilita(_abilita);
+					return c2;
 
-					case 1:
-						_descr_pkmn = set.getString("Descrizione_PKMN");
-						_tipo_energia = set.getString("Tipo_Energia");
-						_ps = set.getInt("PS");
-						_costo_ritirata = set.getInt("Costo_Ritirata");
-						_resistenza = set.getString("Resistenza");
-						_debolezza = set.getString("Debolezza");
-						_stage = set.getInt("Stage");
-						_n_stage_succ = set.getInt("N_Stage_Successivo");
-						_abilita = set.getString("Abilita");
-						_attr_spec = set.getString("Attributo_Speciale");
-						_regola = set.getString("Regola");
+				case 1:
+					_descr_pkmn = set.getString("Descrizione_PKMN");
+					_tipo_energia = set.getString("Tipo_Energia");
+					_ps = set.getInt("PS");
+					_costo_ritirata = set.getInt("Costo_Ritirata");
+					_resistenza = set.getString("Resistenza");
+					_debolezza = set.getString("Debolezza");
+					_stage = set.getInt("Stage");
+					_n_stage_succ = set.getInt("N_Stage_Successivo");
+					_abilita = set.getString("Abilita");
+					_attr_spec = set.getString("Attributo_Speciale");
+					_regola = set.getString("Regola");
 
-						c1 = createCartaPokemon(c);
-						c1.setDescrizione(_descr_pkmn);
-						c1.setTipoEnergia(_tipo_energia);
-						c1.setPS(_ps);
-						c1.setCostoRitirata(_costo_ritirata);
-						c1.setResistenza(_resistenza);
-						c1.setDebolezza(_debolezza);
-						c1.setStage(_stage);
-						c1.setStage_successivo(_n_stage_succ);
-						CartaPokemonSpeciale c3 = createCartaPokemonSpeciale(c1);
-						c3.setAttributoSpeciale(_attr_spec);
-						c3.setRegola(_regola);
-						return c3;
-					case 2:
-						CartaStrumento c4 = createCartaStrumento(c);
-						String _descr_strumento = set.getString("Descrizione_Strum");
-						String _effetto_strumento = set.getString("Effetto_Strum");
-						c4.setDescrizione(_descr_strumento);
-						c4.setEffetto(_effetto_strumento);
-						return c4;
+					c1 = createCartaPokemon(c);
+					c1.setDescrizione(_descr_pkmn);
+					c1.setTipoEnergia(_tipo_energia);
+					c1.setPS(_ps);
+					c1.setCostoRitirata(_costo_ritirata);
+					c1.setResistenza(_resistenza);
+					c1.setDebolezza(_debolezza);
+					c1.setStage(_stage);
+					c1.setStage_successivo(_n_stage_succ);
+					CartaPokemonSpeciale c3 = createCartaPokemonSpeciale(c1);
+					c3.setAttributoSpeciale(_attr_spec);
+					c3.setRegola(_regola);
+					return c3;
+				case 2:
+					CartaStrumento c4 = createCartaStrumento(c);
+					String _descr_strumento = set.getString("Descrizione_Strum");
+					String _effetto_strumento = set.getString("Effetto_Strum");
+					c4.setDescrizione(_descr_strumento);
+					c4.setEffetto(_effetto_strumento);
+					return c4;
 
-					case 3:
-						CartaEnergia c5 = createCartaEnergia(c);
-						String _tipo_carta_energia = set.getString("Tipo_Carta_Energia");
-						c5.setTipo(_tipo_carta_energia);
-						return c5;
+				case 3:
+					CartaEnergia c5 = createCartaEnergia(c);
+					String _tipo_carta_energia = set.getString("Tipo_Carta_Energia");
+					c5.setTipo(_tipo_carta_energia);
+					return c5;
 				}
 
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-		}
-		finally {
+		} finally {
 			try {
 				if (set != null)
 					set.close();
 				connector.closeStatement();
 				connector.closeConnection();
-			}
-			catch (SQLException sqle) {
+			} catch (SQLException sqle) {
 				sqle.printStackTrace();
 			}
 		}
@@ -402,18 +431,15 @@ public class ModelGod {
 				user.setDataRegistrazione(_dataRegistrazione);
 				usersList.add(user);
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-		}
-		finally {
+		} finally {
 			try {
 				if (set != null)
 					set.close();
 				connector.closeStatement();
 				connector.closeConnection();
-			}
-			catch (SQLException sqle) {
+			} catch (SQLException sqle) {
 				sqle.printStackTrace();
 			}
 		}
@@ -448,18 +474,15 @@ public class ModelGod {
 				c.setNome(_nomeCarta);
 				cardsList.add(c);
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-		}
-		finally {
+		} finally {
 			try {
 				if (set != null)
 					set.close();
 				connector.closeStatement();
 				connector.closeConnection();
-			}
-			catch (SQLException sqle) {
+			} catch (SQLException sqle) {
 				sqle.printStackTrace();
 			}
 		}
@@ -490,28 +513,28 @@ public class ModelGod {
 		if (s.hasCardType()) {
 			for (String type : s.getCardType()) {
 				switch (type) {
-					case "Pokemon":
-						query += QueryBuilder.GET_CARDS_TYPE + " UNION " + QueryBuilder.GET_CARDS_TYPE + " INTERSECT ";
-						intParametersMap.put(position, 0);
-						position++;
-						intParametersMap.put(position, 1);
-						position++;
-						query += QueryBuilder.GET_CARDS_BY_PS + " INTERSECT ";
-						intParametersMap.put(position, s.getLowerPSValue());
-						position++;
-						intParametersMap.put(position, s.getUpperPSValue());
-						position++;
-						break;
-					case "Strumento":
-						query += QueryBuilder.GET_CARDS_TYPE + " INTERSECT ";
-						intParametersMap.put(position, 2);
-						position++;
-						break;
-					case "Energia":
-						query += QueryBuilder.GET_CARDS_TYPE + " INTERSECT ";
-						intParametersMap.put(position, 3);
-						position++;
-						break;
+				case "Pokemon":
+					query += QueryBuilder.GET_CARDS_TYPE + " UNION " + QueryBuilder.GET_CARDS_TYPE + " INTERSECT ";
+					intParametersMap.put(position, 0);
+					position++;
+					intParametersMap.put(position, 1);
+					position++;
+					query += QueryBuilder.GET_CARDS_BY_PS + " INTERSECT ";
+					intParametersMap.put(position, s.getLowerPSValue());
+					position++;
+					intParametersMap.put(position, s.getUpperPSValue());
+					position++;
+					break;
+				case "Strumento":
+					query += QueryBuilder.GET_CARDS_TYPE + " INTERSECT ";
+					intParametersMap.put(position, 2);
+					position++;
+					break;
+				case "Energia":
+					query += QueryBuilder.GET_CARDS_TYPE + " INTERSECT ";
+					intParametersMap.put(position, 3);
+					position++;
+					break;
 				}
 			}
 		}
@@ -565,26 +588,90 @@ public class ModelGod {
 		connector.closeStatement();
 		connector.closeConnection();
 	}
+
+	public void updateAvatar(String nickname, ImageIcon avatar) {
+		connector.openConnection();
+		connector.submitParametrizedQuery(QueryBuilder.UPDATE_AVATAR);
+		connector.setImageParameter(1, avatar);
+		connector.setStringParameter(2, nickname);
+		connector.execute();
+		connector.closeStatement();
+		connector.closeConnection();
+	}
 	
+	public boolean isThereCardInCollection(String nickname, String collectionName, int num_card, String abbr_esp) {
+		//da fare
+		connector.openConnection();
+		connector.submitParametrizedQuery(QueryBuilder.IS_THERE_CARD_IN_COLLECTION);
+		connector.setStringParameter(1, nickname);
+		connector.setStringParameter(2, collectionName);
+		connector.setIntParameter(3, num_card);
+		connector.setStringParameter(4, abbr_esp);
+		ResultSet set = connector.executeQuery();
+		try (set) {
+			if (set.next() == false)
+				return false;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (set != null)
+					set.close();
+				connector.closeStatement();
+				connector.closeConnection();
+			} catch (SQLException sqle) {
+				sqle.printStackTrace();
+			}
+		}
+		return true;
+	}
+	
+	public void insertCardInCollection(String collectionName, int num_card, String abbr_esp) {
+		connector.openConnection();
+		connector.submitParametrizedQuery(QueryBuilder.INSERT_CARD_IN_COMPOSTA);
+		connector.setStringParameter(1, collectionName);
+		connector.setIntParameter(2, num_card);
+		connector.setStringParameter(3, abbr_esp);
+		connector.execute();
+		connector.closeStatement();
+		connector.closeConnection();
+	}
+
+	public void createCollection(String nickname, String nameCollection, int visible) {
+		connector.openConnection();
+		connector.submitParametrizedQuery(QueryBuilder.CREATE_COLLECTION_POSSIEDE_TABLE);
+		connector.setStringParameter(1, nickname);
+		connector.setStringParameter(2, nameCollection);
+		connector.execute();
+		connector.submitParametrizedQuery(QueryBuilder.CREATE_COLLECTION_COLLECTION_TABLE);
+		connector.setStringParameter(1, nameCollection);
+		connector.setIntParameter(2, visible);
+		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+		connector.setCurrentDateParameter(3, timestamp);
+		connector.execute();
+		connector.closeConnection();
+		connector.closeConnection();
+	}
+
 	public void createUser(Utente user) {
 		connector.openConnection();
 		connector.submitParametrizedQuery(QueryBuilder.CREATE_USER);
 		connector.setStringParameter(1, user.getNickname());
-		if(user.getNomeUtente().length() > 0) {
+		if (user.getNomeUtente().length() > 0) {
 			connector.setStringParameter(2, user.getNomeUtente());
-		}else {
+		} else {
 			connector.setStringParameter(2, "");
 		}
-		if(user.getMail().length() > 0) {
+		if (user.getMail().length() > 0) {
 			connector.setStringParameter(3, user.getMail());
-		}else {
+		} else {
 			connector.setStringParameter(3, "");
 		}
 		connector.setImageParameter(4, user.getAvatar());
-		Timestamp timestamp =  new Timestamp(System.currentTimeMillis());
+		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 		Date date = new Date(timestamp.getTime());
 		user.setDataRegistrazione(date);
-		connector.setCurrentDateParameter(5,timestamp);
+		connector.setCurrentDateParameter(5, timestamp);
 		connector.execute();
 		connector.closeStatement();
 		connector.closeConnection();

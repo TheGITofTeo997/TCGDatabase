@@ -12,6 +12,8 @@ import java.util.regex.Pattern;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -33,6 +35,7 @@ public class Controller {
 	private EditPanel edPan = null;
 	private UsersPanel usPan = null;
 	private RegistrationPanel regPan = null;
+	private VisitorAccountPanel visPan = null;
 
 	public Controller() {
 		model = new ModelGod();
@@ -86,12 +89,12 @@ public class Controller {
 			}
 		});
 	}
-	
+
 	public void drawRegistrationPanel() {
 		regPan = new RegistrationPanel();
-		regPan.setBounds(0,0,800,600);
+		regPan.setBounds(0, 0, 800, 600);
 		frame.getContentPane().add(regPan);
-		
+
 		regPan.addBackListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -99,28 +102,27 @@ public class Controller {
 				drawLoginPanel();
 			}
 		});
-		
+
 		regPan.addRegisterListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String nickname = regPan.getNicknameText();
-				if(nickname.length() == 0 || model.isUserExistant(nickname)) {
+				if (nickname.length() == 0 || model.isUserExistant(nickname)) {
 					regPan.showNicknameErrorPopup();
-				}
-				else {
+				} else {
 					Utente user = new Utente();
 					String name = regPan.getNameText();
 					String mail = regPan.getMailText();
 					Icon icon = regPan.getAvatarImage();
-					if(!name.matches(Strings.USERNAME_REGEX)) {
+					if (!name.matches(Strings.USERNAME_REGEX)) {
 						regPan.showNameErrorPopup();
-					}else if(!mail.matches(Strings.MAIL_REGEX)) {
+					} else if (!mail.matches(Strings.MAIL_REGEX)) {
 						regPan.showMailErrorPopup();
-					}else {
+					} else {
 						user.setNickname(nickname);
 						user.setNomeUtente(name);
 						user.setMail(mail);
-						user.setAvatar(((ImageIcon)icon));
+						user.setAvatar(((ImageIcon) icon));
 						model.createUser(user);
 						regPan.setVisible(false);
 						drawAccountPanel(user);
@@ -128,7 +130,7 @@ public class Controller {
 				}
 			}
 		});
-		
+
 	}
 
 	public void drawHomePanel(Utente user) {
@@ -166,18 +168,37 @@ public class Controller {
 
 			}
 		});
+
+		homePan.addNewCollectionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (homePan.showNewCollectionPopup()) {
+					String name = homePan.getNameTextField();
+					if (!model.hasUserCollection(user.getNickname(), name)) {
+						String visible = homePan.getVisibileField();
+						int num = 0;
+						if (visible.equals("Visibile"))
+							num = 1;
+						model.createCollection(user.getNickname(), name, num);
+					} else
+						homePan.showErrorPopup();
+				}
+			}
+		});
 	}
 
 	public void drawAccountPanel(Utente user) {
 		acPan = new AccountPanel();
 		acPan.setBounds(0, 0, 800, 600);
 		frame.getContentPane().add(acPan);
+
 		acPan.setNickname(user.getNickname());
 		acPan.setMail(user.getMail());
 		acPan.setAvatar(user.getAvatar());
 		acPan.setUserName(user.getNomeUtente());
 		acPan.setRegistrationDate(user.getDataRegistrazione().toString());
 		acPan.setTotalValue(user.getTotalCardsValue());
+		user.setCollections(model.getUserCollections(user.getNickname()));
 		acPan.setCollections(user.getDefaultListModelCollections());
 
 		acPan.addCollectionListener(new ListSelectionListener() {
@@ -188,7 +209,7 @@ public class Controller {
 					Collezione c = new Collezione(collection);
 					c.setCarteCollezione(model.getCardsFromCollection(user.getNickname(), collection));
 					acPan.setVisible(false);
-					drawCardsPanel(user, "Carte della Collezione " + collection, c.getCardsList());
+					drawCardsPanel(user, "Carte della Collezione " + collection, c.getCardsList(), null, null);
 				}
 			}
 		});
@@ -259,7 +280,26 @@ public class Controller {
 		edPan.addEditAvatarListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String result = edPan.showEditPopup();
+				ImageIcon icon = edPan.chooseAvatar();
+				if (icon != null) {
+					edPan.setAvatar(icon);
+					user.setAvatar(icon);
+					model.updateAvatar(user.getNickname(), icon);
+					edPan.showCorrectPopup();
+				}
+
+			}
+		});
+
+		edPan.addDeleteAvatarListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (edPan.showConfirmPopup()) {
+					ImageIcon icon = new ImageIcon("resources//default_avatar.jpg");
+					edPan.setAvatar(icon);
+					user.setAvatar(icon);
+					model.updateAvatar(user.getNickname(), icon);
+					edPan.showCorrectPopup();
+				}
 			}
 		});
 
@@ -271,32 +311,76 @@ public class Controller {
 			}
 		});
 	}
-	
+
 	public void drawUsersPanel(Utente user, List<Utente> utenti) {
 		usPan = new UsersPanel();
 		usPan.setBounds(0, 0, 800, 600);
 		usPan.setUserList(utenti);
 		frame.getContentPane().add(usPan);
-		
+
 		usPan.addUsersListener(new ListSelectionListener() {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
 				if (!e.getValueIsAdjusting()) {
 					Utente u = utenti.get(usPan.getListSelectedIndex());
-					//Carta card = model.getCardFromNumberAndAbbrEspansione(c.getNumero(), c.getAbbrEspansione());
+					// Carta card = model.getCardFromNumberAndAbbrEspansione(c.getNumero(),
+					// c.getAbbrEspansione());
 					usPan.setVisible(false);
 					String nickname = u.getNickname();
 					u.setTotalCardsValue(model.getUserTotalCardsValue(nickname));
-					u.setCollections(model.getUserCollections(nickname));
-
-					drawAccountPanel(u);
+					u.setCollections(model.getPublicUserCollections(nickname));
+					usPan.setVisible(false);
+					drawVisitorAccountPanel(user, utenti, u);
 				}
 			}
 		});
-		
+
+		usPan.addBackListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				usPan.setVisible(false);
+				drawSearchPanel(user);
+			}
+		});
+
 	}
 
-	public void drawCardsPanel(Utente user, String title, List<Carta> cardsName) {
+	public void drawVisitorAccountPanel(Utente user, List<Utente> utenti, Utente toVisit) {
+		visPan = new VisitorAccountPanel();
+		visPan.setBounds(0, 0, 800, 600);
+		frame.getContentPane().add(visPan);
+
+		visPan.setNickname(toVisit.getNickname());
+		visPan.setMail(toVisit.getMail());
+		visPan.setAvatar(toVisit.getAvatar());
+		visPan.setUserName(toVisit.getNomeUtente());
+		visPan.setRegistrationDate(toVisit.getDataRegistrazione().toString());
+		visPan.setTotalValue(toVisit.getTotalCardsValue());
+		visPan.setCollections(toVisit.getDefaultListModelCollections());
+
+		visPan.addCollectionListener(new ListSelectionListener() {
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				if (!e.getValueIsAdjusting()) {
+					String collection = toVisit.getDefaultListModelCollections().get(visPan.getListSelectedIndex());
+					Collezione c = new Collezione(collection);
+					c.setCarteCollezione(model.getCardsFromCollection(toVisit.getNickname(), collection));
+					visPan.setVisible(false);
+					drawCardsPanel(user, "Carte della Collezione " + collection, c.getCardsList(), utenti, toVisit);
+				}
+			}
+		});
+
+		visPan.addBackListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				visPan.setVisible(false);
+				drawUsersPanel(user, utenti);
+			}
+		});
+	}
+
+	public void drawCardsPanel(Utente user, String title, List<Carta> cardsName, List<Utente> utenti, Utente toVisit) {
 		crdsPan = new CardsPanel();
 		crdsPan.setBounds(0, 0, 800, 600);
 		crdsPan.setTitleText(title);
@@ -310,7 +394,10 @@ public class Controller {
 					Carta c = cardsName.get(crdsPan.getListSelectedIndex());
 					Carta card = model.getCardFromNumberAndAbbrEspansione(c.getNumero(), c.getAbbrEspansione());
 					crdsPan.setVisible(false);
-					drawCartaPanel(user, title, cardsName, card);
+					if (toVisit == null)
+						drawCartaPanel(user, title, cardsName, card, null, null);
+					else
+						drawCartaPanel(user, title, cardsName, card, utenti, toVisit);
 				}
 			}
 		});
@@ -319,11 +406,14 @@ public class Controller {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				crdsPan.setVisible(false);
-				drawAccountPanel(user);
+				if (toVisit == null)
+					drawAccountPanel(user);
+				else
+					drawVisitorAccountPanel(user, utenti, toVisit);
 			}
 		});
 	}
-	
+
 	public void drawCardsPanelFromSearch(Utente user, String title, List<Carta> cardsName) {
 		crdsPan = new CardsPanel();
 		crdsPan.setBounds(0, 0, 800, 600);
@@ -338,7 +428,7 @@ public class Controller {
 					Carta c = cardsName.get(crdsPan.getListSelectedIndex());
 					Carta card = model.getCardFromNumberAndAbbrEspansione(c.getNumero(), c.getAbbrEspansione());
 					crdsPan.setVisible(false);
-					drawCartaPanel(user, title, cardsName, card);
+					drawCartaPanel(user, title, cardsName, card, null, null);
 				}
 			}
 		});
@@ -352,7 +442,8 @@ public class Controller {
 		});
 	}
 
-	public void drawCartaPanel(Utente user, String title, List<Carta> cardsName, Carta c) {
+	public void drawCartaPanel(Utente user, String title, List<Carta> cardsName, Carta c, List<Utente> utenti,
+			Utente toVisit) {
 		carPan = new CartaPanel();
 		carPan.setBounds(0, 0, 800, 600);
 		frame.getContentPane().add(carPan);
@@ -374,11 +465,33 @@ public class Controller {
 
 		}
 
+		carPan.addAddToCollectionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				carPan.createCollectionListPopup(user.getDefaultListModelCollections());	
+				String selectedCollection = carPan.showCollectionsListPopup();
+					if(selectedCollection!= null) {
+						if(!model.isThereCardInCollection(user.getNickname(), selectedCollection, c.getNumero(), c.getAbbrEspansione())) {
+							model.insertCardInCollection(selectedCollection, c.getNumero(), c.getAbbrEspansione());
+							carPan.showCorrectInsertPopup();
+						}
+						else carPan.showErrorPopup();
+						drawCartaPanel(user, title, cardsName,c, utenti, toVisit);
+					}else {
+						carPan.showNoSelectedPopup();
+						drawCartaPanel(user, title, cardsName,c, utenti, toVisit);
+					}
+			}
+		});
+
 		carPan.addBackListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				carPan.setVisible(false);
-				drawCardsPanel(user, title, cardsName);
+				if (toVisit == null)
+					drawCardsPanel(user, title, cardsName, null, null);
+				else
+					drawCardsPanel(user, title, cardsName, utenti, toVisit);
 			}
 		});
 
@@ -433,14 +546,8 @@ public class Controller {
 				s.setRarityType(rarityType);
 
 				List<Carta> carte_trovate = model.getSearchResult(s);
-				/*for(Carta c : carte_trovate)
-					System.out.println(c.getNome());*/
 				srcPan.setVisible(false);
 				drawCardsPanelFromSearch(user, "Carte trovate", carte_trovate);
-
-				// Fare le query singole ed intersecare i risultati?
-				// List<Carta> carte_trovate = model.(....);
-				// drawCardPanel(user, "carte trovate", carte_trovate);
 
 			}
 		});

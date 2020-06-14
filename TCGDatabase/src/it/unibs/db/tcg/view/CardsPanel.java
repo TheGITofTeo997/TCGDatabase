@@ -83,7 +83,7 @@ public class CardsPanel extends JPanel {
 		list.setFixedCellHeight(50);
 		
 		JScrollPane scrollPane = new JScrollPane(this,
-	            JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+	            JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 	            JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPane.setViewportView(list);
 		scrollPane.setBounds(50,50,700,400);

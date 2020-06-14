@@ -13,7 +13,7 @@ import java.awt.Image;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class AccountPanel extends JPanel {
+public class VisitorAccountPanel extends JPanel {
 
 	/**
 	 * 
@@ -32,7 +32,6 @@ public class AccountPanel extends JPanel {
 	private JLabel lblName;
 	private JLabel lblMail;
 	private JLabel lblRegistrationDate;
-	private JButton btnEdit;
 	private JButton btnBack;
 	private JList<String> list;
 	private JLabel lblTotalValue;
@@ -41,7 +40,7 @@ public class AccountPanel extends JPanel {
 	private JLabel lblAvatarSmall;
 	private JLabel lblNickname2;
 
-	public AccountPanel() {
+	public VisitorAccountPanel() {
 		setLayout(null);
 		secondaryBackgroundColor = Preferences.getSecondaryBackgroundColor();
 		backgroundColor = Preferences.getBackgroundColor();
@@ -156,14 +155,6 @@ public class AccountPanel extends JPanel {
 		lblthird.setBounds(290, 170, 100, 50);
 		informationPanel.add(lblthird);
 
-		btnEdit = new JButton("");
-		btnEdit.setBounds(700, 250, 75, 75);
-		btnEdit.setBackground(null);
-		btnEdit.setBorder(null);
-		btnEdit.setIcon(new ImageIcon(
-				new ImageIcon("resources//edit.png").getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
-		informationPanel.add(btnEdit);
-
 		collectionsPanel = new JPanel();
 		collectionsPanel.setBounds(0, 30, WIDTH, HEIGHT - 30);
 		collectionsPanel.setLayout(null);
@@ -262,10 +253,6 @@ public class AccountPanel extends JPanel {
 
 	public void addCollectionListener(ListSelectionListener a) {
 		list.addListSelectionListener(a);
-	}
-
-	public void addEditListener(ActionListener a) {
-			btnEdit.addActionListener(a);
 	}
 
 	public void addBackListener(ActionListener a) {

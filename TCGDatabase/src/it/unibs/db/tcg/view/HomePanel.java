@@ -25,7 +25,9 @@ import javax.swing.border.LineBorder;
 import it.unibs.db.tcg.model.Strings;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JColorChooser;
+import javax.swing.JComboBox;
 
 public class HomePanel extends JPanel {
 
@@ -50,6 +52,9 @@ public class HomePanel extends JPanel {
 	private JButton btnBack;
 	private JButton btnNewCollection;
 	private JPanel optionPanel;
+	private JPanel newCollectionPanel;
+	private JComboBox visibleList;
+	private JTextField nameText;
 
 	public HomePanel() {
 		setLayout(null);
@@ -120,6 +125,7 @@ public class HomePanel extends JPanel {
 			}
 		});
 
+		createNewCollectionPopup();
 	}
 
 	public void setNickname(String nickname) {
@@ -208,8 +214,52 @@ public class HomePanel extends JPanel {
 				JOptionPane.YES_NO_OPTION);
 	}
 
-	public void addActionListener(ActionListener a) {
-		listenerList.add(a);
+	public void addNewCollectionListener(ActionListener a) {
+		btnNewCollection.addActionListener(a);
+	}
+
+	private void createNewCollectionPopup() {
+		newCollectionPanel = new JPanel();
+		newCollectionPanel.setLayout(null);
+		newCollectionPanel.setForeground(foregroundColor);
+		newCollectionPanel.setFont(panelFont);
+		newCollectionPanel.setPreferredSize(new Dimension(200, 300));
+
+		JLabel lblSName = new JLabel("Nome");
+		lblSName.setBackground(backgroundColor);
+		lblSName.setHorizontalAlignment(JLabel.CENTER);
+		lblSName.setBounds(0, 0, 50, 25);
+		newCollectionPanel.add(lblSName);
+
+		nameText = new JTextField();
+		nameText.setBounds(50, 0, 150, 25);
+		newCollectionPanel.add(nameText);
+
+		String[] choices = { "Visibile", "Non Visibile" };
+
+		// Create the combo box, select item at index 4.
+		// Indices start at 0, so 4 specifies the pig.
+		visibleList = new JComboBox(choices);
+		visibleList.setBounds(10, 30, 190, 25);
+		visibleList.setSelectedIndex(0);
+		newCollectionPanel.add(visibleList);
+
+		JButton btnAddCollection = new JButton("Crea");
+		btnAddCollection.setBounds(0, 0, 0, 0);
+		newCollectionPanel.add(btnAddCollection);
+
+	}
+
+	public String getNameTextField() {
+		return nameText.getText();
+	}
+
+	public String getVisibileField() {
+		return (String) visibleList.getSelectedItem();
+	}
+
+	public boolean showNewCollectionPopup() {
+		return (JOptionPane.showConfirmDialog(this, newCollectionPanel) == 0);
 	}
 
 	public void addAccountListener(ActionListener a) {
@@ -223,6 +273,11 @@ public class HomePanel extends JPanel {
 
 	public void addBackListener(ActionListener a) {
 		btnBack.addActionListener(a);
+	}
+
+	public void showErrorPopup() {
+		JOptionPane.showMessageDialog(this, "Hai già una collezione con quel nome!");
+
 	}
 
 }

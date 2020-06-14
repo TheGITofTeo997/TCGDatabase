@@ -1,15 +1,24 @@
 package it.unibs.db.tcg.view;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionListener;
+import java.util.List;
 
+import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
+import javax.swing.SwingWorker;
+import javax.swing.border.LineBorder;
 
 import it.unibs.db.tcg.model.Carta;
 import it.unibs.db.tcg.model.CartaEnergia;
@@ -75,6 +84,10 @@ public class CartaPanel extends JPanel {
 	private JLabel pkmnlblNomeMossa2;
 	private JLabel pkmnlblDannoMossa2;
 	private JLabel pkmnlblDescrizioneMossa2;
+
+	private JPanel collectionsPanel;
+	private JButton btnAddToCollection;
+	private JList collectionsList;
 
 	public CartaPanel() {
 		setLayout(null);
@@ -479,6 +492,54 @@ public class CartaPanel extends JPanel {
 		nrglblEnergyType.setFont(panelFont);
 		energyPanel.add(nrglblEnergyType);
 
+		btnAddToCollection = new JButton("Aggiungi questa carta ad una tua collezione");
+		btnAddToCollection.setBounds(60, 410, 250, 50);
+		add(btnAddToCollection);
+
+	}
+
+	public void addAddToCollectionListener(ActionListener a) {
+		btnAddToCollection.addActionListener(a);
+	}
+
+	public void createCollectionListPopup(DefaultListModel<String> collectionsName) {
+		collectionsPanel = new JPanel();
+		collectionsPanel.setPreferredSize(new Dimension(200, 250));
+		if (collectionsName.size() == 0) {
+			JLabel lblNoCollection = new JLabel("Non sono presenti collezioni qui");
+			lblNoCollection.setBounds(0, 0, 200, 50);
+			collectionsPanel.add(lblNoCollection);
+		} else {
+			collectionsList = new JList(collectionsName);
+			collectionsList.setBounds(0, 0, 190, 150);
+			collectionsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+			collectionsList.setBackground(null);
+			collectionsList.setFont(panelFont);
+			collectionsList.setFixedCellWidth(collectionsList.getWidth());
+			collectionsList.setBorder(new LineBorder(Color.BLACK));
+			JScrollPane scrollPane = new JScrollPane(this, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+					JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+			scrollPane.setViewportView(collectionsList);
+			scrollPane.setBounds(0, 0, 200, 150);
+			collectionsPanel.add(scrollPane);
+		}
+	}
+
+	public String showCollectionsListPopup() {
+		JOptionPane.showMessageDialog(this, collectionsPanel, "Scegli la collezione", JOptionPane.QUESTION_MESSAGE);
+		return (String) collectionsList.getSelectedValue();
+	}
+
+	public void showNoSelectedPopup() {
+		JOptionPane.showMessageDialog(this, "Attenzione, non hai selezionato alcuna collezione");
+	}
+
+	public void showErrorPopup() {
+		JOptionPane.showMessageDialog(this, "Attenzione, è già presente questa carta nella collezione selezionata");
+	}
+
+	public void showCorrectInsertPopup() {
+		JOptionPane.showMessageDialog(this, "Inserimento avvenuto correttamente");
 	}
 
 	public void setSpecsCartaStrumento(CartaStrumento carta) {
@@ -559,4 +620,5 @@ public class CartaPanel extends JPanel {
 	public void addBackListener(ActionListener a) {
 		btnBack.addActionListener(a);
 	}
+
 }

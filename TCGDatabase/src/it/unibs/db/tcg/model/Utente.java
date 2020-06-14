@@ -69,6 +69,15 @@ public class Utente {
 		return listModel;
 	}
 
+	public DefaultListModel<String> getDefaultListModelPublicCollections() {
+		DefaultListModel<String> listModel = new DefaultListModel<>();
+		for (Collezione c : collezioni) {
+			if (c.isVisibile())
+				listModel.addElement(c.getNomeCollezione());
+		}
+		return listModel;
+	}
+
 	public Collezione getCollezioneByNome(String nomeCollezione) {
 		for (int i = 0; i < collezioni.size(); i++) {
 			if (collezioni.get(i).getNomeCollezione().equals(nomeCollezione))
@@ -85,6 +94,7 @@ public class Utente {
 	}
 
 	public void setCollections(List<String> collections) {
+		collezioni = new ArrayList<>();
 		for (String s : collections)
 			collezioni.add(new Collezione(s));
 	}

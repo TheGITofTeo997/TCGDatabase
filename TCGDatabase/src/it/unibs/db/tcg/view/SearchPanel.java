@@ -172,7 +172,7 @@ public class SearchPanel extends JPanel {
 		cardPanel.add(cardSLblPS);
 
 		lblPSUpperRange = new JLabel("500");
-		lblPSUpperRange.setBounds(740, 0, 30, 50);
+		lblPSUpperRange.setBounds(740, 0, 40, 50);
 		lblPSUpperRange.setForeground(foregroundColor);
 		lblPSUpperRange.setFont(panelFont);
 		lblPSUpperRange.setVisible(false);
@@ -211,17 +211,17 @@ public class SearchPanel extends JPanel {
 		cardSLbValue.setFont(panelFont);
 		cardPanel.add(cardSLbValue);
 
-		lblValueUpperRange = new JLabel("500");
-		lblValueUpperRange.setBounds(740, 60, 30, 50);
+		lblValueUpperRange = new JLabel("1000");
+		lblValueUpperRange.setBounds(740, 60, 40, 50);
 		lblValueUpperRange.setForeground(foregroundColor);
 		lblValueUpperRange.setFont(panelFont);
 		cardPanel.add(lblValueUpperRange);
 
-		valueRange = new RangeSlider(0, 500);
+		valueRange = new RangeSlider(0, 1000);
 		valueRange.setBounds(430, 60, 300, 50);
 		valueRange.setLowerValue(0);
 		valueRange.setBackground(null);
-		valueRange.setUpperValue(500);
+		valueRange.setUpperValue(1000);
 		cardPanel.add(valueRange);
 		valueRange.addChangeListener(e -> valueSliderChanged());
 
