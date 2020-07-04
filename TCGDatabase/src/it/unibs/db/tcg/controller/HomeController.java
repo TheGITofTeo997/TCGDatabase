@@ -9,78 +9,79 @@ import it.unibs.db.tcg.model.ConnectorService;
 import it.unibs.db.tcg.model.Utente;
 import it.unibs.db.tcg.view.HomePanel;
 
-public class HomeController extends Controller{
-	
-	private HomePanel homePan;
-private JFrame frame;
-	
+public class HomeController extends Controller {
+
+	private HomePanel homePanel;
+	private JFrame frame;
+
 	public HomeController(JFrame frame) {
 		this.frame = frame;
 	}
+
 	public void drawHomePanel(String username) {
 		Utente user = connectorService.getUser(username);
 		user.setCollections(connectorService.getUserCollections(user.getNickname()));
-		homePan = new HomePanel();
-		homePan.setBounds(0, 0, 800, 600);
-		frame.getContentPane().add(homePan);
+		homePanel = new HomePanel();
+		homePanel.setBounds(0, 0, 800, 600);
+		frame.getContentPane().add(homePanel);
 
-		homePan.setAvatar(user.getAvatar());
-		homePan.setNickname(user.getNickname());
+		homePanel.setAvatar(user.getAvatar());
+		homePanel.setNickname(user.getNickname());
 
-		homePan.addAccountListener(new ActionListener() {
+		homePanel.addAccountListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				homePan.setVisible(false);
+				homePanel.setVisible(false);
 				user.setTotalCardsValue(connectorService.getUserTotalCardsValue(user.getNickname()));
 				AccountController accountController = new AccountController(frame);
 				accountController.drawAccountPanel(user.getNickname());
 			}
 		});
 
-		homePan.addBackListener(new ActionListener() {
+		homePanel.addBackListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (homePan.showConfirmDialog() == 0) {
-					homePan.setVisible(false);
+				if (homePanel.showConfirmDialog() == 0) {
+					homePanel.setVisible(false);
 					LoginController loginController = new LoginController(frame);
 					loginController.drawLoginPanel();
 				}
 			}
 		});
 
-		homePan.addSearchListener(new ActionListener() {
+		homePanel.addSearchListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				homePan.setVisible(false);
+				homePanel.setVisible(false);
 				SearchController searchController = new SearchController(frame);
 				searchController.drawSearchPanel(user);
 
 			}
 		});
 
-		homePan.addNewCollectionListener(new ActionListener() {
+		homePanel.addNewCollectionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (homePan.showNewCollectionPopup()) {
-					String name = homePan.getNameTextField();
+				if (homePanel.showNewCollectionPopup()) {
+					String name = homePanel.getNameTextField();
 					if (!connectorService.hasUserCollection(user.getNickname(), name)) {
-						String visible = homePan.getVisibileField();
+						String visible = homePanel.getVisibileField();
 						int num = 0;
 						if (visible.equals("Visibile"))
 							num = 1;
 						connectorService.createCollection(user.getNickname(), name, num);
 					} else
-						homePan.showErrorPopup();
+						homePanel.showErrorPopup();
 				}
 			}
 		});
 
-		homePan.addRandomCardListener(new ActionListener() {
+		homePanel.addRandomCardListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				homePan.showRandomCardPopup(connectorService.getRandomCard());
+				homePanel.showRandomCardPopup(connectorService.getRandomCard());
 			}
 		});
 	}
-	
+
 }

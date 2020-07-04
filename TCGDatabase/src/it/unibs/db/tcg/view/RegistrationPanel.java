@@ -56,7 +56,7 @@ public class RegistrationPanel extends JPanel {
 		nicknameTextField.setFont(panelFont);
 		add(nicknameTextField);
 
-		JLabel lblName = new JLabel("Name");
+		JLabel lblName = new JLabel("Name *");
 		lblName.setForeground(foregroundColor);
 		lblName.setBounds(50, 100, 100, 25);
 		lblName.setForeground(foregroundColor);
@@ -68,7 +68,7 @@ public class RegistrationPanel extends JPanel {
 		nameTextField.setFont(panelFont);
 		add(nameTextField);
 
-		JLabel lblMail = new JLabel("Mail");
+		JLabel lblMail = new JLabel("Mail *");
 		lblMail.setForeground(foregroundColor);
 		lblMail.setBounds(50, 150, 100, 25);
 		lblMail.setForeground(foregroundColor);
@@ -96,7 +96,7 @@ public class RegistrationPanel extends JPanel {
 		lblAvatar.setIcon(icon);
 		add(lblAvatar);
 
-		JButton btnChooser = new JButton("Scegli file");
+		JButton btnChooser = new JButton("Scegli il file");
 		btnChooser.setBounds(50, 535, 250, 25);
 		btnChooser.setFont(panelFont);
 		add(btnChooser);

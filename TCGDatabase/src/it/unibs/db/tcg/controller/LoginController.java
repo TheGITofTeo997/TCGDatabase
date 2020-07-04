@@ -19,8 +19,8 @@ public class LoginController extends Controller {
 
 
 
-	private LoginPanel logPan;
-	private RegistrationPanel regPan;
+	private LoginPanel loginPanel;
+	
 	
 	private JFrame frame;
 	
@@ -29,71 +29,30 @@ public class LoginController extends Controller {
 	}
 	
 	public void drawLoginPanel() {
-		logPan = new LoginPanel();
-		logPan.setBounds(0, 0, 800, 600);
-		frame.getContentPane().add(logPan);
-		logPan.addHomeListener(new ActionListener() {
+		loginPanel = new LoginPanel();
+		loginPanel.setBounds(0, 0, 800, 600);
+		frame.getContentPane().add(loginPanel);
+		loginPanel.addHomeListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (logPan.getLoginField().equals(null) || !connectorService.isUserExistant(logPan.getLoginField()))
-					logPan.showErrorPopup();
+				if (loginPanel.getLoginField().equals(null) || !connectorService.isUserExistant(loginPanel.getLoginField()))
+					loginPanel.showErrorPopup();
 				else {
-					logPan.setVisible(false);
+					loginPanel.setVisible(false);
 					HomeController homeController = new HomeController(frame);
-					homeController.drawHomePanel(logPan.getLoginField());
+					homeController.drawHomePanel(loginPanel.getLoginField());
 				}
 			}
 		});
-		logPan.addRegistrationListener(new ActionListener() {
+		loginPanel.addRegistrationListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				logPan.setVisible(false);
-				drawRegistrationPanel();
+				loginPanel.setVisible(false);
+				RegistrationController registrationController = new RegistrationController(frame);
+				registrationController.drawRegistrationPanel();
 			}
 		});
 	}
 
-	public void drawRegistrationPanel() {
-		regPan = new RegistrationPanel();
-		regPan.setBounds(0, 0, 800, 600);
-		frame.getContentPane().add(regPan);
 
-		regPan.addBackListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				regPan.setVisible(false);
-				drawLoginPanel();
-			}
-		});
-
-		regPan.addRegisterListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				String nickname = regPan.getNicknameText();
-				if (nickname.length() == 0 || connectorService.isUserExistant(nickname)) {
-					regPan.showNicknameErrorPopup();
-				} else {
-					Utente user = new Utente();
-					String name = regPan.getNameText();
-					String mail = regPan.getMailText();
-					Icon icon = regPan.getAvatarImage();
-					if (!name.matches(Strings.USERNAME_REGEX)) {
-						regPan.showNameErrorPopup();
-					} else if (!mail.matches(Strings.MAIL_REGEX)) {
-						regPan.showMailErrorPopup();
-					} else {
-						user.setNickname(nickname);
-						user.setNomeUtente(name);
-						user.setMail(mail);
-						user.setAvatar(((ImageIcon) icon));
-						connectorService.createUser(user);
-						regPan.setVisible(false);
-						AccountController accountController = new AccountController(frame);
-						accountController.drawAccountPanel(user.getNickname());
-					}
-				}
-			}
-		});
-
-	}
 }

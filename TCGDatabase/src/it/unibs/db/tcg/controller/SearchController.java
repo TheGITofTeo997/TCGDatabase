@@ -12,52 +12,52 @@ import it.unibs.db.tcg.model.Utente;
 import it.unibs.db.tcg.view.SearchPanel;
 
 public class SearchController extends Controller {
-	
-	private SearchPanel srcPan;
-	
-private JFrame frame;
-	
+
+	private SearchPanel searchPanel;
+
+	private JFrame frame;
+
 	public SearchController(JFrame frame) {
 		this.frame = frame;
 	}
-	
-	public void drawSearchPanel(Utente user) {
-		srcPan = new SearchPanel();
-		srcPan.setBounds(0, 0, 800, 600);
-		frame.getContentPane().add(srcPan);
 
-		srcPan.addBackListener(new ActionListener() {
+	public void drawSearchPanel(Utente user) {
+		searchPanel = new SearchPanel();
+		searchPanel.setBounds(0, 0, 800, 600);
+		frame.getContentPane().add(searchPanel);
+
+		searchPanel.addBackListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				srcPan.setVisible(false);
+				searchPanel.setVisible(false);
 				HomeController homeController = new HomeController(frame);
 				homeController.drawHomePanel(user.getNickname());
 			}
 		});
 
-		srcPan.addUserSearchListener(new ActionListener() {
+		searchPanel.addUserSearchListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String name = srcPan.getUserNameField();
-				srcPan.setVisible(false);
+				String name = searchPanel.getUserNameField();
+				searchPanel.setVisible(false);
 				UsersController usersController = new UsersController(frame);
 				usersController.drawUsersPanel(user, connectorService.getSearchResult(name));
 			}
 		});
 
-		srcPan.addCardSearchListener(new ActionListener() {
+		searchPanel.addCardSearchListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String cardName = srcPan.getCardNameField();
-				String exp = srcPan.getCardExpField();
-				String cardIllustrator = srcPan.getCardIllustratorField();
-				int lowerPSValue = srcPan.getPSBarLowerValue();
-				int upperPSValue = srcPan.getPSBarUpperValue();
-				int lowerValueBarValue = srcPan.getValueBarLowerValue();
-				int upperValueBarValue = srcPan.getValueBarUpperValue();
-				List<String> cardType = srcPan.getCardTypeSelected();
-				List<String> energyType = srcPan.getEnergyTypeSelected();
-				List<String> rarityType = srcPan.getRaritySelected();
+				String cardName = searchPanel.getCardNameField();
+				String exp = searchPanel.getCardExpField();
+				String cardIllustrator = searchPanel.getCardIllustratorField();
+				int lowerPSValue = searchPanel.getPSBarLowerValue();
+				int upperPSValue = searchPanel.getPSBarUpperValue();
+				int lowerValueBarValue = searchPanel.getValueBarLowerValue();
+				int upperValueBarValue = searchPanel.getValueBarUpperValue();
+				List<String> cardType = searchPanel.getCardTypeSelected();
+				List<String> energyType = searchPanel.getEnergyTypeSelected();
+				List<String> rarityType = searchPanel.getRaritySelected();
 
 				CardSearchObject s = new CardSearchObject();
 				s.setCardName(cardName);
@@ -72,9 +72,9 @@ private JFrame frame;
 				s.setRarityType(rarityType);
 
 				List<Carta> carte_trovate = connectorService.getSearchResult(s);
-				srcPan.setVisible(false);
+				searchPanel.setVisible(false);
 				CardsController cardsController = new CardsController(frame);
-				cardsController.drawCardsPanel(user, "Carte trovate", carte_trovate, null, null,true);
+				cardsController.drawCardsPanel(user, "Carte trovate", carte_trovate, null, null, true);
 
 			}
 		});

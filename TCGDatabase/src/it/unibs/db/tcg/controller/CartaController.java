@@ -18,64 +18,66 @@ import it.unibs.db.tcg.view.CartaPanel;
 
 public class CartaController extends Controller {
 
-	private CartaPanel carPan;
-	
+	private CartaPanel cardPanel;
+
 	private JFrame frame;
-	
+
 	public CartaController(JFrame frame) {
 		this.frame = frame;
 	}
-	
+
 	public void drawCartaPanel(Utente user, String title, List<Carta> cardsName, Carta c, List<Utente> utenti,
 			Utente toVisit) {
-		carPan = new CartaPanel();
-		carPan.setBounds(0, 0, 800, 600);
-		frame.getContentPane().add(carPan);
+		cardPanel = new CartaPanel();
+		cardPanel.setBounds(0, 0, 800, 600);
+		frame.getContentPane().add(cardPanel);
 
 		for (String collection : connectorService.getUserCollections(user.getNickname())) {
-			if (connectorService.isThereCardInCollection(user.getNickname(), collection, c.getNumero(), c.getAbbrEspansione())) {
-				carPan.setVisibleRemoveCardButton();
+			if (connectorService.isThereCardInCollection(user.getNickname(), collection, c.getNumero(),
+					c.getAbbrEspansione())) {
+				cardPanel.setVisibleRemoveCardButton();
 			}
 		}
 
 		String cardType = connectorService.getCardType(c.getNumero(), c.getAbbrEspansione());
 		switch (cardType) {
 		case Strings.CARTA_POKEMON_BASE:
-			carPan.setSpecsCartaPokemon((CartaPokemonBase) c);
+			cardPanel.setSpecsCartaPokemon((CartaPokemonBase) c);
 			break;
 		case Strings.CARTA_POKEMON_SPECIALE:
-			carPan.setSpecsCartaPokemon((CartaPokemonSpeciale) c);
+			cardPanel.setSpecsCartaPokemon((CartaPokemonSpeciale) c);
 			break;
 		case Strings.CARTA_STRUMENTO:
-			carPan.setSpecsCartaStrumento((CartaStrumento) c);
+			cardPanel.setSpecsCartaStrumento((CartaStrumento) c);
 			break;
 		case Strings.CARTA_ENERGIA:
-			carPan.setSpecsCartaEnergia((CartaEnergia) c);
+			cardPanel.setSpecsCartaEnergia((CartaEnergia) c);
 			break;
 
 		}
 
-		carPan.addAddToCollectionListener(new ActionListener() {
+		cardPanel.addAddToCollectionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				carPan.createCollectionListPopup(user.getDefaultListModelCollections());
-				String selectedCollection = carPan.showCollectionsListPopup();
+				cardPanel.createCollectionListPopup(user.getDefaultListModelCollections());
+				String selectedCollection = cardPanel.showCollectionsListPopup();
 				if (selectedCollection != null) {
 					if (!connectorService.isThereCardInCollection(user.getNickname(), selectedCollection, c.getNumero(),
 							c.getAbbrEspansione())) {
-						connectorService.insertCardInCollection(user.getNickname(), selectedCollection, c.getNumero(), c.getAbbrEspansione());
-						carPan.showCorrectInsertPopup();
+						connectorService.insertCardInCollection(user.getNickname(), selectedCollection, c.getNumero(),
+								c.getAbbrEspansione());
+						cardPanel.showCorrectInsertPopup();
 					} else
-						carPan.showErrorPopup();
+						cardPanel.showErrorPopup();
 					drawCartaPanel(user, title, cardsName, c, utenti, toVisit);
 				} else {
-					carPan.showNoSelectedPopup();
+					cardPanel.showNoSelectedPopup();
 					drawCartaPanel(user, title, cardsName, c, utenti, toVisit);
 				}
 			}
 		});
 
-		carPan.addRemoveCardListener(new ActionListener() {
+		cardPanel.addRemoveCardListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				DefaultListModel<String> listModel = new DefaultListModel<>();
@@ -85,34 +87,35 @@ public class CartaController extends Controller {
 						listModel.addElement(collection);
 					}
 				}
-				carPan.createCollectionListPopup(listModel);
-				String selectedCollection = carPan.showCollectionsListPopup();
+				cardPanel.createCollectionListPopup(listModel);
+				String selectedCollection = cardPanel.showCollectionsListPopup();
 				if (selectedCollection != null) {
 					if (connectorService.isThereCardInCollection(user.getNickname(), selectedCollection, c.getNumero(),
 							c.getAbbrEspansione())) {
-						connectorService.removeCardFromCollection(selectedCollection, c.getNumero(), c.getAbbrEspansione());
-						carPan.setVisible(false);
+						connectorService.removeCardFromCollection(selectedCollection, c.getNumero(),
+								c.getAbbrEspansione());
+						cardPanel.setVisible(false);
 						drawCartaPanel(user, title, cardsName, c, utenti, toVisit);
-						carPan.repaint();
+						cardPanel.repaint();
 					} else {
-						carPan.showErrorPopup();
-						carPan.setVisible(false);
+						cardPanel.showErrorPopup();
+						cardPanel.setVisible(false);
 						drawCartaPanel(user, title, cardsName, c, utenti, toVisit);
 					}
 
 				} else {
-					carPan.showNoSelectedPopup();
-					carPan.setVisible(false);
+					cardPanel.showNoSelectedPopup();
+					cardPanel.setVisible(false);
 					drawCartaPanel(user, title, cardsName, c, utenti, toVisit);
 				}
-				
+
 			}
 		});
 
-		carPan.addBackListener(new ActionListener() {
+		cardPanel.addBackListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				carPan.setVisible(false);
+				cardPanel.setVisible(false);
 				CardsController cardsController = new CardsController(frame);
 				if (toVisit == null)
 					cardsController.drawCardsPanel(user, title, cardsName, null, null, false);

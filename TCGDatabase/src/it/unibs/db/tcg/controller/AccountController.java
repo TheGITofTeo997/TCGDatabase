@@ -13,61 +13,62 @@ import it.unibs.db.tcg.model.Utente;
 import it.unibs.db.tcg.view.AccountPanel;
 import it.unibs.db.tcg.view.HomePanel;
 
-public class AccountController extends Controller{
+public class AccountController extends Controller {
 
-	private AccountPanel acPan;
-	
+	private AccountPanel accountPanel;
+
 	private JFrame frame;
-	
+
 	public AccountController(JFrame frame) {
 		this.frame = frame;
 	}
-	
+
 	public void drawAccountPanel(String username) {
-		
+
 		Utente user = connectorService.getUser(username);
 		user.setCollections(connectorService.getUserCollections(user.getNickname()));
-		
-		acPan = new AccountPanel();
-		acPan.setBounds(0, 0, 800, 600);
-		frame.getContentPane().add(acPan);
 
-		acPan.setNickname(user.getNickname());
-		acPan.setMail(user.getMail());
-		acPan.setAvatar(user.getAvatar());
-		acPan.setUserName(user.getNomeUtente());
-		acPan.setRegistrationDate(user.getDataRegistrazione().toString());
-		acPan.setTotalValue(connectorService.getUserTotalCardsValue(user.getNickname()));
+		accountPanel = new AccountPanel();
+		accountPanel.setBounds(0, 0, 800, 600);
+		frame.getContentPane().add(accountPanel);
+
+		accountPanel.setNickname(user.getNickname());
+		accountPanel.setMail(user.getMail());
+		accountPanel.setAvatar(user.getAvatar());
+		accountPanel.setUserName(user.getNomeUtente());
+		accountPanel.setRegistrationDate(user.getDataRegistrazione().toString());
+		accountPanel.setTotalValue(connectorService.getUserTotalCardsValue(user.getNickname()));
 		user.setCollections(connectorService.getUserCollections(user.getNickname()));
-		acPan.setCollections(user.getDefaultListModelCollections());
+		accountPanel.setCollections(user.getDefaultListModelCollections());
 
-		acPan.addCollectionListener(new ListSelectionListener() {
+		accountPanel.addCollectionListener(new ListSelectionListener() {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
 				if (!e.getValueIsAdjusting()) {
-					String collection = user.getDefaultListModelCollections().get(acPan.getListSelectedIndex());
+					String collection = user.getDefaultListModelCollections().get(accountPanel.getListSelectedIndex());
 					Collezione c = new Collezione(collection);
 					c.setCarteCollezione(connectorService.getCardsFromCollection(user.getNickname(), collection));
-					acPan.setVisible(false);
+					accountPanel.setVisible(false);
 					CardsController cardsController = new CardsController(frame);
-					cardsController.drawCardsPanel(user, "Carte della Collezione " + collection, c.getCardsList(), null, null, false);
+					cardsController.drawCardsPanel(user, "Carte della Collezione " + collection, c.getCardsList(), null,
+							null, false);
 				}
 			}
 		});
 
-		acPan.addEditListener(new ActionListener() {
+		accountPanel.addEditListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				acPan.setVisible(false);
+				accountPanel.setVisible(false);
 				EditController editController = new EditController(frame);
 				editController.drawEditPanel(user);
 			}
 		});
 
-		acPan.addBackListener(new ActionListener() {
+		accountPanel.addBackListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				acPan.setVisible(false);
+				accountPanel.setVisible(false);
 				HomeController homeController = new HomeController(frame);
 				homeController.drawHomePanel(user.getNickname());
 			}

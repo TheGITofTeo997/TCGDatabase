@@ -22,7 +22,7 @@ public class Controller {
 	public Controller() {
 		connectorService = new ConnectorService();
 	}
-	
+
 	public void buildFrame() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -46,5 +46,5 @@ public class Controller {
 			}
 		});
 	}
-	
+
 }

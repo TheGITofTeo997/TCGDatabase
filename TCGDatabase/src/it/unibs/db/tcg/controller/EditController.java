@@ -13,110 +13,111 @@ import it.unibs.db.tcg.model.Strings;
 import it.unibs.db.tcg.model.Utente;
 import it.unibs.db.tcg.view.EditPanel;
 
-public class EditController extends Controller{
-	
-	private EditPanel edPan;
-	
-private JFrame frame;
-	
+public class EditController extends Controller {
+
+	private EditPanel editPanel;
+
+	private JFrame frame;
+
 	public EditController(JFrame frame) {
 		this.frame = frame;
 	}
-	
-	public void drawEditPanel(Utente user) {
-		edPan = new EditPanel();
-		edPan.setBounds(0, 0, 800, 600);
-		frame.getContentPane().add(edPan);
-		edPan.setNickname(user.getNickname());
-		edPan.setUserName(user.getNomeUtente());
-		edPan.setMail(user.getMail());
-		edPan.setName(user.getNomeUtente());
-		edPan.setAvatar(user.getAvatar());
 
-		edPan.addEditNameListener(new ActionListener() {
+	public void drawEditPanel(Utente user) {
+		editPanel = new EditPanel();
+		editPanel.setBounds(0, 0, 800, 600);
+		frame.getContentPane().add(editPanel);
+		editPanel.setNickname(user.getNickname());
+		editPanel.setUserName(user.getNomeUtente());
+		editPanel.setMail(user.getMail());
+		editPanel.setName(user.getNomeUtente());
+		editPanel.setAvatar(user.getAvatar());
+
+		editPanel.addEditNameListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String result = edPan.showEditPopup();
+				String result = editPanel.showEditPopup();
 				if (result != null) {
 					if (result.matches(Strings.USERNAME_REGEX) && result.length() > 2) {
 						connectorService.updateUserName(user.getNickname(), result);
 						user.setNomeUtente(result);
-						edPan.setUserName(result);
-						edPan.showCorrectPopup();
+						editPanel.setUserName(result);
+						editPanel.showCorrectPopup();
 					} else
-						edPan.showErrorPopup();
+						editPanel.showErrorPopup();
 				}
 			}
 		});
 
-		edPan.addEditMailListener(new ActionListener() {
+		editPanel.addEditMailListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String result = edPan.showEditPopup();
+				String result = editPanel.showEditPopup();
 				if (result != null) {
 					Pattern p = Pattern.compile(Strings.MAIL_REGEX, Pattern.CASE_INSENSITIVE);
 					Matcher matcher = p.matcher(result);
 					if (matcher.find()) {
 						connectorService.updateMail(user.getNickname(), result);
 						user.setMail(result);
-						edPan.setMail(result);
-						edPan.showCorrectPopup();
+						editPanel.setMail(result);
+						editPanel.showCorrectPopup();
 					} else
-						edPan.showErrorPopup();
+						editPanel.showErrorPopup();
 				}
 
 			}
 		});
 
-		edPan.addEditAvatarListener(new ActionListener() {
+		editPanel.addEditAvatarListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ImageIcon icon = edPan.chooseAvatar();
+				ImageIcon icon = editPanel.chooseAvatar();
 				if (icon != null) {
-					edPan.setAvatar(icon);
+					editPanel.setAvatar(icon);
 					user.setAvatar(icon);
 					connectorService.updateAvatar(user.getNickname(), icon);
-					edPan.showCorrectPopup();
+					editPanel.showCorrectPopup();
 				}
 
 			}
 		});
 
-		edPan.addDeleteAvatarListener(new ActionListener() {
+		editPanel.addDeleteAvatarListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (edPan.showConfirmPopup("Vuoi eliminare definitivamente l'avatar del profilo?")) {
+				if (editPanel.showConfirmPopup("Vuoi eliminare definitivamente l'avatar del profilo?")) {
 					ImageIcon icon = new ImageIcon("resources//default_avatar.jpg");
-					edPan.setAvatar(icon);
+					editPanel.setAvatar(icon);
 					user.setAvatar(icon);
 					connectorService.updateAvatar(user.getNickname(), icon);
-					edPan.showCorrectPopup();
+					editPanel.showCorrectPopup();
 				}
 			}
 		});
-		
-		edPan.addDeleteCollectionListener(new ActionListener() {
+
+		editPanel.addDeleteCollectionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				DefaultListModel<String> listModel = new DefaultListModel<>();
 				for (String collection : connectorService.getUserCollections(user.getNickname())) {
-						listModel.addElement(collection);				
+					listModel.addElement(collection);
 				}
-				edPan.createCollectionListPopup(listModel);
-				String selectedCollection = edPan.showCollectionsListPopup();
+				editPanel.createCollectionListPopup(listModel);
+				String selectedCollection = editPanel.showCollectionsListPopup();
 				if (selectedCollection != null) {
-					if(edPan.showConfirmPopup("Sei sicuro di voler eliminare la collezione " + selectedCollection + " ?")) {
-						connectorService.deleteCollection(user.getNickname(), selectedCollection);						
+					if (editPanel.showConfirmPopup(
+							"Sei sicuro di voler eliminare la collezione " + selectedCollection + " ?")) {
+						connectorService.deleteCollection(user.getNickname(), selectedCollection);
 					}
 				}
-				edPan.setVisible(false);
+				editPanel.setVisible(false);
 				drawEditPanel(user);
 			}
 		});
 
-		edPan.addBackListener(new ActionListener() {
+		editPanel.addBackListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				edPan.setVisible(false);
+				editPanel.setVisible(false);
 				AccountController accountController = new AccountController(frame);
 				accountController.drawAccountPanel(user.getNickname());
 			}
