@@ -3,6 +3,7 @@ package it.unibs.db.tcg.view;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 
@@ -45,7 +47,7 @@ public class LoginPanel extends JPanel implements KeyListener {
 
 		setFocusable(true);
 		addKeyListener(this);
-
+		
 		loginTextField = new JTextField();
 		loginTextField.setBounds(WIDTH / 2 - 100, HEIGHT / 2 - 25, 200, 50);
 		add(loginTextField);
@@ -58,7 +60,7 @@ public class LoginPanel extends JPanel implements KeyListener {
 		lblLogin.setBounds(WIDTH / 2 - loginTextField.getWidth(), HEIGHT / 2 - loginTextField.getHeight() / 2, 100, 50);
 		lblLogin.setFont(panelFont.deriveFont(Font.BOLD));
 		add(lblLogin);
-
+		
 		btnLogin = new JButton("Login");
 		btnLogin.setFont(panelFont);
 		btnLogin.setBounds(WIDTH / 2 - 100, HEIGHT / 2 + 100, 200, 50);
@@ -68,6 +70,25 @@ public class LoginPanel extends JPanel implements KeyListener {
 		btnRegister.setFont(panelFont);
 		btnRegister.setBounds(300, 500, 200, 50);
 		add(btnRegister);
+		
+		JLabel lblLogo = new JLabel();
+		lblLogo.setBounds(-20, 0, 800, 200);
+		ImageIcon icon = new ImageIcon("resources//login_logo.png");
+		Image image = icon.getImage();
+		icon = new ImageIcon(image);
+		image = image.getScaledInstance(lblLogo.getWidth(), lblLogo.getHeight(), Image.SCALE_SMOOTH);
+		lblLogo.setIcon(icon);
+		add(lblLogo);
+		
+		JLabel lblCharizardBackgroundLogin = new JLabel();
+		lblCharizardBackgroundLogin.setBounds(400, 250, 400, 400);
+		icon = new ImageIcon("resources//login_charizard.png");
+		image = icon.getImage();
+		icon = new ImageIcon(image);
+		image = image.getScaledInstance(lblCharizardBackgroundLogin.getWidth(), lblCharizardBackgroundLogin.getHeight(), Image.SCALE_SMOOTH);
+		lblCharizardBackgroundLogin.setIcon(icon);
+		add(lblCharizardBackgroundLogin);
+
 	
 
 	}
