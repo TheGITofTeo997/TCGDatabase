@@ -8,7 +8,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import it.unibs.db.tcg.model.Collezione;
-import it.unibs.db.tcg.model.ModelGod;
+import it.unibs.db.tcg.model.ConnectorService;
 import it.unibs.db.tcg.model.Utente;
 import it.unibs.db.tcg.view.AccountPanel;
 import it.unibs.db.tcg.view.HomePanel;
@@ -25,8 +25,8 @@ public class AccountController extends Controller{
 	
 	public void drawAccountPanel(String username) {
 		
-		Utente user = model.getUser(username);
-		user.setCollections(model.getUserCollections(user.getNickname()));
+		Utente user = connectorService.getUser(username);
+		user.setCollections(connectorService.getUserCollections(user.getNickname()));
 		
 		acPan = new AccountPanel();
 		acPan.setBounds(0, 0, 800, 600);
@@ -37,8 +37,8 @@ public class AccountController extends Controller{
 		acPan.setAvatar(user.getAvatar());
 		acPan.setUserName(user.getNomeUtente());
 		acPan.setRegistrationDate(user.getDataRegistrazione().toString());
-		acPan.setTotalValue(model.getUserTotalCardsValue(user.getNickname()));
-		user.setCollections(model.getUserCollections(user.getNickname()));
+		acPan.setTotalValue(connectorService.getUserTotalCardsValue(user.getNickname()));
+		user.setCollections(connectorService.getUserCollections(user.getNickname()));
 		acPan.setCollections(user.getDefaultListModelCollections());
 
 		acPan.addCollectionListener(new ListSelectionListener() {
@@ -47,7 +47,7 @@ public class AccountController extends Controller{
 				if (!e.getValueIsAdjusting()) {
 					String collection = user.getDefaultListModelCollections().get(acPan.getListSelectedIndex());
 					Collezione c = new Collezione(collection);
-					c.setCarteCollezione(model.getCardsFromCollection(user.getNickname(), collection));
+					c.setCarteCollezione(connectorService.getCardsFromCollection(user.getNickname(), collection));
 					acPan.setVisible(false);
 					CardsController cardsController = new CardsController(frame);
 					cardsController.drawCardsPanel(user, "Carte della Collezione " + collection, c.getCardsList(), null, null, false);

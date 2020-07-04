@@ -31,12 +31,12 @@ private JFrame frame;
 			public void valueChanged(ListSelectionEvent e) {
 				if (!e.getValueIsAdjusting()) {
 					Utente u = utenti.get(usPan.getListSelectedIndex());
-					// Carta card = model.getCardFromNumberAndAbbrEspansione(c.getNumero(),
+					// Carta card = connectorService.getCardFromNumberAndAbbrEspansione(c.getNumero(),
 					// c.getAbbrEspansione());
 					usPan.setVisible(false);
 					String nickname = u.getNickname();
-					u.setTotalCardsValue(model.getUserTotalCardsValue(nickname));
-					u.setCollections(model.getPublicUserCollections(nickname));
+					u.setTotalCardsValue(connectorService.getUserTotalCardsValue(nickname));
+					u.setCollections(connectorService.getPublicUserCollections(nickname));
 					usPan.setVisible(false);
 					VisitorAccountController visitorAccountController = new VisitorAccountController(frame);
 					visitorAccountController.drawVisitorAccountPanel(user, utenti, u);

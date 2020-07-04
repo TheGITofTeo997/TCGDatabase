@@ -7,20 +7,20 @@ import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import it.unibs.db.tcg.model.ModelGod;
+import it.unibs.db.tcg.model.ConnectorService;
 import it.unibs.db.tcg.model.Strings;
 import it.unibs.db.tcg.view.LoginPanel;
 
 public class Controller {
 
-	protected ModelGod model;
+	protected ConnectorService connectorService;
 
 	private LoginController loginController;
 
 	private JFrame frame;
 
 	public Controller() {
-		model = new ModelGod();
+		connectorService = new ConnectorService();
 	}
 	
 	public void buildFrame() {

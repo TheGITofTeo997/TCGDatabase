@@ -39,7 +39,7 @@ public class VisitorAccountController extends Controller {
 				if (!e.getValueIsAdjusting()) {
 					String collection = toVisit.getDefaultListModelCollections().get(visPan.getListSelectedIndex());
 					Collezione c = new Collezione(collection);
-					c.setCarteCollezione(model.getCardsFromCollection(toVisit.getNickname(), collection));
+					c.setCarteCollezione(connectorService.getCardsFromCollection(toVisit.getNickname(), collection));
 					visPan.setVisible(false);
 					CardsController cardsController = new CardsController(frame);
 					cardsController.drawCardsPanel(user, "Carte della Collezione " + collection, c.getCardsList(), utenti, toVisit, false);

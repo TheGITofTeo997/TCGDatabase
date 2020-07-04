@@ -41,7 +41,7 @@ private JFrame frame;
 				String name = srcPan.getUserNameField();
 				srcPan.setVisible(false);
 				UsersController usersController = new UsersController(frame);
-				usersController.drawUsersPanel(user, model.getSearchResult(name));
+				usersController.drawUsersPanel(user, connectorService.getSearchResult(name));
 			}
 		});
 
@@ -71,7 +71,7 @@ private JFrame frame;
 				s.setEnergyType(energyType);
 				s.setRarityType(rarityType);
 
-				List<Carta> carte_trovate = model.getSearchResult(s);
+				List<Carta> carte_trovate = connectorService.getSearchResult(s);
 				srcPan.setVisible(false);
 				CardsController cardsController = new CardsController(frame);
 				cardsController.drawCardsPanel(user, "Carte trovate", carte_trovate, null, null,true);

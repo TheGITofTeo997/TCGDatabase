@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 
-import it.unibs.db.tcg.model.ModelGod;
+import it.unibs.db.tcg.model.ConnectorService;
 import it.unibs.db.tcg.model.Utente;
 import it.unibs.db.tcg.view.HomePanel;
 
@@ -18,8 +18,8 @@ private JFrame frame;
 		this.frame = frame;
 	}
 	public void drawHomePanel(String username) {
-		Utente user = model.getUser(username);
-		user.setCollections(model.getUserCollections(user.getNickname()));
+		Utente user = connectorService.getUser(username);
+		user.setCollections(connectorService.getUserCollections(user.getNickname()));
 		homePan = new HomePanel();
 		homePan.setBounds(0, 0, 800, 600);
 		frame.getContentPane().add(homePan);
@@ -31,7 +31,7 @@ private JFrame frame;
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				homePan.setVisible(false);
-				user.setTotalCardsValue(model.getUserTotalCardsValue(user.getNickname()));
+				user.setTotalCardsValue(connectorService.getUserTotalCardsValue(user.getNickname()));
 				AccountController accountController = new AccountController(frame);
 				accountController.drawAccountPanel(user.getNickname());
 			}
@@ -63,12 +63,12 @@ private JFrame frame;
 			public void actionPerformed(ActionEvent e) {
 				if (homePan.showNewCollectionPopup()) {
 					String name = homePan.getNameTextField();
-					if (!model.hasUserCollection(user.getNickname(), name)) {
+					if (!connectorService.hasUserCollection(user.getNickname(), name)) {
 						String visible = homePan.getVisibileField();
 						int num = 0;
 						if (visible.equals("Visibile"))
 							num = 1;
-						model.createCollection(user.getNickname(), name, num);
+						connectorService.createCollection(user.getNickname(), name, num);
 					} else
 						homePan.showErrorPopup();
 				}
@@ -78,7 +78,7 @@ private JFrame frame;
 		homePan.addRandomCardListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				homePan.showRandomCardPopup(model.getRandomCard());
+				homePan.showRandomCardPopup(connectorService.getRandomCard());
 			}
 		});
 	}

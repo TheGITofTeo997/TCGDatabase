@@ -316,7 +316,7 @@ class RangeSliderUI extends BasicSliderUI {
 	}
 
 	/**
-	 * Listener to handle model change events. This calculates the thumb locations
+	 * Listener to handle connectorService change events. This calculates the thumb locations
 	 * and repaints the slider if the value change is not caused by dragging a
 	 * thumb.
 	 */

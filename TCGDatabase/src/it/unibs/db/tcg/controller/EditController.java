@@ -39,7 +39,7 @@ private JFrame frame;
 				String result = edPan.showEditPopup();
 				if (result != null) {
 					if (result.matches(Strings.USERNAME_REGEX) && result.length() > 2) {
-						model.updateUserName(user.getNickname(), result);
+						connectorService.updateUserName(user.getNickname(), result);
 						user.setNomeUtente(result);
 						edPan.setUserName(result);
 						edPan.showCorrectPopup();
@@ -57,7 +57,7 @@ private JFrame frame;
 					Pattern p = Pattern.compile(Strings.MAIL_REGEX, Pattern.CASE_INSENSITIVE);
 					Matcher matcher = p.matcher(result);
 					if (matcher.find()) {
-						model.updateMail(user.getNickname(), result);
+						connectorService.updateMail(user.getNickname(), result);
 						user.setMail(result);
 						edPan.setMail(result);
 						edPan.showCorrectPopup();
@@ -75,7 +75,7 @@ private JFrame frame;
 				if (icon != null) {
 					edPan.setAvatar(icon);
 					user.setAvatar(icon);
-					model.updateAvatar(user.getNickname(), icon);
+					connectorService.updateAvatar(user.getNickname(), icon);
 					edPan.showCorrectPopup();
 				}
 
@@ -88,7 +88,7 @@ private JFrame frame;
 					ImageIcon icon = new ImageIcon("resources//default_avatar.jpg");
 					edPan.setAvatar(icon);
 					user.setAvatar(icon);
-					model.updateAvatar(user.getNickname(), icon);
+					connectorService.updateAvatar(user.getNickname(), icon);
 					edPan.showCorrectPopup();
 				}
 			}
@@ -98,14 +98,14 @@ private JFrame frame;
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				DefaultListModel<String> listModel = new DefaultListModel<>();
-				for (String collection : model.getUserCollections(user.getNickname())) {
+				for (String collection : connectorService.getUserCollections(user.getNickname())) {
 						listModel.addElement(collection);				
 				}
 				edPan.createCollectionListPopup(listModel);
 				String selectedCollection = edPan.showCollectionsListPopup();
 				if (selectedCollection != null) {
 					if(edPan.showConfirmPopup("Sei sicuro di voler eliminare la collezione " + selectedCollection + " ?")) {
-						model.deleteCollection(user.getNickname(), selectedCollection);						
+						connectorService.deleteCollection(user.getNickname(), selectedCollection);						
 					}
 				}
 				edPan.setVisible(false);

@@ -34,7 +34,7 @@ private JFrame frame;
 			public void valueChanged(ListSelectionEvent e) {
 				if (!e.getValueIsAdjusting()) {
 					Carta c = cardsName.get(crdsPan.getListSelectedIndex());
-					Carta card = model.getCardFromNumberAndAbbrEspansione(c.getNumero(), c.getAbbrEspansione());
+					Carta card = connectorService.getCardFromNumberAndAbbrEspansione(c.getNumero(), c.getAbbrEspansione());
 					crdsPan.setVisible(false);
 					CartaController cartaController = new CartaController(frame);
 					if (toVisit == null)

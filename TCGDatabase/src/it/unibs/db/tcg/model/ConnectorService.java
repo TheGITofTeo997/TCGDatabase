@@ -12,7 +12,7 @@ import java.sql.Date;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
-public class ModelGod {
+public class ConnectorService {
 
 	// private Connector connector = new
 	// Connector("jdbc:mysql://192.168.1.124:3306/TCG_DB", "root", "R2mSDzoz");

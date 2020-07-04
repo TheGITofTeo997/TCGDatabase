@@ -32,13 +32,13 @@ public class CartaController extends Controller {
 		carPan.setBounds(0, 0, 800, 600);
 		frame.getContentPane().add(carPan);
 
-		for (String collection : model.getUserCollections(user.getNickname())) {
-			if (model.isThereCardInCollection(user.getNickname(), collection, c.getNumero(), c.getAbbrEspansione())) {
+		for (String collection : connectorService.getUserCollections(user.getNickname())) {
+			if (connectorService.isThereCardInCollection(user.getNickname(), collection, c.getNumero(), c.getAbbrEspansione())) {
 				carPan.setVisibleRemoveCardButton();
 			}
 		}
 
-		String cardType = model.getCardType(c.getNumero(), c.getAbbrEspansione());
+		String cardType = connectorService.getCardType(c.getNumero(), c.getAbbrEspansione());
 		switch (cardType) {
 		case Strings.CARTA_POKEMON_BASE:
 			carPan.setSpecsCartaPokemon((CartaPokemonBase) c);
@@ -61,9 +61,9 @@ public class CartaController extends Controller {
 				carPan.createCollectionListPopup(user.getDefaultListModelCollections());
 				String selectedCollection = carPan.showCollectionsListPopup();
 				if (selectedCollection != null) {
-					if (!model.isThereCardInCollection(user.getNickname(), selectedCollection, c.getNumero(),
+					if (!connectorService.isThereCardInCollection(user.getNickname(), selectedCollection, c.getNumero(),
 							c.getAbbrEspansione())) {
-						model.insertCardInCollection(user.getNickname(), selectedCollection, c.getNumero(), c.getAbbrEspansione());
+						connectorService.insertCardInCollection(user.getNickname(), selectedCollection, c.getNumero(), c.getAbbrEspansione());
 						carPan.showCorrectInsertPopup();
 					} else
 						carPan.showErrorPopup();
@@ -79,8 +79,8 @@ public class CartaController extends Controller {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				DefaultListModel<String> listModel = new DefaultListModel<>();
-				for (String collection : model.getUserCollections(user.getNickname())) {
-					if (model.isThereCardInCollection(user.getNickname(), collection, c.getNumero(),
+				for (String collection : connectorService.getUserCollections(user.getNickname())) {
+					if (connectorService.isThereCardInCollection(user.getNickname(), collection, c.getNumero(),
 							c.getAbbrEspansione())) {
 						listModel.addElement(collection);
 					}
@@ -88,9 +88,9 @@ public class CartaController extends Controller {
 				carPan.createCollectionListPopup(listModel);
 				String selectedCollection = carPan.showCollectionsListPopup();
 				if (selectedCollection != null) {
-					if (model.isThereCardInCollection(user.getNickname(), selectedCollection, c.getNumero(),
+					if (connectorService.isThereCardInCollection(user.getNickname(), selectedCollection, c.getNumero(),
 							c.getAbbrEspansione())) {
-						model.removeCardFromCollection(selectedCollection, c.getNumero(), c.getAbbrEspansione());
+						connectorService.removeCardFromCollection(selectedCollection, c.getNumero(), c.getAbbrEspansione());
 						carPan.setVisible(false);
 						drawCartaPanel(user, title, cardsName, c, utenti, toVisit);
 						carPan.repaint();

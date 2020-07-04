@@ -7,7 +7,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
-import it.unibs.db.tcg.model.ModelGod;
+import it.unibs.db.tcg.model.ConnectorService;
 import it.unibs.db.tcg.model.Strings;
 import it.unibs.db.tcg.model.Utente;
 import it.unibs.db.tcg.view.LoginPanel;
@@ -15,7 +15,7 @@ import it.unibs.db.tcg.view.RegistrationPanel;
 
 public class LoginController extends Controller {
 
-	// private ModelGod model;
+	// private ConnectorService connectorService;
 
 
 
@@ -35,7 +35,7 @@ public class LoginController extends Controller {
 		logPan.addHomeListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (logPan.getLoginField().equals(null) || !model.isUserExistant(logPan.getLoginField()))
+				if (logPan.getLoginField().equals(null) || !connectorService.isUserExistant(logPan.getLoginField()))
 					logPan.showErrorPopup();
 				else {
 					logPan.setVisible(false);
@@ -70,7 +70,7 @@ public class LoginController extends Controller {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String nickname = regPan.getNicknameText();
-				if (nickname.length() == 0 || model.isUserExistant(nickname)) {
+				if (nickname.length() == 0 || connectorService.isUserExistant(nickname)) {
 					regPan.showNicknameErrorPopup();
 				} else {
 					Utente user = new Utente();
@@ -86,7 +86,7 @@ public class LoginController extends Controller {
 						user.setNomeUtente(name);
 						user.setMail(mail);
 						user.setAvatar(((ImageIcon) icon));
-						model.createUser(user);
+						connectorService.createUser(user);
 						regPan.setVisible(false);
 						AccountController accountController = new AccountController(frame);
 						accountController.drawAccountPanel(user.getNickname());
