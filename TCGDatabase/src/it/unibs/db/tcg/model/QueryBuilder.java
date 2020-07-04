@@ -19,6 +19,14 @@ public class QueryBuilder {
 			" ORDER BY RAND()" + 
 			" LIMIT 1";
 	
+	protected static String DELETE_CARD_FROM_COLLECTION = "DELETE FROM Composta WHERE Nome_Collezione = ? AND N_Carta = ? AND Abbr_Espansione = ?";
+	
+	protected static String DELETE_COLLECTION_POSSIEDE_TABLE = "DELETE FROM Possiede WHERE Possiede.Nickname = ? AND Possiede.Nome_Collezione = ? ";
+	
+	protected static String DELETE_COLLECTION_COMPOSTA_TABLE = "DELETE FROM Composta WHERE Composta.Nickname = ? AND Composta.Nome_Collezione = ?";
+	
+	protected static String DELETE_COLLECTION_COLLECTION_TABLE = "DELETE FROM Collezione WHERE Collezione.Nickname = ? AND Collezione.Nome_Collezione = ?";
+	
 	protected static String GET_PUBLIC_USER_COLLECTIONS = " SELECT possiede.Nome_Collezione"
 			+ " FROM Possiede JOIN Collezione ON possiede.Nome_Collezione = collezione.Nome_Collezione"
 			+ " WHERE Possiede.Nickname = ? AND collezione.Visibile = 1";
@@ -41,11 +49,11 @@ public class QueryBuilder {
 	protected static String CREATE_COLLECTION_POSSIEDE_TABLE= "INSERT INTO possiede(possiede.Nickname, possiede.Nome_Collezione)" + 
 			"VALUES(?, ?)";
 	
-	protected static String INSERT_CARD_IN_COMPOSTA = "INSERT INTO composta(composta.Nome_Collezione, composta.N_Carta, composta.Abbr_Espansione)\n" + 
-			"VALUES(?, ?, ?)";
+	protected static String INSERT_CARD_IN_COMPOSTA = "INSERT INTO composta(composta.Nickname, composta.Nome_Collezione, composta.N_Carta, composta.Abbr_Espansione)\n" + 
+			"VALUES(?, ?, ?, ?)";
 	
-	protected static String CREATE_COLLECTION_COLLECTION_TABLE = "INSERT INTO collezione(collezione.Nome_Collezione, collezione.Visibile, collezione.Data_Inizio)" + 
-			"VALUES(?, ?, ?)";
+	protected static String CREATE_COLLECTION_COLLECTION_TABLE = "INSERT INTO collezione(Collezione.Nickname, collezione.Nome_Collezione, collezione.Visibile, collezione.Data_Inizio)" + 
+			"VALUES(?, ?, ?, ?)";
 	
 	protected static String GET_CARDS_BY_NAME = "SELECT Nome_Carta, Immagine, Abbr_Espansione, Numero" + " FROM Carta "
 			+ " WHERE Carta.Nome_Carta LIKE ?";

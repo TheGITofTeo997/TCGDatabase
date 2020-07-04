@@ -87,6 +87,7 @@ public class CartaPanel extends JPanel {
 
 	private JPanel collectionsPanel;
 	private JButton btnAddToCollection;
+	private JButton btnRemoveCard;
 	private JList collectionsList;
 
 	public CartaPanel() {
@@ -492,9 +493,14 @@ public class CartaPanel extends JPanel {
 		nrglblEnergyType.setFont(panelFont);
 		energyPanel.add(nrglblEnergyType);
 
-		btnAddToCollection = new JButton("Aggiungi questa carta ad una tua collezione");
+		btnAddToCollection = new JButton("Aggiungi a una collezione");
 		btnAddToCollection.setBounds(60, 410, 250, 50);
 		add(btnAddToCollection);
+
+		btnRemoveCard = new JButton("Rimuovi da una collezione");
+		btnRemoveCard.setBounds(60, 470, 250, 50);
+		btnRemoveCard.setVisible(false);
+		add(btnRemoveCard);
 
 	}
 
@@ -524,12 +530,12 @@ public class CartaPanel extends JPanel {
 			collectionsPanel.add(scrollPane);
 		}
 	}
-	
+
 	public String showCollectionsListPopup() {
 		JOptionPane.showMessageDialog(this, collectionsPanel, "Scegli la collezione", JOptionPane.QUESTION_MESSAGE);
 		return (String) collectionsList.getSelectedValue();
 	}
-	
+
 	public void showNoSelectedPopup() {
 		JOptionPane.showMessageDialog(this, "Attenzione, non hai selezionato alcuna collezione");
 	}
@@ -615,6 +621,18 @@ public class CartaPanel extends JPanel {
 		pkmnlblDescription.setText(carta.getDescrizione());
 		pkmnlblDebolezza.setText(carta.getDebolezza());
 		pkmnlblResistenza.setText(carta.getResistenza());
+	}
+
+	public void setVisibleRemoveCardButton() {
+		btnRemoveCard.setVisible(true);
+	}
+	
+	public void callBackDoClick() {
+		btnBack.doClick();
+	}
+
+	public void addRemoveCardListener(ActionListener a) {
+		btnRemoveCard.addActionListener(a);
 	}
 
 	public void addBackListener(ActionListener a) {

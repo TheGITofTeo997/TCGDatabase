@@ -8,9 +8,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.ListSelectionModel;
+import javax.swing.border.LineBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -35,6 +40,10 @@ public class EditPanel extends JPanel {
 
 	private JButton btnChangeAvatar;
 	private JButton btnDeleteAvatar;
+	private JButton btnDeleteCollection;
+	
+	private JPanel collectionsPanel;
+	private JList collectionsList;
 
 	public EditPanel() {
 		setLayout(null);
@@ -100,6 +109,10 @@ public class EditPanel extends JPanel {
 		btnEditMail = new JButton("Edit Mail");
 		btnEditMail.setBounds(700, 115, 90, 50);
 		add(btnEditMail);
+		
+		btnDeleteCollection = new JButton("Elimina una collezione");
+		btnDeleteCollection.setBounds(290, 200, 300, 50);
+		add(btnDeleteCollection);
 
 		btnBack = new JButton("Back");
 		btnBack.setBounds(650, 480, 90, 50);
@@ -159,8 +172,41 @@ public class EditPanel extends JPanel {
 		return null;
 	}
 	
-	public boolean showConfirmPopup() {
-		return (JOptionPane.showConfirmDialog(this, "Questa operazione eliminerà la tua foto profilo corrente. Vuoi procedere?") == 0);
+	public boolean showConfirmPopup(String text) {
+		return (JOptionPane.showConfirmDialog(this, text) == 0);
+	}
+	
+	
+	public void createCollectionListPopup(DefaultListModel<String> collectionsName) {
+		collectionsPanel = new JPanel();
+		collectionsPanel.setPreferredSize(new Dimension(200, 250));
+		if (collectionsName.size() == 0) {
+			JLabel lblNoCollection = new JLabel("Non sono presenti collezioni qui");
+			lblNoCollection.setBounds(0, 0, 200, 50);
+			collectionsPanel.add(lblNoCollection);
+		} else {
+			collectionsList = new JList(collectionsName);
+			collectionsList.setBounds(0, 0, 190, 150);
+			collectionsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+			collectionsList.setBackground(null);
+			collectionsList.setFont(panelFont);
+			collectionsList.setFixedCellWidth(collectionsList.getWidth());
+			collectionsList.setBorder(new LineBorder(Color.BLACK));
+			JScrollPane scrollPane = new JScrollPane(this, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+					JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+			scrollPane.setViewportView(collectionsList);
+			scrollPane.setBounds(0, 0, 200, 150);
+			collectionsPanel.add(scrollPane);
+		}
+	}
+
+	public String showCollectionsListPopup() {
+		JOptionPane.showMessageDialog(this, collectionsPanel, "Scegli la collezione", JOptionPane.QUESTION_MESSAGE);
+		return (String) collectionsList.getSelectedValue();
+	}
+	
+	public void addDeleteCollectionListener(ActionListener a) {
+		btnDeleteCollection.addActionListener(a);
 	}
 
 	public void addEditNameListener(ActionListener a) {

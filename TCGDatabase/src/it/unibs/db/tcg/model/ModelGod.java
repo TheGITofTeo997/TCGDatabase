@@ -20,10 +20,6 @@ public class ModelGod {
 	// private Connector connector = new
 	// Connector("jdbc:mysql://localhost:4040/TCG_DB", "root", "");
 
-	public ModelGod() {
-	}
-
-	// close ResultSet???
 	public Utente getUser(String nickname) {
 		connector.openConnection();
 		connector.submitParametrizedQuery(QueryBuilder.GET_USER_ATTRIBUTES);
@@ -184,7 +180,7 @@ public class ModelGod {
 		} finally {
 			try {
 				if (set != null)
-					set.close();
+					set.close(); 
 				connector.closeStatement();
 				connector.closeConnection();
 			} catch (SQLException sqle) {
@@ -625,9 +621,21 @@ public class ModelGod {
 		return true;
 	}
 	
-	public void insertCardInCollection(String collectionName, int num_card, String abbr_esp) {
+	public void insertCardInCollection(String nickname, String collectionName, int num_card, String abbr_esp) {
 		connector.openConnection();
 		connector.submitParametrizedQuery(QueryBuilder.INSERT_CARD_IN_COMPOSTA);
+		connector.setStringParameter(1, nickname);
+		connector.setStringParameter(2, collectionName);
+		connector.setIntParameter(3, num_card);
+		connector.setStringParameter(4, abbr_esp);
+		connector.execute();
+		connector.closeStatement();
+		connector.closeConnection();
+	}
+	
+	public void removeCardFromCollection(String collectionName, int num_card, String abbr_esp) {
+		connector.openConnection();
+		connector.submitParametrizedQuery(QueryBuilder.DELETE_CARD_FROM_COLLECTION);
 		connector.setStringParameter(1, collectionName);
 		connector.setIntParameter(2, num_card);
 		connector.setStringParameter(3, abbr_esp);
@@ -672,10 +680,29 @@ public class ModelGod {
 		connector.setStringParameter(2, nameCollection);
 		connector.execute();
 		connector.submitParametrizedQuery(QueryBuilder.CREATE_COLLECTION_COLLECTION_TABLE);
-		connector.setStringParameter(1, nameCollection);
-		connector.setIntParameter(2, visible);
+		connector.setStringParameter(1, nickname);
+		connector.setStringParameter(2, nameCollection);
+		connector.setIntParameter(3, visible);
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-		connector.setCurrentDateParameter(3, timestamp);
+		connector.setCurrentDateParameter(4, timestamp);
+		connector.execute();
+		connector.closeConnection();
+		connector.closeConnection();
+	}
+	
+	public void deleteCollection(String nickname, String nameCollection) {
+		connector.openConnection();
+		connector.submitParametrizedQuery(QueryBuilder.DELETE_COLLECTION_POSSIEDE_TABLE);
+		connector.setStringParameter(1, nickname);
+		connector.setStringParameter(2, nameCollection);
+		connector.execute();
+		connector.submitParametrizedQuery(QueryBuilder.DELETE_COLLECTION_COMPOSTA_TABLE);
+		connector.setStringParameter(1, nickname);
+		connector.setStringParameter(2, nameCollection);
+		connector.execute();
+		connector.submitParametrizedQuery(QueryBuilder.DELETE_COLLECTION_COLLECTION_TABLE);
+		connector.setStringParameter(1, nickname);
+		connector.setStringParameter(2, nameCollection);
 		connector.execute();
 		connector.closeConnection();
 		connector.closeConnection();

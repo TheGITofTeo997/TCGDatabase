@@ -77,7 +77,7 @@ public class Utente {
 		}
 		return listModel;
 	}
-
+	
 	public Collezione getCollezioneByNome(String nomeCollezione) {
 		for (int i = 0; i < collezioni.size(); i++) {
 			if (collezioni.get(i).getNomeCollezione().equals(nomeCollezione))
@@ -85,7 +85,7 @@ public class Utente {
 		}
 		return null;
 	}
-
+	
 	public boolean hasCollezione(String nomeCollezione) {
 		boolean res = true;
 		if (getCollezioneByNome(nomeCollezione) == null)
