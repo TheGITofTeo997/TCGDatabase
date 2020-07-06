@@ -9,12 +9,14 @@ import java.awt.event.WindowEvent;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.SwingWorker;
 
 import it.unibs.db.tcg.model.ConnectorService;
 import it.unibs.db.tcg.model.Strings;
 import it.unibs.db.tcg.model.Utente;
 import it.unibs.db.tcg.view.LoginPanel;
 import it.unibs.db.tcg.view.RegistrationPanel;
+import it.unibs.db.tcg.view.Worker;
 
 public class LoginController extends Controller {
 
@@ -52,21 +54,34 @@ public class LoginController extends Controller {
 				registrationController.drawRegistrationPanel();
 			}
 		});
-
+		
+		loginPanel.addRefreshDatabaseStatusListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				checkDatabaseStatus();
+			}
+		});	
+		
 		checkDatabaseStatus();
-
 	}
 
 	private void checkDatabaseStatus() {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					loginPanel.setDatabaseStatus(connectorService.isReachable());
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+		SwingWorker<Void, Void> backgroundThread1 = new SwingWorker<Void, Void>() {
+			boolean flag;
+            @Override
+            protected Void doInBackground() throws Exception {
+            	loginPanel.showWaitingDatabadeConnection();
+                flag = connectorService.isReachable();
+                return null;
+            }
+
+            @Override
+            protected void done() {
+               loginPanel.setDatabaseStatus(flag);
+            };
+        };
+        backgroundThread1.execute();
+
 	}
 
 }

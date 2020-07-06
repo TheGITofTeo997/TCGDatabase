@@ -23,7 +23,7 @@ public class ConnectorService {
 	public boolean isReachable() {
 		return connector.isReachable();
 	}
-	
+		
 	public Utente getUser(String nickname) {
 		connector.openConnection();
 		connector.submitParametrizedQuery(QueryBuilder.GET_USER_ATTRIBUTES);

@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -37,6 +38,7 @@ public class LoginPanel extends JPanel implements KeyListener {
 	private JButton btnRegister;
 	private JLabel lblStatus;
 	private JLabel lblStatusText;
+	private JButton btnRefreshDatabaseStatus;
 
 	public LoginPanel() {
 		setLayout(null);
@@ -47,7 +49,6 @@ public class LoginPanel extends JPanel implements KeyListener {
 		setForeground(foregroundColor);
 		panelFont = Preferences.getFont();
 		setFont(panelFont);
-		
 
 		setFocusable(true);
 		addKeyListener(this);
@@ -64,10 +65,16 @@ public class LoginPanel extends JPanel implements KeyListener {
 		lblDatabaseStatus.setFont(getFont());
 		lblDatabaseStatus.setForeground(getForeground());
 		add(lblDatabaseStatus);
+
+		ImageIcon imageWait = new ImageIcon("resources//waiting.gif");
+		imageWait.setImage(imageWait.getImage().getScaledInstance(30, 30, Image.SCALE_DEFAULT));
+		lblStatus = new JLabel(imageWait);
+		lblStatus.setBounds(130, 525, 30, 30);
+		add(lblStatus);
 		
-		lblStatusText = new JLabel("Connection...");
+		lblStatusText = new JLabel("");
 		lblStatusText.setForeground(Color.WHITE);
-		lblStatusText.setBounds(130	, 525, 125, 30);
+		lblStatusText.setBounds(130, 525, 125, 30);
 		add(lblStatusText);
 
 		JLabel lblLogin = new JLabel("Nickname");
@@ -105,6 +112,10 @@ public class LoginPanel extends JPanel implements KeyListener {
 		lblCharizardBackgroundLogin.setIcon(icon);
 		add(lblCharizardBackgroundLogin);
 
+		btnRefreshDatabaseStatus = new JButton("Refresh");
+		btnRefreshDatabaseStatus.setBounds(10, 501, 89, 23);
+		add(btnRefreshDatabaseStatus);
+
 	}
 
 	public String getLoginField() {
@@ -121,9 +132,15 @@ public class LoginPanel extends JPanel implements KeyListener {
 	public void addHomeListener(ActionListener a) {
 		btnLogin.addActionListener(a);
 	}
+	
+	public void showWaitingDatabadeConnection() {
+		lblStatus.setVisible(true);
+		lblStatusText.setVisible(false);
+	}
 
 	public void setDatabaseStatus(boolean status) {
-		
+		lblStatus.setVisible(false);
+		lblStatusText.setVisible(true);
 		if (status) {
 			lblStatusText.setText("Operational");
 			lblStatusText.setForeground(Color.GREEN);
@@ -135,6 +152,10 @@ public class LoginPanel extends JPanel implements KeyListener {
 
 	public void addRegistrationListener(ActionListener a) {
 		btnRegister.addActionListener(a);
+	}
+
+	public void addRefreshDatabaseStatusListener(ActionListener a) {
+		btnRefreshDatabaseStatus.addActionListener(a);
 	}
 
 	@Override
