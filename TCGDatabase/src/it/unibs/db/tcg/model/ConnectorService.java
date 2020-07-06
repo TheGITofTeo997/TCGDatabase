@@ -595,6 +595,39 @@ public class ConnectorService {
 		connector.closeConnection();
 	}
 	
+	public void updateCollectionName(String newCollectionName, String nickname, String oldCollectionName) {
+		connector.openConnection();
+		connector.submitParametrizedQuery(QueryBuilder.UPDATE_COLLECTION_NAME_COLLEZIONE_TABLE);
+		connector.setStringParameter(1, newCollectionName);
+		connector.setStringParameter(2, nickname);
+		connector.setStringParameter(3, oldCollectionName);
+		connector.execute();
+		connector.submitParametrizedQuery(QueryBuilder.UPDATE_COLLECTION_NAME_COMPOSTA_TABLE);
+		connector.setStringParameter(1, newCollectionName);
+		connector.setStringParameter(2, nickname);
+		connector.setStringParameter(3, oldCollectionName);
+		connector.execute();
+		connector.submitParametrizedQuery(QueryBuilder.UPDATE_COLLECTION_NAME_POSSIEDE_TABLE);
+		connector.setStringParameter(1, newCollectionName);
+		connector.setStringParameter(2, nickname);
+		connector.setStringParameter(3, oldCollectionName);
+		connector.execute();
+		connector.closeStatement();
+		connector.closeConnection();
+	}
+	
+	public void updateCollectionVisibility(boolean visible, String nickname, String collectionName) {
+		int visibility = visible ? 1 : 0;
+		connector.openConnection();
+		connector.submitParametrizedQuery(QueryBuilder.UPDATE_COLLECTION_VISIBILITY);
+		connector.setIntParameter(1, visibility);
+		connector.setStringParameter(2, nickname);
+		connector.setStringParameter(3, collectionName);
+		connector.execute();
+		connector.closeStatement();
+		connector.closeConnection();
+	}
+	
 	public boolean isThereCardInCollection(String nickname, String collectionName, int num_card, String abbr_esp) {
 		connector.openConnection();
 		connector.submitParametrizedQuery(QueryBuilder.IS_THERE_CARD_IN_COLLECTION);

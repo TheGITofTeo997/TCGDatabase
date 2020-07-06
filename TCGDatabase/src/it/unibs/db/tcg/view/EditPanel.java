@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.LineBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -18,6 +19,7 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 
 public class EditPanel extends JPanel {
@@ -29,6 +31,7 @@ public class EditPanel extends JPanel {
 	private static Color secondaryBackgroundColor;
 	private static Color foregroundColor;
 	private Font panelFont;
+	private JPanel optionPanel;
 
 	private JLabel lblAvatar;
 	private JLabel lblName;
@@ -40,9 +43,14 @@ public class EditPanel extends JPanel {
 
 	private JButton btnChangeAvatar;
 	private JButton btnDeleteAvatar;
+	private JButton btnEditCollection;
 	private JButton btnDeleteCollection;
-	
+	private JButton btnEditVisibilityCollection;
+	private JButton btnEditNameCollection;
+
 	private JPanel collectionsPanel;
+	private JPanel visibilityCollectionPanel;
+	private JComboBox visibleList;
 	private JList collectionsList;
 
 	public EditPanel() {
@@ -109,10 +117,19 @@ public class EditPanel extends JPanel {
 		btnEditMail = new JButton("Edit Mail");
 		btnEditMail.setBounds(700, 115, 90, 50);
 		add(btnEditMail);
-		
-		btnDeleteCollection = new JButton("Elimina una collezione");
-		btnDeleteCollection.setBounds(290, 200, 300, 50);
-		add(btnDeleteCollection);
+
+		btnEditCollection = new JButton("Opzioni collezione");
+		btnEditCollection.setBounds(290, 200, 300, 50);
+		add(btnEditCollection);
+		btnEditCollection.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showOptionCollectionPanel();
+			}
+		});
+
+		btnDeleteCollection = new JButton("Cancella una collezione");
+		btnEditVisibilityCollection = new JButton("Cambia visibilità");
+		btnEditNameCollection = new JButton("Modifica nome");
 
 		btnBack = new JButton("Back");
 		btnBack.setBounds(650, 480, 90, 50);
@@ -156,7 +173,7 @@ public class EditPanel extends JPanel {
 		correct.showMessageDialog(this, "Modifica effettuata correttamente!", "Correct",
 				JOptionPane.INFORMATION_MESSAGE);
 	}
-	
+
 	public ImageIcon chooseAvatar() {
 		JFileChooser chooser = new JFileChooser();
 		FileNameExtensionFilter filter = new FileNameExtensionFilter("File jpeg, jpg, png", "jpeg", "jpg", "png");
@@ -171,12 +188,11 @@ public class EditPanel extends JPanel {
 		}
 		return null;
 	}
-	
+
 	public boolean showConfirmPopup(String text) {
 		return (JOptionPane.showConfirmDialog(this, text) == 0);
 	}
-	
-	
+
 	public void createCollectionListPopup(DefaultListModel<String> collectionsName) {
 		collectionsPanel = new JPanel();
 		collectionsPanel.setPreferredSize(new Dimension(200, 250));
@@ -200,11 +216,51 @@ public class EditPanel extends JPanel {
 		}
 	}
 
+	private void showOptionCollectionPanel() {
+		optionPanel = new JPanel();
+		optionPanel.setLayout(null);
+		optionPanel.setForeground(foregroundColor);
+		optionPanel.setFont(panelFont);
+		optionPanel.setPreferredSize(new Dimension(100, 300));
+
+		btnDeleteCollection.setBounds(0, 50, 150, 25);
+		optionPanel.add(btnDeleteCollection);
+
+		btnEditVisibilityCollection.setBounds(0, 25, 150, 25);
+		optionPanel.add(btnEditVisibilityCollection);
+
+		btnEditNameCollection.setBounds(0, 0, 150, 25);
+		optionPanel.add(btnEditNameCollection);
+
+		JOptionPane.showMessageDialog(this, optionPanel, "Impostazioni Collezione", JOptionPane.INFORMATION_MESSAGE);
+	}
+	
+	public void showChangeVisibilityCollectionPopup() {
+		visibilityCollectionPanel = new JPanel();
+		visibilityCollectionPanel.setLayout(null);
+		visibilityCollectionPanel.setForeground(foregroundColor);
+		visibilityCollectionPanel.setFont(panelFont);
+		visibilityCollectionPanel.setPreferredSize(new Dimension(200, 300));
+
+		String[] choices = { "Visibile", "Non Visibile" };
+
+		visibleList = new JComboBox(choices);
+		visibleList.setBounds(10, 30, 190, 25);
+		visibleList.setSelectedIndex(0);
+		visibilityCollectionPanel.add(visibleList);
+		
+		JOptionPane.showMessageDialog(this, visibilityCollectionPanel, "Cambia visibilità della collazione", JOptionPane.INFORMATION_MESSAGE);
+	}
+
+	public String getVisibileField() {
+		return (String) visibleList.getSelectedItem();
+	}
+	
 	public String showCollectionsListPopup() {
 		JOptionPane.showMessageDialog(this, collectionsPanel, "Scegli la collezione", JOptionPane.QUESTION_MESSAGE);
 		return (String) collectionsList.getSelectedValue();
 	}
-	
+
 	public void addDeleteCollectionListener(ActionListener a) {
 		btnDeleteCollection.addActionListener(a);
 	}
@@ -220,9 +276,17 @@ public class EditPanel extends JPanel {
 	public void addEditAvatarListener(ActionListener a) {
 		btnChangeAvatar.addActionListener(a);
 	}
-	
+
 	public void addDeleteAvatarListener(ActionListener a) {
 		btnDeleteAvatar.addActionListener(a);
+	}
+
+	public void addEditCollectionNameListener(ActionListener a) {
+		btnEditNameCollection.addActionListener(a);
+	}
+
+	public void addEditVisibilityCollectionListener(ActionListener a) {
+		btnEditVisibilityCollection.addActionListener(a);
 	}
 
 	public void addBackListener(ActionListener a) {

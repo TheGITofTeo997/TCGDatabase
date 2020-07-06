@@ -93,6 +93,53 @@ public class EditController extends Controller {
 				}
 			}
 		});
+		
+		editPanel.addEditCollectionNameListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				DefaultListModel<String> listModel = new DefaultListModel<>();
+				for (String collection : connectorService.getUserCollections(user.getNickname())) {
+					listModel.addElement(collection);
+				}
+				editPanel.createCollectionListPopup(listModel);
+				String selectedCollection = editPanel.showCollectionsListPopup();
+				if (selectedCollection != null) {
+					String newCollectionName = editPanel.showEditPopup();
+					if(newCollectionName != null) {
+						user.getCollezioneByNome(selectedCollection).setNomeCollezione(newCollectionName);
+						connectorService.updateCollectionName(newCollectionName, user.getNickname(), selectedCollection);
+						editPanel.showCorrectPopup();
+					}
+				}
+				editPanel.setVisible(false);
+				drawEditPanel(user);
+			}
+		});
+		
+		editPanel.addEditVisibilityCollectionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				DefaultListModel<String> listModel = new DefaultListModel<>();
+				for (String collection : connectorService.getUserCollections(user.getNickname())) {
+					listModel.addElement(collection);
+				}
+				editPanel.createCollectionListPopup(listModel);
+				String selectedCollection = editPanel.showCollectionsListPopup();
+				if (selectedCollection != null) {
+					editPanel.showChangeVisibilityCollectionPopup();
+					String visible = editPanel.getVisibileField();
+					if(visible != null) {
+						boolean flag;
+						if(visible.equals("Visibile")) flag = true;
+						else flag = false;
+						connectorService.updateCollectionVisibility(flag, user.getNickname(), selectedCollection);
+						editPanel.showCorrectPopup();
+					}
+				}
+				editPanel.setVisible(false);
+				drawEditPanel(user);
+			}
+		});
 
 		editPanel.addDeleteCollectionListener(new ActionListener() {
 			@Override

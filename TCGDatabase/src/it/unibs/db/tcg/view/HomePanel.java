@@ -213,17 +213,18 @@ public class HomePanel extends JPanel {
 		avatar = new ImageIcon(image);
 		lblAvatar.setIcon(avatar);
 	}
-	
+
 	public void showRandomCardPopup(ImageIcon card) {
 		JPanel panel = new JPanel();
-		panel.setPreferredSize(new Dimension(250,300));
+		panel.setPreferredSize(new Dimension(250, 300));
 		Image image = card.getImage();
 		image = image.getScaledInstance(250, 300, Image.SCALE_SMOOTH);
 		ImageIcon icon = new ImageIcon(image);
 		JLabel lblCard = new JLabel(icon);
-		lblCard.setBounds(0,0,250,300);
+		lblCard.setBounds(0, 0, 250, 300);
 		panel.add(lblCard);
-		JOptionPane.showOptionDialog(null, panel, "Carta Random", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, new Object[]{"Ok"}, null);
+		JOptionPane.showOptionDialog(null, panel, "Carta Random", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
+				null, new Object[] { "Ok" }, null);
 
 	}
 
