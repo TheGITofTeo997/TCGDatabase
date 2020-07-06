@@ -1,6 +1,5 @@
 package it.unibs.db.tcg.view;
 
-import java.awt.Button;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -19,22 +18,17 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-import javax.swing.border.Border;
-import javax.swing.border.LineBorder;
+
 
 import it.unibs.db.tcg.model.Strings;
 
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
+
 import javax.swing.JColorChooser;
 import javax.swing.JComboBox;
 
 public class HomePanel extends JPanel {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -8768541615844025092L;
 	private static final int WIDTH = 800;
 	private static final int HEIGHT = 600;
 	private static Color backgroundColor;
