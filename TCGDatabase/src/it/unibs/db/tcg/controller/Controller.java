@@ -4,6 +4,7 @@ import java.awt.EventQueue;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -38,6 +39,7 @@ public class Controller {
 					});
 					frame.getContentPane().setLayout(null);
 					frame.setVisible(true);
+					frame.setIconImage(new ImageIcon("resources/icon.png").getImage());
 					loginController = new LoginController(frame);
 					loginController.drawLoginPanel();
 				} catch (Exception e) {
