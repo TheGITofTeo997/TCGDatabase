@@ -29,8 +29,7 @@ public class Connector {
 	public void openConnection() {
 		try {
 			con = DriverManager.getConnection(url, user, password);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -38,90 +37,80 @@ public class Connector {
 	public void closeConnection() {
 		try {
 			con.close();
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void setIntParameter(int position, int parameter) {
 		try {
 			stmt.setInt(position, parameter);
-		}
-		catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public void setCurrentDateParameter(int position, Timestamp timestamp) {
-		try {
-			stmt.setTimestamp(position,timestamp);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
+	public void setCurrentDateParameter(int position, Timestamp timestamp) {
+		try {
+			stmt.setTimestamp(position, timestamp);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
 	public void setImageParameter(int position, ImageIcon imageIcon) {
 		try {
 			BufferedImage bi = getBufferedImage(imageIcon.getImage());
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			try {
-				ImageIO.write(bi, "png" , baos);
+				ImageIO.write(bi, "png", baos);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 
-			byte[] byteArray= baos.toByteArray();
+			byte[] byteArray = baos.toByteArray();
 			stmt.setBytes(position, byteArray);
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
-	
-	private static BufferedImage getBufferedImage(Image img)
-	{
-	    if (img instanceof BufferedImage)
-	    {
-	       return (BufferedImage) img;
-	    }
 
-	    BufferedImage bimage = new BufferedImage(img.getWidth(null), 
-	                    img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+	private static BufferedImage getBufferedImage(Image img) {
+		if (img instanceof BufferedImage) {
+			return (BufferedImage) img;
+		}
 
-	    Graphics2D bGr = bimage.createGraphics();
-	    bGr.drawImage(img, 0, 0, null);
-	    bGr.dispose();
+		BufferedImage bimage = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
 
-	    // Return the buffered image
-	    return bimage;
+		Graphics2D bGr = bimage.createGraphics();
+		bGr.drawImage(img, 0, 0, null);
+		bGr.dispose();
+
+		// Return the buffered image
+		return bimage;
 	}
 
-	
 	public void setStringParameter(int position, String parameter) {
 		try {
 			stmt.setString(position, parameter);
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void submitParametrizedQuery(String query) {
 		try {
 			stmt = con.prepareStatement(query);
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public ResultSet executeQuery() {
 		ResultSet res = null;
 		try {
 			res = stmt.executeQuery();
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return res;
@@ -130,8 +119,7 @@ public class Connector {
 	public void execute() {
 		try {
 			stmt.execute();
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -140,10 +128,28 @@ public class Connector {
 		if (stmt != null)
 			try {
 				stmt.close();
-			}
-			catch (SQLException e) {
+			} catch (SQLException e) {
 				e.printStackTrace();
 			}
+	}
+
+	public boolean isReachable() {
+		try {
+			con = DriverManager.getConnection(url, user, password);
+			// wait for 4 seconds and then stop
+			DriverManager.setLoginTimeout(4);
+
+			if (con == null) {
+				return false;
+
+			} else {
+				con.close();
+				return true;
+			}
+
+		} catch (Exception ex) {
+			return false;
+		}
 	}
 
 }

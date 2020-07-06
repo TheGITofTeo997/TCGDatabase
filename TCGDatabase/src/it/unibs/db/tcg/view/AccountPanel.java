@@ -265,7 +265,7 @@ public class AccountPanel extends JPanel {
 	}
 
 	public void addEditListener(ActionListener a) {
-			btnEdit.addActionListener(a);
+		btnEdit.addActionListener(a);
 	}
 
 	public void addBackListener(ActionListener a) {

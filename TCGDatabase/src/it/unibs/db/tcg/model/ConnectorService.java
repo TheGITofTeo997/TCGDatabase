@@ -19,7 +19,11 @@ public class ConnectorService {
 	private Connector connector = new Connector("jdbc:mysql://localhost:3306/TCG_DB", "root", "");
 	// private Connector connector = new
 	// Connector("jdbc:mysql://localhost:4040/TCG_DB", "root", "");
-
+	
+	public boolean isReachable() {
+		return connector.isReachable();
+	}
+	
 	public Utente getUser(String nickname) {
 		connector.openConnection();
 		connector.submitParametrizedQuery(QueryBuilder.GET_USER_ATTRIBUTES);

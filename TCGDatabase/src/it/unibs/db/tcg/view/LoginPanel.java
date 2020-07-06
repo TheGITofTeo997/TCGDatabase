@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingWorker;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
@@ -34,6 +35,8 @@ public class LoginPanel extends JPanel implements KeyListener {
 	private JTextField loginTextField;
 	private JButton btnLogin;
 	private JButton btnRegister;
+	private JLabel lblStatus;
+	private JLabel lblStatusText;
 
 	public LoginPanel() {
 		setLayout(null);
@@ -44,10 +47,11 @@ public class LoginPanel extends JPanel implements KeyListener {
 		setForeground(foregroundColor);
 		panelFont = Preferences.getFont();
 		setFont(panelFont);
+		
 
 		setFocusable(true);
 		addKeyListener(this);
-		
+
 		loginTextField = new JTextField();
 		loginTextField.setBounds(WIDTH / 2 - 100, HEIGHT / 2 - 25, 200, 50);
 		add(loginTextField);
@@ -55,22 +59,33 @@ public class LoginPanel extends JPanel implements KeyListener {
 		loginTextField.setFont(panelFont);
 		loginTextField.setColumns(10);
 
+		JLabel lblDatabaseStatus = new JLabel("Database Status");
+		lblDatabaseStatus.setBounds(10, 525, 125, 30);
+		lblDatabaseStatus.setFont(getFont());
+		lblDatabaseStatus.setForeground(getForeground());
+		add(lblDatabaseStatus);
+		
+		lblStatusText = new JLabel("Connection...");
+		lblStatusText.setForeground(Color.WHITE);
+		lblStatusText.setBounds(130	, 525, 125, 30);
+		add(lblStatusText);
+
 		JLabel lblLogin = new JLabel("Nickname");
 		lblLogin.setForeground(foregroundColor);
 		lblLogin.setBounds(WIDTH / 2 - loginTextField.getWidth(), HEIGHT / 2 - loginTextField.getHeight() / 2, 100, 50);
 		lblLogin.setFont(panelFont.deriveFont(Font.BOLD));
 		add(lblLogin);
-		
+
 		btnLogin = new JButton("Login");
 		btnLogin.setFont(panelFont);
 		btnLogin.setBounds(WIDTH / 2 - 100, HEIGHT / 2 + 100, 200, 50);
 		add(btnLogin);
-		
+
 		btnRegister = new JButton("Nuovo utente");
 		btnRegister.setFont(panelFont);
 		btnRegister.setBounds(300, 500, 200, 50);
 		add(btnRegister);
-		
+
 		JLabel lblLogo = new JLabel();
 		lblLogo.setBounds(-20, 0, 800, 200);
 		ImageIcon icon = new ImageIcon("resources//login_logo.png");
@@ -79,20 +94,19 @@ public class LoginPanel extends JPanel implements KeyListener {
 		image = image.getScaledInstance(lblLogo.getWidth(), lblLogo.getHeight(), Image.SCALE_SMOOTH);
 		lblLogo.setIcon(icon);
 		add(lblLogo);
-		
+
 		JLabel lblCharizardBackgroundLogin = new JLabel();
 		lblCharizardBackgroundLogin.setBounds(400, 250, 400, 400);
 		icon = new ImageIcon("resources//login_charizard.png");
 		image = icon.getImage();
 		icon = new ImageIcon(image);
-		image = image.getScaledInstance(lblCharizardBackgroundLogin.getWidth(), lblCharizardBackgroundLogin.getHeight(), Image.SCALE_SMOOTH);
+		image = image.getScaledInstance(lblCharizardBackgroundLogin.getWidth(), lblCharizardBackgroundLogin.getHeight(),
+				Image.SCALE_SMOOTH);
 		lblCharizardBackgroundLogin.setIcon(icon);
 		add(lblCharizardBackgroundLogin);
 
-	
-
 	}
-	
+
 	public String getLoginField() {
 		return loginTextField.getText();
 	}
@@ -107,7 +121,18 @@ public class LoginPanel extends JPanel implements KeyListener {
 	public void addHomeListener(ActionListener a) {
 		btnLogin.addActionListener(a);
 	}
-	
+
+	public void setDatabaseStatus(boolean status) {
+		
+		if (status) {
+			lblStatusText.setText("Operational");
+			lblStatusText.setForeground(Color.GREEN);
+		} else {
+			lblStatusText.setText("Unreachable");
+			lblStatusText.setForeground(Color.RED);
+		}
+	}
+
 	public void addRegistrationListener(ActionListener a) {
 		btnRegister.addActionListener(a);
 	}
@@ -116,7 +141,7 @@ public class LoginPanel extends JPanel implements KeyListener {
 	public void keyTyped(KeyEvent e) {
 
 	}
-	
+
 	@Override
 	public void keyPressed(KeyEvent e) {
 		if (e.getExtendedKeyCode() == KeyEvent.VK_ENTER) {
@@ -129,5 +154,4 @@ public class LoginPanel extends JPanel implements KeyListener {
 	public void keyReleased(KeyEvent e) {
 
 	}
-
 }
