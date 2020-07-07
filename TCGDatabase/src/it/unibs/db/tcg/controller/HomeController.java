@@ -85,7 +85,7 @@ public class HomeController extends Controller {
 				homePanel.showRandomCardPopup(connectorService.getRandomCard());
 			}
 		});
-		
+
 		lblEffect();
 
 		homePanel.addLblPikachuMouseListener(new MouseAdapter() {
@@ -97,7 +97,7 @@ public class HomeController extends Controller {
 		});
 
 	}
-	
+
 	private void lblEffect() {
 		SwingWorker<Void, Void> backgroundThread1 = new SwingWorker<Void, Void>() {
 			@Override

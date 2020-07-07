@@ -162,7 +162,7 @@ public class AccountPanel extends JPanel {
 		btnEdit.setBackground(null);
 		btnEdit.setBorder(null);
 		btnEdit.setIcon(new ImageIcon(
-				new ImageIcon("resources//edit.png").getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
+				new ImageIcon("resources//icon//edit.png").getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
 		informationPanel.add(btnEdit);
 
 		collectionsPanel = new JPanel();

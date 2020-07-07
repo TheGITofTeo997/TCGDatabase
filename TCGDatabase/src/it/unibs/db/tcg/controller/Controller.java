@@ -39,7 +39,7 @@ public class Controller {
 					});
 					frame.getContentPane().setLayout(null);
 					frame.setVisible(true);
-					frame.setIconImage(new ImageIcon("resources/icon.png").getImage());
+					frame.setIconImage(new ImageIcon("resources//icon//icon.png").getImage());
 					loginController = new LoginController(frame);
 					loginController.drawLoginPanel();
 				} catch (Exception e) {

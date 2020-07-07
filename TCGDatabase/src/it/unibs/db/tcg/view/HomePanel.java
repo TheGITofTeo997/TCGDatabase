@@ -9,17 +9,20 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-
+import javax.swing.ToolTipManager;
 
 import it.unibs.db.tcg.model.Strings;
 
@@ -51,7 +54,8 @@ public class HomePanel extends JPanel {
 	private JPanel newCollectionPanel;
 	private JComboBox visibleList;
 	private JTextField nameText;
-	
+	private JTextArea textInformation;
+
 	private JLabel lblPikachuBackground;
 
 	public HomePanel() {
@@ -73,6 +77,17 @@ public class HomePanel extends JPanel {
 		lblAvatar.setIcon(icon);
 		add(lblAvatar);
 
+		textInformation = new JTextArea("Benvenuto nella tua home di TCG Database");
+		textInformation.setBounds(600, 40, 175, 100);
+		textInformation.setFont(getFont().deriveFont(Font.ITALIC));
+		textInformation.setEditable(false);
+		textInformation.setLineWrap(true);
+		//textInformation.setOpaque(false);
+		textInformation.setWrapStyleWord(true);
+		textInformation.setBackground(new Color(73, 75, 76));
+		textInformation.setForeground(Color.WHITE);
+		add(textInformation);
+
 		btnViewProfile = new JButton("Profilo");
 		btnViewProfile.setBounds(10, 220, WIDTH / 4 - WIDTH / 40, 30);
 		btnViewProfile.setFont(panelFont);
@@ -91,45 +106,114 @@ public class HomePanel extends JPanel {
 		add(lblProfile);
 
 		btnSearch = new JButton("Cerca");
-		btnSearch.setBounds(WIDTH / 4, 0, 600, 30);
+		btnSearch.setBounds(225, 40, 100, 100);
 		btnSearch.setBackground(new Color(192, 192, 192));
 		btnSearch.setForeground(foregroundColor);
+		btnSearch.setBackground(null);
+		btnSearch.setIcon(new ImageIcon(new ImageIcon("resources//icon//search_icon.png").getImage()
+				.getScaledInstance(120, 120, Image.SCALE_SMOOTH)));
 		btnSearch.setFont(panelFont.deriveFont(Font.BOLD));
+		btnSearch.addMouseListener(new MouseAdapter() {
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				textInformation.setText("Cerca carte o utenti");
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				textInformation.setText("");
+			}
+		});	
 		add(btnSearch);
 
 		btnNewCollection = new JButton("Nuova collezione");
-		btnNewCollection.setBounds(WIDTH / 4 + 20, 40, 540, 80);
-		btnNewCollection.setBackground(new Color(27, 232, 16));
+		btnNewCollection.setBounds(350, 40, 100, 100);
 		btnNewCollection.setForeground(foregroundColor);
+		btnNewCollection.setBackground(null);
+		btnNewCollection.setIcon(new ImageIcon(new ImageIcon("resources//icon//new_collection_icon.png").getImage()
+				.getScaledInstance(120, 120, Image.SCALE_SMOOTH)));
 		btnNewCollection.setFont(panelFont.deriveFont(Font.BOLD));
+		btnNewCollection.addMouseListener(new MouseAdapter() {
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				textInformation.setText("Crea una nuova collezione");
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				textInformation.setText("");
+			}
+		});
 		add(btnNewCollection);
 
 		btnRandomCard = new JButton("Mostra carta random");
-		btnRandomCard.setBounds(WIDTH / 4 + 20, 130, 540, 80);
-		btnRandomCard.setBackground(new Color(27, 232, 16));
+		btnRandomCard.setBounds(475, 40, 100, 100);
 		btnRandomCard.setForeground(foregroundColor);
+		btnRandomCard.setBackground(null);
+		btnRandomCard.setIcon(new ImageIcon(new ImageIcon("resources//icon//random_card_icon.png").getImage()
+				.getScaledInstance(120, 120, Image.SCALE_SMOOTH)));
 		btnRandomCard.setFont(panelFont.deriveFont(Font.BOLD));
+		btnRandomCard.addMouseListener(new MouseAdapter() {
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				textInformation.setText("Mostra una carta random");
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				textInformation.setText("");
+			}
+		});
 		add(btnRandomCard);
 
-		btnBack = new JButton("Back");
+		btnBack = new JButton("Logout");
 		btnBack.setBounds(650, 480, 90, 50);
 		btnBack.setFont(panelFont);
 		add(btnBack);
 
 		btnOption = new JButton("");
 		btnOption.setBounds(675, 400, 75, 75);
-		btnOption.setBackground(null);
 		btnOption.setBorder(null);
-		btnOption.setIcon(new ImageIcon(
-				new ImageIcon("resources//gear_option.png").getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
+		btnOption.setBackground(null);
+		btnOption.setIcon(new ImageIcon(new ImageIcon("resources//icon//gear_option.png").getImage()
+				.getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
+		btnOption.addMouseListener(new MouseAdapter() {
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				textInformation.setText("Opzioni");
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				textInformation.setText("");
+			}
+		});	
 		add(btnOption);
-		
+
 		ImageIcon pikachu = new ImageIcon("resources///pikachu.png");
 		pikachu.setImage(pikachu.getImage().getScaledInstance(300, 300, Image.SCALE_DEFAULT));
 		lblPikachuBackground = new JLabel(pikachu);
 		lblPikachuBackground.setBounds(75, 300, 300, 300);
+		lblPikachuBackground.addMouseListener(new MouseAdapter() {
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+			}
+			
+			public void mouseClicked(MouseEvent e) {
+				textInformation.setText("Why are you clicking me?");
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				textInformation.setText("");
+			}
+		});	
 		add(lblPikachuBackground);
-		
 
 		btnOption.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -139,11 +223,12 @@ public class HomePanel extends JPanel {
 
 		createNewCollectionPopup();
 	}
-	
+
 	public void setLblPikachuX(int x) {
-		lblPikachuBackground.setBounds(x, lblPikachuBackground.getY(), lblPikachuBackground.getWidth(), lblPikachuBackground.getHeight());
+		lblPikachuBackground.setBounds(x, lblPikachuBackground.getY(), lblPikachuBackground.getWidth(),
+				lblPikachuBackground.getHeight());
 	}
-	
+
 	public void addLblPikachuMouseListener(MouseListener a) {
 		lblPikachuBackground.addMouseListener(a);
 	}
@@ -255,9 +340,14 @@ public class HomePanel extends JPanel {
 	public void addRandomCardListener(ActionListener a) {
 		btnRandomCard.addActionListener(a);
 	}
+	
+	public void setTextInformationMessage(String text) {
+		textInformation.setText(text);
+	}
 
 	private void createNewCollectionPopup() {
 		newCollectionPanel = new JPanel();
+		newCollectionPanel.setName("Nuova collezione");
 		newCollectionPanel.setLayout(null);
 		newCollectionPanel.setForeground(foregroundColor);
 		newCollectionPanel.setFont(panelFont);
