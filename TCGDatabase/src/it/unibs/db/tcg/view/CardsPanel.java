@@ -19,6 +19,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
+import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionListener;
 
 import it.unibs.db.tcg.main.TCGMain;
@@ -87,9 +89,10 @@ public class CardsPanel extends JPanel {
 	            JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPane.setViewportView(list);
 		scrollPane.setBounds(50,50,700,400);
-		//list.setLayoutOrientation(JList.HORIZONTAL_WRAP);
+		Border empty = new EmptyBorder(0,0,0,0);
+		scrollPane.setBorder(empty);
 		add(scrollPane);
-		//add(list);
+
 	}
 
 	private void showNoCardsFoundImage() {

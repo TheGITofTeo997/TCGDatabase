@@ -328,7 +328,7 @@ public class ConnectorService {
 					_n_stage_succ = set.getInt("N_Stage_Successivo");
 					_abilita = set.getString("Abilita");
 					_attr_spec = set.getString("Attributo_Speciale");
-					_regola = set.getString("Regola");
+					_regola = set.getString("Regola");					
 
 					c1 = createCartaPokemon(c);
 					c1.setDescrizione(_descr_pkmn);
@@ -339,6 +339,34 @@ public class ConnectorService {
 					c1.setDebolezza(_debolezza);
 					c1.setStage(_stage);
 					c1.setStage_successivo(_n_stage_succ);
+					connector.submitParametrizedQuery(QueryBuilder.GET_MOSSE);
+					connector.setIntParameter(1, c1.getNumero());
+					connector.setStringParameter(2, c1.getAbbrEspansione());
+					ResultSet setNomiMosse = connector.executeQuery();
+					List<String> nomiMosse = new ArrayList<>();
+					while(setNomiMosse.next()) {
+						nomiMosse.add(setNomiMosse.getString("Nome_Mossa"));
+					}
+					List<Mossa> mosse = new ArrayList<>();
+					for(int k = 0; k < nomiMosse.size(); k++) {
+						connector.submitParametrizedQuery(QueryBuilder.GET_MOSSA_BY_NAME);
+						connector.setStringParameter(1, nomiMosse.get(k));
+						ResultSet setMosse = connector.executeQuery();
+						while(setMosse.next()) {
+							Mossa m = new Mossa(setMosse.getString("Nome_Mossa"));
+							int energia_richiesta = setMosse.getInt("Energia_Richiesta");
+							int danno = setMosse.getInt("Danno");
+							String descr = setMosse.getString("Descrizione");
+							m.setEnergiaRichiesta(energia_richiesta);
+							m.setDanno(danno);
+							m.setDescrizione(descr);
+							mosse.add(m);
+						}
+					}
+					
+					for(Mossa m : mosse)
+						c1.addMossa(m);
+							
 					CartaPokemonBase c2 = createCartaPokemonBase(c1);
 					c2.setAbilita(_abilita);
 					return c2;
@@ -365,9 +393,39 @@ public class ConnectorService {
 					c1.setDebolezza(_debolezza);
 					c1.setStage(_stage);
 					c1.setStage_successivo(_n_stage_succ);
+					
+					
+					connector.submitParametrizedQuery(QueryBuilder.GET_MOSSE);
+					connector.setIntParameter(1, c1.getNumero());
+					connector.setStringParameter(2, c1.getAbbrEspansione());
+					ResultSet setNomiMosse2 = connector.executeQuery();
+					List<String> nomiMosse2 = new ArrayList<>();
+					while(setNomiMosse2.next()) {
+						nomiMosse2.add(setNomiMosse2.getString("Nome_Mossa"));
+					}
+					List<Mossa> mosse2 = new ArrayList<>();
+					for(int k = 0; k < nomiMosse2.size(); k++) {
+						connector.submitParametrizedQuery(QueryBuilder.GET_MOSSA_BY_NAME);
+						connector.setStringParameter(1, nomiMosse2.get(k));
+						ResultSet setMosse = connector.executeQuery();
+						while(setMosse.next()) {
+							Mossa m = new Mossa(setMosse.getString("Nome_Mossa"));
+							int energia_richiesta = setMosse.getInt("Energia_Richiesta");
+							int danno = setMosse.getInt("Danno");
+							String descr = setMosse.getString("Descrizione");
+							m.setEnergiaRichiesta(energia_richiesta);
+							m.setDanno(danno);
+							m.setDescrizione(descr);
+							mosse2.add(m);
+						}
+					}
+					
+					for(Mossa m : mosse2)
+						c1.addMossa(m);
 					CartaPokemonSpeciale c3 = createCartaPokemonSpeciale(c1);
 					c3.setAttributoSpeciale(_attr_spec);
 					c3.setRegola(_regola);
+					
 					return c3;
 				case 2:
 					CartaStrumento c4 = createCartaStrumento(c);
@@ -810,10 +868,12 @@ public class ConnectorService {
 		result.setTipoEnergia(c.getTipoEnergia());
 		result.setPS(c.getPS());
 		result.setCostoRitirata(c.getCostoRitirata());
-		// result.setResistenza(_resistenza); resistenza è string o int??
-		// result.setDebolezza(_debolezza); debolezza è string o int??
+		result.setResistenza(c.getResistenza()); 
+		result.setDebolezza(c.getDebolezza()); 
 		result.setStage(c.getStage());
 		result.setStage_successivo(c.getStage_successivo());
+		for(Mossa m : c.getMosse())
+			result.addMossa(m);
 		return result;
 	}
 
@@ -828,10 +888,12 @@ public class ConnectorService {
 		result.setTipoEnergia(c.getTipoEnergia());
 		result.setPS(c.getPS());
 		result.setCostoRitirata(c.getCostoRitirata());
-		// result.setResistenza(_resistenza); resistenza è string o int??
-		// result.setDebolezza(_debolezza); debolezza è string o int??
+		result.setResistenza(c.getResistenza()); 
+		result.setDebolezza(c.getDebolezza());
 		result.setStage(c.getStage());
 		result.setStage_successivo(c.getStage_successivo());
+		for(Mossa m : c.getMosse())
+			result.addMossa(m);
 		return result;
 	}
 

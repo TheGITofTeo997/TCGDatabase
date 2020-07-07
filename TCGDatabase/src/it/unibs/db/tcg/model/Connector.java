@@ -137,7 +137,7 @@ public class Connector {
 		try {
 
 			con = DriverManager.getConnection(url, user, password);
-			// wait for 4 seconds and then stop
+			// wait for 3 seconds and then stop
 			DriverManager.setLoginTimeout(3);
 
 			if (con == null) {

@@ -2,8 +2,11 @@ package it.unibs.db.tcg.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JFrame;
+import javax.swing.SwingWorker;
 
 import it.unibs.db.tcg.model.ConnectorService;
 import it.unibs.db.tcg.model.Utente;
@@ -82,6 +85,37 @@ public class HomeController extends Controller {
 				homePanel.showRandomCardPopup(connectorService.getRandomCard());
 			}
 		});
+		
+		lblEffect();
+
+		homePanel.addLblPikachuMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				lblEffect();
+			}
+
+		});
+
+	}
+	
+	private void lblEffect() {
+		SwingWorker<Void, Void> backgroundThread1 = new SwingWorker<Void, Void>() {
+			@Override
+			protected Void doInBackground() throws Exception {
+				int x = 50;
+				while (x < 75) {
+					homePanel.setLblPikachuX(x);
+					x = x + 1;
+					Thread.sleep(25);
+				}
+				return null;
+			}
+
+			@Override
+			protected void done() {
+			};
+		};
+		backgroundThread1.execute();
 	}
 
 }

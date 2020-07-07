@@ -8,6 +8,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.event.ListSelectionListener;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionListener;
@@ -248,7 +249,18 @@ public class AccountPanel extends JPanel {
 		list.setFont(panelFont);
 		list.setForeground(foregroundColor);
 		list.setFixedCellWidth(list.getWidth());
-		list.setBorder(new LineBorder(Color.BLACK));
+		list.setFixedCellHeight(50);
+		list.setCellRenderer(new DefaultListCellRenderer(){
+            @Override
+            public Component getListCellRendererComponent(JList<?> list,
+                    Object value, int index, boolean isSelected,
+                    boolean cellHasFocus) {
+                JLabel listCellRendererComponent = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected,cellHasFocus);
+                listCellRendererComponent.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0,Color.WHITE));
+                return listCellRendererComponent;
+            }
+        });
+		
 		collectionsPanel.add(list);
 	}
 

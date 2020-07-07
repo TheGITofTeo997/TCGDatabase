@@ -109,11 +109,11 @@ public class EditPanel extends JPanel {
 		lblsecond.setBounds(290, 115, 100, 50);
 		add(lblsecond);
 
-		btnEditName = new JButton("Edit Nome");
+		btnEditName = new JButton("Edit");
 		btnEditName.setBounds(700, 60, 90, 50);
 		add(btnEditName);
 
-		btnEditMail = new JButton("Edit Mail");
+		btnEditMail = new JButton("Edit");
 		btnEditMail.setBounds(700, 115, 90, 50);
 		add(btnEditMail);
 

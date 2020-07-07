@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,6 +51,8 @@ public class HomePanel extends JPanel {
 	private JPanel newCollectionPanel;
 	private JComboBox visibleList;
 	private JTextField nameText;
+	
+	private JLabel lblPikachuBackground;
 
 	public HomePanel() {
 		setLayout(null);
@@ -120,6 +123,13 @@ public class HomePanel extends JPanel {
 		btnOption.setIcon(new ImageIcon(
 				new ImageIcon("resources//gear_option.png").getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
 		add(btnOption);
+		
+		ImageIcon pikachu = new ImageIcon("resources///pikachu.png");
+		pikachu.setImage(pikachu.getImage().getScaledInstance(300, 300, Image.SCALE_DEFAULT));
+		lblPikachuBackground = new JLabel(pikachu);
+		lblPikachuBackground.setBounds(75, 300, 300, 300);
+		add(lblPikachuBackground);
+		
 
 		btnOption.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -128,6 +138,14 @@ public class HomePanel extends JPanel {
 		});
 
 		createNewCollectionPopup();
+	}
+	
+	public void setLblPikachuX(int x) {
+		lblPikachuBackground.setBounds(x, lblPikachuBackground.getY(), lblPikachuBackground.getWidth(), lblPikachuBackground.getHeight());
+	}
+	
+	public void addLblPikachuMouseListener(MouseListener a) {
+		lblPikachuBackground.addMouseListener(a);
 	}
 
 	public void setNickname(String nickname) {
@@ -299,5 +317,4 @@ public class HomePanel extends JPanel {
 		JOptionPane.showMessageDialog(this, "Hai già una collezione con quel nome!");
 
 	}
-
 }

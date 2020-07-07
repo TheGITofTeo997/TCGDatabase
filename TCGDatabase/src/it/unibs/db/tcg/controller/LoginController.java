@@ -63,7 +63,7 @@ public class LoginController extends Controller {
 
 		checkDatabaseStatus();
 	}
-
+	
 	private void checkDatabaseStatus() {
 		SwingWorker<Void, Void> backgroundThread1 = new SwingWorker<Void, Void>() {
 			boolean flag;
@@ -81,7 +81,6 @@ public class LoginController extends Controller {
 			};
 		};
 		backgroundThread1.execute();
-
 	}
 
 }

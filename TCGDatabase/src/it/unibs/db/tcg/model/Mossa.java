@@ -2,7 +2,7 @@ package it.unibs.db.tcg.model;
 
 public class Mossa {
 	private String nomeMossa;
-	private String energiaRichiesta;
+	private int energiaRichiesta;
 	private String descrizione;
 	private int danno;
 
@@ -19,11 +19,11 @@ public class Mossa {
 		this.nomeMossa = nomeMossa;
 	}
 
-	public String getEnergiaRichiesta() {
+	public int getEnergiaRichiesta() {
 		return energiaRichiesta;
 	}
 
-	public void setEnergiaRichiesta(String energiaRichiesta) {
+	public void setEnergiaRichiesta(int energiaRichiesta) {
 		this.energiaRichiesta = energiaRichiesta;
 	}
 

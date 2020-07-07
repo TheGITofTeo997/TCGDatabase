@@ -30,7 +30,11 @@ public class QueryBuilder {
 			+ " WHERE Possiede.Nickname = ? AND collezione.Visibile = 1";
 
 	protected static String GET_CARD = "SELECT * FROM Carta WHERE Carta.Numero = ? AND Carta.Abbr_Espansione = ?";
-
+	
+	protected static String GET_MOSSE = "SELECT conosce.Nome_Mossa FROM conosce WHERE conosce.N_Carta = ? AND conosce.Abbr_Espansione = ?";
+	
+	protected static String GET_MOSSA_BY_NAME = "SELECT * FROM mossa WHERE mossa.Nome_Mossa = ?";
+	
 	protected static String GET_USER_TOTAL_CARDS_VALUE = "SELECT sum(Valore) "
 			+ " FROM Possiede JOIN Composta ON Possiede.Nome_Collezione = Composta.Nome_Collezione JOIN Carta ON Composta.N_Carta = Carta.Numero"
 			+ " WHERE Possiede.Nickname = ?";
