@@ -5,7 +5,6 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionListener;
-import java.util.List;
 
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
@@ -16,19 +15,15 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
-import javax.swing.SwingWorker;
 import javax.swing.border.LineBorder;
 
-import it.unibs.db.tcg.model.Carta;
 import it.unibs.db.tcg.model.CartaEnergia;
 import it.unibs.db.tcg.model.CartaPokemon;
 import it.unibs.db.tcg.model.CartaPokemonBase;
 import it.unibs.db.tcg.model.CartaPokemonSpeciale;
 import it.unibs.db.tcg.model.CartaStrumento;
-import it.unibs.db.tcg.model.Mossa;
 import it.unibs.db.tcg.model.Strings;
 
 public class CartaPanel extends JPanel {

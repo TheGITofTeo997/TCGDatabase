@@ -6,11 +6,9 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 
 import it.unibs.db.tcg.model.ConnectorService;
 import it.unibs.db.tcg.model.Strings;
-import it.unibs.db.tcg.view.LoginPanel;
 
 public class Controller {
 

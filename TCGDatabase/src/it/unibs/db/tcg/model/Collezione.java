@@ -4,7 +4,6 @@ import java.sql.Date;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import javax.swing.DefaultListModel;
 
 public class Collezione {
 	private String nomeCollezione;

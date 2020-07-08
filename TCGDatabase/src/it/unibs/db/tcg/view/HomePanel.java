@@ -7,8 +7,6 @@ import java.awt.GraphicsEnvironment;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -17,12 +15,10 @@ import java.util.List;
 
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-import javax.swing.ToolTipManager;
 
 import it.unibs.db.tcg.model.Strings;
 
@@ -33,6 +29,7 @@ import javax.swing.JComboBox;
 
 public class HomePanel extends JPanel {
 
+	private static final long serialVersionUID = -2344441442972902447L;
 	private static final int WIDTH = 800;
 	private static final int HEIGHT = 600;
 	private static Color backgroundColor;

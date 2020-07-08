@@ -3,10 +3,8 @@ package it.unibs.db.tcg.model;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.sql.*;
 
 import javax.imageio.ImageIO;

@@ -2,15 +2,10 @@ package it.unibs.db.tcg.view;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Image;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.List;
 
 import javax.swing.DefaultListModel;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -23,7 +18,6 @@ import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionListener;
 
-import it.unibs.db.tcg.main.TCGMain;
 import it.unibs.db.tcg.model.Carta;
 
 public class CardsPanel extends JPanel {

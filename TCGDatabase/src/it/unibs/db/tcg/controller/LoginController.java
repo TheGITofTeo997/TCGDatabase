@@ -1,21 +1,15 @@
 package it.unibs.db.tcg.controller;
 
-import java.awt.EventQueue;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.SwingWorker;
 
-import it.unibs.db.tcg.model.ConnectorService;
-import it.unibs.db.tcg.model.Strings;
-import it.unibs.db.tcg.model.Utente;
+
 import it.unibs.db.tcg.view.LoginPanel;
-import it.unibs.db.tcg.view.RegistrationPanel;
+
 
 public class LoginController extends Controller {
 

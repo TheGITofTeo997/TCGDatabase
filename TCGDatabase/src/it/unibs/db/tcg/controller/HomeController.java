@@ -8,7 +8,6 @@ import java.awt.event.MouseEvent;
 import javax.swing.JFrame;
 import javax.swing.SwingWorker;
 
-import it.unibs.db.tcg.model.ConnectorService;
 import it.unibs.db.tcg.model.Utente;
 import it.unibs.db.tcg.view.HomePanel;
 

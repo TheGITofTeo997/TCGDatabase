@@ -1,10 +1,7 @@
 package it.unibs.db.tcg.view;
 
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.*;
-import javax.swing.border.LineBorder;
 import javax.swing.event.ListSelectionListener;
 
 import java.awt.Color;
@@ -16,9 +13,6 @@ import java.awt.event.ActionEvent;
 
 public class AccountPanel extends JPanel {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -4259378117098818102L;
 	private static final int WIDTH = 800;
 	private static final int HEIGHT = 600;

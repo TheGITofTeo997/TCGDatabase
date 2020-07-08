@@ -8,10 +8,8 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import it.unibs.db.tcg.model.Collezione;
-import it.unibs.db.tcg.model.ConnectorService;
 import it.unibs.db.tcg.model.Utente;
 import it.unibs.db.tcg.view.AccountPanel;
-import it.unibs.db.tcg.view.HomePanel;
 
 public class AccountController extends Controller {
 
