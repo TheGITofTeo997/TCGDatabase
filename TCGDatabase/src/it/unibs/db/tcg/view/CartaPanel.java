@@ -516,11 +516,17 @@ public class CartaPanel extends JPanel {
 		energyPanel.add(nrglblEnergyType);
 
 		btnAddToCollection = new JButton("Aggiungi a una collezione");
-		btnAddToCollection.setBounds(60, 410, 250, 50);
+		btnAddToCollection.setBounds(60, 410, 100, 100);
+		btnAddToCollection.setToolTipText("Aggiungi questa carta ad una collezione");
+		btnAddToCollection.setIcon(new ImageIcon(new ImageIcon("resources//icon//add_card_to_collection_icon.png").getImage()
+				.getScaledInstance(130, 130, Image.SCALE_SMOOTH)));
 		add(btnAddToCollection);
 
 		btnRemoveCard = new JButton("Rimuovi da una collezione");
-		btnRemoveCard.setBounds(60, 470, 250, 50);
+		btnRemoveCard.setBounds(210, 410, 100, 100);
+		btnRemoveCard.setToolTipText("Rimuovi questa carta da una collezione");
+		btnRemoveCard.setIcon(new ImageIcon(new ImageIcon("resources//icon//remove_card_from_collection_icon.png").getImage()
+				.getScaledInstance(130, 130, Image.SCALE_SMOOTH)));
 		btnRemoveCard.setVisible(false);
 		add(btnRemoveCard);
 

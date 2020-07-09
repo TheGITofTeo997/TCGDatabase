@@ -192,7 +192,7 @@ public class HomePanel extends JPanel {
 		add(btnOption);
 
 		ImageIcon pikachu = new ImageIcon("resources///pikachu.png");
-		pikachu.setImage(pikachu.getImage().getScaledInstance(300, 300, Image.SCALE_DEFAULT));
+		pikachu.setImage(pikachu.getImage().getScaledInstance(300, 300, Image.SCALE_SMOOTH));
 		lblPikachuBackground = new JLabel(pikachu);
 		lblPikachuBackground.setBounds(75, 300, 300, 300);
 		lblPikachuBackground.addMouseListener(new MouseAdapter() {

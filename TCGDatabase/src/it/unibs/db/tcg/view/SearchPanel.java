@@ -31,6 +31,8 @@ public class SearchPanel extends JPanel {
 
 	private JPanel cardPanel;
 	private JPanel userPanel;
+	private JButton btnCard;
+	private JButton btnUser;
 	private JButton btnBack;
 	private JButton btnRefresh;
 	private JButton btnCardSearch;
@@ -78,6 +80,9 @@ public class SearchPanel extends JPanel {
 	private JCheckBox olograficaRaraVBox;
 	private List<JCheckBox> typeCheckBox;
 	private List<JCheckBox> rarityCheckBox;
+	
+	private JLabel lblMewBackgroundUserPanel;
+	private JLabel lblMewBackgroundCardPanel;
 
 	private JTextField userNameField;
 
@@ -111,15 +116,27 @@ public class SearchPanel extends JPanel {
 		userPanel.setFocusable(false);
 		userPanel.setVisible(false);
 		add(userPanel);
-
-		JButton btnCard = new JButton("Cerca Carta");
+		
+		
+		ImageIcon mew = new ImageIcon("resources//mew.png");
+		mew.setImage(mew.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH));
+		
+		lblMewBackgroundCardPanel = new JLabel(mew);
+		lblMewBackgroundCardPanel.setBounds(600, 200, 150, 150);
+		cardPanel.add(lblMewBackgroundCardPanel);
+		
+		lblMewBackgroundUserPanel = new JLabel(mew);
+		lblMewBackgroundUserPanel.setBounds(600, 200, 150, 150);
+		userPanel.add(lblMewBackgroundUserPanel);
+		
+		btnCard = new JButton("Cerca Carta");
 		btnCard.setBounds(0, 0, WIDTH / 2, 30);
 		btnCard.setBackground(backgroundColor);
 		btnCard.setForeground(foregroundColor);
 		btnCard.setFont(panelFont.deriveFont(Font.BOLD));
 		menuPanel.add(btnCard);
 
-		JButton btnUser = new JButton("Cerca Utente");
+		btnUser = new JButton("Cerca Utente");
 		btnUser.setBounds(WIDTH / 2, 0, WIDTH / 2, 30);
 		btnUser.setBorderPainted(false);
 		btnUser.setFont(panelFont);
@@ -292,7 +309,7 @@ public class SearchPanel extends JPanel {
 		cardIllustratorField.setBounds(150, 180, 200, 50);
 		cardIllustratorField.setFont(panelFont);
 		cardPanel.add(cardIllustratorField);
-
+		
 		pkmnCheckBox.addItemListener(new ItemListener() {
 
 			public void itemStateChanged(ItemEvent e) {
@@ -706,6 +723,20 @@ public class SearchPanel extends JPanel {
 		icon = new ImageIcon(image);
 		image = image.getScaledInstance(16, 16, Image.SCALE_SMOOTH);
 		return icon;
+	}
+	
+	public void addEffectToMenuButtons(ActionListener a) {
+		btnUser.addActionListener(a);
+	}
+	
+	public void setLblUserPanelMewY(int y) {	
+		lblMewBackgroundUserPanel.setBounds(lblMewBackgroundUserPanel.getX(), y, lblMewBackgroundUserPanel.getWidth(),
+				lblMewBackgroundUserPanel.getHeight());
+	}
+	
+	public void setLblCardPanelMewY(int y) {
+		lblMewBackgroundCardPanel.setBounds(lblMewBackgroundCardPanel.getX(), y, lblMewBackgroundCardPanel.getWidth(),
+				lblMewBackgroundCardPanel.getHeight());
 	}
 
 }

@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.util.List;
 
 import javax.swing.JFrame;
+import javax.swing.SwingWorker;
 
 import it.unibs.db.tcg.model.CardSearchObject;
 import it.unibs.db.tcg.model.Carta;
@@ -77,7 +78,35 @@ public class SearchController extends Controller {
 				cardsController.drawCardsPanel(user, "Carte trovate", carte_trovate, null, null, true);
 
 			}
+			
 		});
+		
+		searchPanel.addEffectToMenuButtons(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				lblEffect();
+			}
+		});
+	}
+	
+	private void lblEffect() {
+		SwingWorker<Void, Void> backgroundThread1 = new SwingWorker<Void, Void>() {
+			@Override
+			protected Void doInBackground() throws Exception {
+				int y = 150;
+				while (y > 75) {
+					searchPanel.setLblUserPanelMewY(y);
+					y = y - 1;
+					Thread.sleep(10);
+				}
+				return null;
+			}
+
+			@Override
+			protected void done() {
+			};
+		};
+		backgroundThread1.execute();
 	}
 
 }
