@@ -81,11 +81,13 @@ public class LoginPanel extends JPanel implements KeyListener {
 
 		btnLogin = new JButton("Login");
 		btnLogin.setFont(panelFont);
+		btnLogin.setEnabled(false);
 		btnLogin.setBounds(WIDTH / 2 - 100, HEIGHT / 2 + 100, 200, 50);
 		add(btnLogin);
 
 		btnRegister = new JButton("Nuovo utente");
 		btnRegister.setFont(panelFont);
+		btnRegister.setEnabled(false);
 		btnRegister.setBounds(300, 500, 200, 50);
 		add(btnRegister);
 
@@ -145,6 +147,14 @@ public class LoginPanel extends JPanel implements KeyListener {
 			lblStatusText.setForeground(Color.RED);
 		}
 	}
+	
+	public void setBtnLoginEnabled(boolean flag) {
+		btnLogin.setEnabled(flag);
+	}
+	
+	public void setBtnRegisterEnabled(boolean flag) {
+		btnRegister.setEnabled(flag);
+	}
 
 	public void addRegistrationListener(ActionListener a) {
 		btnRegister.addActionListener(a);
@@ -166,7 +176,7 @@ public class LoginPanel extends JPanel implements KeyListener {
 		}
 
 	}
-
+	
 	@Override
 	public void keyReleased(KeyEvent e) {
 

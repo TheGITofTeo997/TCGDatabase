@@ -72,6 +72,8 @@ public class LoginController extends Controller {
 			@Override
 			protected void done() {
 				loginPanel.setDatabaseStatus(flag);
+				loginPanel.setBtnLoginEnabled(flag);
+				loginPanel.setBtnRegisterEnabled(flag);
 			};
 		};
 		backgroundThread1.execute();
