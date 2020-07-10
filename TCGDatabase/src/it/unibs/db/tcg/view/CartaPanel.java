@@ -90,6 +90,7 @@ public class CartaPanel extends JPanel {
 	private JPanel collectionsPanel;
 	private JButton btnAddToCollection;
 	private JButton btnRemoveCard;
+	private JButton btnWho;
 	private JList collectionsList;
 
 	public CartaPanel() {
@@ -529,11 +530,21 @@ public class CartaPanel extends JPanel {
 				.getScaledInstance(130, 130, Image.SCALE_SMOOTH)));
 		btnRemoveCard.setVisible(false);
 		add(btnRemoveCard);
+		
+		btnWho = new JButton("Chi ha questa carta?");
+		btnWho.setBounds(60, 515, 250, 40);
+		btnWho.setFont(panelFont);
+		btnWho.setToolTipText("Visualizza quali utenti possiedono questa carta");
+		add(btnWho);
 
 	}
 
 	public void addAddToCollectionListener(ActionListener a) {
 		btnAddToCollection.addActionListener(a);
+	}
+	
+	public void addBtnWhoListener(ActionListener a) {
+		btnWho.addActionListener(a);
 	}
 
 	public void createCollectionListPopup(DefaultListModel<String> collectionsName) {

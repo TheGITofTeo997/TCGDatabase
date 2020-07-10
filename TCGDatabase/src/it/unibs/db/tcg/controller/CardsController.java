@@ -43,10 +43,13 @@ public class CardsController extends Controller {
 							c.getAbbrEspansione());
 					cardsPanel.setVisible(false);
 					CartaController cartaController = new CartaController(frame);
-					if (toVisit == null)
-						cartaController.drawCartaPanel(user, title, cardsName, card, null, null);
+					if (toVisit == null) {
+						if(fromSearchPanel) cartaController.drawCartaPanel(user, title, cardsName, card, null, null, true);
+						else cartaController.drawCartaPanel(user, title, cardsName, card, null, null, false);
+					}
+						
 					else
-						cartaController.drawCartaPanel(user, title, cardsName, card, utenti, toVisit);
+						cartaController.drawCartaPanel(user, title, cardsName, card, utenti, toVisit, false);
 				}
 			}
 		});

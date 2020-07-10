@@ -668,13 +668,26 @@ public class ConnectorService {
 		connector.setStringParameter(2, nickname);
 		connector.setStringParameter(3, oldCollectionName);
 		connector.execute();
-		connector.submitParametrizedQuery(QueryBuilder.UPDATE_COLLECTION_NAME_POSSIEDE_TABLE);
-		connector.setStringParameter(1, newCollectionName);
-		connector.setStringParameter(2, nickname);
-		connector.setStringParameter(3, oldCollectionName);
-		connector.execute();
 		connector.closeStatement();
 		connector.closeConnection();
+	}
+	
+	public List<String> getUsersByCard(int num, String abbr_exp){
+		connector.openConnection();
+		connector.submitParametrizedQuery(QueryBuilder.GET_USERS_BY_CARD);
+		connector.setIntParameter(1, num);
+		connector.setStringParameter(2, abbr_exp);
+		ResultSet set = connector.executeQuery();
+		List<String> result = new ArrayList<>();
+		try {
+			while (set.next()) {
+				String nickname = set.getString("Nickname");
+				result.add(nickname);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 	public void updateCollectionVisibility(boolean visible, String nickname, String collectionName) {
@@ -688,7 +701,7 @@ public class ConnectorService {
 		connector.closeStatement();
 		connector.closeConnection();
 	}
-
+	
 	public boolean isThereCardInCollection(String nickname, String collectionName, int num_card, String abbr_esp) {
 		connector.openConnection();
 		connector.submitParametrizedQuery(QueryBuilder.IS_THERE_CARD_IN_COLLECTION);
@@ -769,10 +782,6 @@ public class ConnectorService {
 
 	public void createCollection(String nickname, String nameCollection, int visible) {
 		connector.openConnection();
-		connector.submitParametrizedQuery(QueryBuilder.CREATE_COLLECTION_POSSIEDE_TABLE);
-		connector.setStringParameter(1, nickname);
-		connector.setStringParameter(2, nameCollection);
-		connector.execute();
 		connector.submitParametrizedQuery(QueryBuilder.CREATE_COLLECTION_COLLECTION_TABLE);
 		connector.setStringParameter(1, nickname);
 		connector.setStringParameter(2, nameCollection);
@@ -786,10 +795,6 @@ public class ConnectorService {
 
 	public void deleteCollection(String nickname, String nameCollection) {
 		connector.openConnection();
-		connector.submitParametrizedQuery(QueryBuilder.DELETE_COLLECTION_POSSIEDE_TABLE);
-		connector.setStringParameter(1, nickname);
-		connector.setStringParameter(2, nameCollection);
-		connector.execute();
 		connector.submitParametrizedQuery(QueryBuilder.DELETE_COLLECTION_COMPOSTA_TABLE);
 		connector.setStringParameter(1, nickname);
 		connector.setStringParameter(2, nameCollection);

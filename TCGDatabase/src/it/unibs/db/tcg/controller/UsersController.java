@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import it.unibs.db.tcg.model.Carta;
 import it.unibs.db.tcg.model.Utente;
 import it.unibs.db.tcg.view.UsersPanel;
 
@@ -31,9 +32,6 @@ public class UsersController extends Controller {
 			public void valueChanged(ListSelectionEvent e) {
 				if (!e.getValueIsAdjusting()) {
 					Utente u = utenti.get(usersPanel.getListSelectedIndex());
-					// Carta card =
-					// connectorService.getCardFromNumberAndAbbrEspansione(c.getNumero(),
-					// c.getAbbrEspansione());
 					usersPanel.setVisible(false);
 					String nickname = u.getNickname();
 					u.setTotalCardsValue(connectorService.getUserTotalCardsValue(nickname));

@@ -339,7 +339,7 @@ public class SearchPanel extends JPanel {
 			}
 		});
 
-		JLabel userSLblName = new JLabel("Nome");
+		JLabel userSLblName = new JLabel("Nome Utente");
 		userSLblName.setBounds(0, 0, 100, 50);
 		userSLblName.setForeground(foregroundColor);
 		userSLblName.setFont(panelFont);

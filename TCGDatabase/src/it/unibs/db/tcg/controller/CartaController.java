@@ -2,6 +2,7 @@ package it.unibs.db.tcg.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.DefaultListModel;
@@ -27,7 +28,7 @@ public class CartaController extends Controller {
 	}
 
 	public void drawCartaPanel(Utente user, String title, List<Carta> cardsName, Carta c, List<Utente> utenti,
-			Utente toVisit) {
+			Utente toVisit, boolean fromSearchPanel) {
 		cardPanel = new CartaPanel();
 		cardPanel.setBounds(0, 0, 800, 600);
 		frame.getContentPane().add(cardPanel);
@@ -69,10 +70,10 @@ public class CartaController extends Controller {
 						cardPanel.showCorrectInsertPopup();
 					} else
 						cardPanel.showErrorPopup();
-					drawCartaPanel(user, title, cardsName, c, utenti, toVisit);
+					drawCartaPanel(user, title, cardsName, c, utenti, toVisit, fromSearchPanel);
 				} else {
 					cardPanel.showNoSelectedPopup();
-					drawCartaPanel(user, title, cardsName, c, utenti, toVisit);
+					drawCartaPanel(user, title, cardsName, c, utenti, toVisit, fromSearchPanel);
 				}
 			}
 		});
@@ -95,20 +96,34 @@ public class CartaController extends Controller {
 						connectorService.removeCardFromCollection(selectedCollection, c.getNumero(),
 								c.getAbbrEspansione());
 						cardPanel.setVisible(false);
-						drawCartaPanel(user, title, cardsName, c, utenti, toVisit);
+						drawCartaPanel(user, title, cardsName, c, utenti, toVisit, fromSearchPanel);
 						cardPanel.repaint();
 					} else {
 						cardPanel.showErrorPopup();
 						cardPanel.setVisible(false);
-						drawCartaPanel(user, title, cardsName, c, utenti, toVisit);
+						drawCartaPanel(user, title, cardsName, c, utenti, toVisit, fromSearchPanel);
 					}
 
 				} else {
 					cardPanel.showNoSelectedPopup();
 					cardPanel.setVisible(false);
-					drawCartaPanel(user, title, cardsName, c, utenti, toVisit);
+					drawCartaPanel(user, title, cardsName, c, utenti, toVisit, fromSearchPanel);
 				}
 
+			}
+		});
+		
+		cardPanel.addBtnWhoListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				List<String> nickname_utenti = connectorService.getUsersByCard(c.getNumero(), c.getAbbrEspansione());
+				List<Utente> utenti = new ArrayList<>();
+				for(String nickname : nickname_utenti) {
+					utenti.add(connectorService.getUser(nickname));
+				}
+				cardPanel.setVisible(false);
+				UsersController usersController = new UsersController(frame);
+				usersController.drawUsersPanel(user, utenti);
 			}
 		});
 
@@ -117,8 +132,10 @@ public class CartaController extends Controller {
 			public void actionPerformed(ActionEvent e) {
 				cardPanel.setVisible(false);
 				CardsController cardsController = new CardsController(frame);
-				if (toVisit == null)
-					cardsController.drawCardsPanel(user, title, cardsName, null, null, false);
+				if (toVisit == null) {
+					if(fromSearchPanel) cardsController.drawCardsPanel(user, title, cardsName, null, null, true);
+					else cardsController.drawCardsPanel(user, title, cardsName, null, null, false);
+				}			
 				else
 					cardsController.drawCardsPanel(user, title, cardsName, utenti, toVisit, false);
 			}
