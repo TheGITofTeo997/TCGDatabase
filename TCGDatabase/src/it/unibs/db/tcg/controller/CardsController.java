@@ -2,6 +2,10 @@ package it.unibs.db.tcg.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.swing.JFrame;
@@ -61,6 +65,59 @@ public class CardsController extends Controller {
 					VisitorAccountController visitorAccountController = new VisitorAccountController(frame);
 					visitorAccountController.drawVisitorAccountPanel(user, utenti, toVisit);
 				}
+
+			}
+		});
+
+		cardsPanel.addBtnGroupByNumberActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Carta[] item = cardsName.toArray(new Carta[cardsName.size()]);
+				int n = item.length;
+				Carta temp;
+				for (int index = 0; index < n; index++) {
+					for (int j = 1; j < (n - index); j++) {
+						if (item[j - 1].getNumero() > item[j].getNumero()) {
+							temp = item[j - 1];
+							item[j - 1] = item[j];
+							item[j] = temp;
+						}
+					}
+				}
+				List<Carta> cardsName = Arrays.asList(item);
+				cardsPanel.setVisible(false);
+				drawCardsPanel(user, title, cardsName, utenti, toVisit, fromSearchPanel);
+			}
+
+		});
+
+		cardsPanel.addBtnGroupByNameActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Collections.sort(cardsName, new Comparator<Carta>() {
+					public int compare(Carta c1, Carta c2) {
+						return c1.getNome().compareTo(c2.getNome());
+					}
+				});
+
+				cardsPanel.setVisible(false);
+				drawCardsPanel(user, title, cardsName, utenti, toVisit, fromSearchPanel);
+
+			}
+		});
+
+		cardsPanel.addBtnGroupByExpActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				Collections.sort(cardsName, new Comparator<Carta>() {
+					public int compare(Carta c1, Carta c2) {
+						return c1.getAbbrEspansione().compareTo(c2.getAbbrEspansione());
+					}
+				});
+
+				cardsPanel.setVisible(false);
+				drawCardsPanel(user, title, cardsName, utenti, toVisit, fromSearchPanel);
 
 			}
 		});

@@ -32,6 +32,9 @@ public class CardsPanel extends JPanel {
 	private JLabel lblTitle;
 	private JList<Carta> list;
 	private JButton btnBack;
+	private JButton btnGroupByNumber;
+	private JButton btnGroupByName;
+	private JButton btnGroupByExp;
 
 	/**
 	 * Create the panel.
@@ -57,6 +60,29 @@ public class CardsPanel extends JPanel {
 		btnBack.setBounds(650, 450, 90, 50);
 		btnBack.setFont(panelFont);
 		add(btnBack);
+
+		JLabel lblGroupBy = new JLabel("Ordina per");
+		lblGroupBy.setForeground(foregroundColor);
+		lblGroupBy.setFont(panelFont);
+		lblGroupBy.setBounds(50, 450, 100, 50);
+		lblGroupBy.setHorizontalAlignment(SwingConstants.CENTER);
+		add(lblGroupBy);
+
+		btnGroupByNumber = new JButton("Numero");
+		btnGroupByNumber.setBounds(175, 450, 100, 50);
+		btnGroupByNumber.setFont(panelFont);
+		add(btnGroupByNumber);
+
+		btnGroupByName = new JButton("Nome");
+		btnGroupByName.setBounds(300, 450, 100, 50);
+		btnGroupByName.setFont(panelFont);
+		add(btnGroupByName);
+
+		btnGroupByExp = new JButton("Esp");
+		btnGroupByExp.setBounds(425, 450, 100, 50);
+		btnGroupByExp.setFont(panelFont);
+		add(btnGroupByExp);
+
 	}
 
 	public void setCardList(List<Carta> carte) {
@@ -66,7 +92,8 @@ public class CardsPanel extends JPanel {
 		list = new JList();
 		DefaultListModel dm = new DefaultListModel();
 		for (Carta c : carte) {
-			dm.addElement(new ResultRow(c.getImmagine(), c.getNumero() + "/" + c.getAbbrEspansione() + " " + c.getNome()));
+			dm.addElement(
+					new ResultRow(c.getImmagine(), c.getNumero() + "/" + c.getAbbrEspansione() + " " + c.getNome()));
 		}
 		list.setCellRenderer(new Renderer());
 		list.setModel(dm);
@@ -77,13 +104,12 @@ public class CardsPanel extends JPanel {
 		list.setForeground(foregroundColor);
 		list.setFixedCellWidth(list.getWidth());
 		list.setFixedCellHeight(50);
-		
-		JScrollPane scrollPane = new JScrollPane(this,
-	            JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-	            JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+
+		JScrollPane scrollPane = new JScrollPane(this, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPane.setViewportView(list);
-		scrollPane.setBounds(50,50,700,400);
-		Border empty = new EmptyBorder(0,0,0,0);
+		scrollPane.setBounds(50, 50, 700, 400);
+		Border empty = new EmptyBorder(0, 0, 0, 0);
 		scrollPane.setBorder(empty);
 		add(scrollPane);
 
@@ -103,6 +129,18 @@ public class CardsPanel extends JPanel {
 		lblNoCardsText.setBounds(50, 410, 700, 20);
 		add(lblNoCardsText);
 		add(lblNoCards);
+	}
+
+	public void addBtnGroupByNumberActionListener(ActionListener a) {
+		btnGroupByNumber.addActionListener(a);
+	}
+
+	public void addBtnGroupByNameActionListener(ActionListener a) {
+		btnGroupByName.addActionListener(a);
+	}
+
+	public void addBtnGroupByExpActionListener(ActionListener a) {
+		btnGroupByExp.addActionListener(a);
 	}
 
 	public void setTitleText(String title) {
