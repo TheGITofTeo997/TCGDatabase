@@ -854,6 +854,35 @@ public class ConnectorService {
 		return result;
 		
 	}
+	
+	public List<Utente> getRankingTotalCardNumber(){
+		List<Utente> result = new ArrayList<>();
+		connector.openConnection();
+		connector.submitParametrizedQuery(QueryBuilder.GET_USER_RANKING_BY_TOTAL_CARDS_NUMBER);
+		ResultSet set = connector.executeQuery();
+		try {
+			while (set.next()) {
+				String nickname = set.getString("Nickname");
+				int totale = set.getInt("TotaleCarte");
+				Blob b = set.getBlob("Avatar");
+				byte[] imageByte = b.getBytes(1, (int) b.length());
+				InputStream is = new ByteArrayInputStream(imageByte);
+				BufferedImage imag = ImageIO.read(is);
+				Image i = imag;
+				ImageIcon avatar = new ImageIcon(i);
+				Utente u = new Utente();
+				u.setNickname(nickname);
+				u.setAvatar(avatar);
+				u.setTotalCard(totale);
+				result.add(u);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+		
+	}
 
 	private CartaEnergia createCartaEnergia(Carta c) {
 		CartaEnergia result = new CartaEnergia(c.getNumero(), c.getAbbrEspansione());

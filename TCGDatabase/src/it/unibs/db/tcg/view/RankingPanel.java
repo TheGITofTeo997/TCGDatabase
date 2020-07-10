@@ -40,12 +40,21 @@ public class RankingPanel extends JPanel {
 		panelFont = Preferences.getFont();
 		setFont(panelFont);
 
-		JLabel lblRankingCardValue = new JLabel("Classifica valore carta");
+		JLabel lblRankingCardValue = new JLabel("Classifica per valore totale carte");
 		lblRankingCardValue.setForeground(foregroundColor);
-		lblRankingCardValue.setFont(panelFont);
-		lblRankingCardValue.setBounds(50, 50, 200, 50);
+		lblRankingCardValue.setFont(panelFont.deriveFont(Font.BOLD));
+		lblRankingCardValue.setBounds(50, 25, 300, 50);
 		lblRankingCardValue.setHorizontalAlignment(SwingConstants.CENTER);
 		add(lblRankingCardValue);
+		
+		JLabel lblRankingCardCount = new JLabel("Classifica per totale carta possedute");
+		lblRankingCardCount.setForeground(foregroundColor);
+		lblRankingCardCount.setFont(panelFont.deriveFont(Font.BOLD));
+		lblRankingCardCount.setBounds(450, 25, 300, 50);
+		lblRankingCardCount.setHorizontalAlignment(SwingConstants.CENTER);
+		add(lblRankingCardCount);
+		
+		
 
 		btnBack = new JButton("Back");
 		btnBack.setBounds(650, 480, 90, 50);
@@ -66,7 +75,7 @@ public class RankingPanel extends JPanel {
 		}
 		list.setCellRenderer(new Renderer());
 		list.setModel(dm);
-		list.setBounds(50, 100, 300, 300);
+		list.setBounds(50, 75, 300, 300);
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		list.setBackground(backgroundColor);
 		list.setFont(panelFont);
@@ -77,8 +86,33 @@ public class RankingPanel extends JPanel {
 		JScrollPane scrollPane = new JScrollPane(this, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPane.setViewportView(list);
-		scrollPane.setBounds(50, 100, 300, 300);
+		scrollPane.setBounds(50, 75, 300, 200);
 		add(scrollPane);
 	}
+	
+	public void setRankingTotalCardList(List<Utente> utenti) {
+		list = new JList<Utente>();
+		DefaultListModel dm = new DefaultListModel();
+		for (Utente u : utenti) {
+			dm.addElement(new ResultRow(u.getAvatar(), u.getNickname() + "      " + u.getTotalCard() + " carte"));
+		}
+		list.setCellRenderer(new Renderer());
+		list.setModel(dm);
+		list.setBounds(450, 75, 300, 300);
+		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		list.setBackground(backgroundColor);
+		list.setFont(panelFont);
+		list.setForeground(foregroundColor);
+		list.setFixedCellWidth(300);
+		list.setFixedCellHeight(50);
+
+		JScrollPane scrollPane = new JScrollPane(this, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollPane.setViewportView(list);
+		scrollPane.setBounds(450, 75, 300, 200);
+		add(scrollPane);
+	}
+	
+	
 
 }

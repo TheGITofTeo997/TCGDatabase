@@ -23,6 +23,7 @@ public class RankingController extends Controller {
 		rankingPanel = new RankingPanel();
 		rankingPanel.setBounds(0, 0, 800, 600);
 		rankingPanel.setRankingCardValueList(connectorService.getRankingCardValue());
+		rankingPanel.setRankingTotalCardList(connectorService.getRankingTotalCardNumber());
 		frame.getContentPane().add(rankingPanel);
 
 		rankingPanel.addBackListener(new ActionListener() {

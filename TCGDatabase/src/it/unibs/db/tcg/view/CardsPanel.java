@@ -36,9 +36,6 @@ public class CardsPanel extends JPanel {
 	private JButton btnGroupByName;
 	private JButton btnGroupByExp;
 
-	/**
-	 * Create the panel.
-	 */
 	public CardsPanel() {
 		setLayout(null);
 		secondaryBackgroundColor = Preferences.getSecondaryBackgroundColor();
@@ -112,7 +109,6 @@ public class CardsPanel extends JPanel {
 		Border empty = new EmptyBorder(0, 0, 0, 0);
 		scrollPane.setBorder(empty);
 		add(scrollPane);
-
 	}
 
 	private void showNoCardsFoundImage() {

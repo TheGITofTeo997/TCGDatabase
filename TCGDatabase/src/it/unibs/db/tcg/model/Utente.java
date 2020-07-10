@@ -12,6 +12,7 @@ public class Utente {
 	private ImageIcon avatar;
 	private ArrayList<Collezione> collezioni;
 	private double totalCardsValue;
+	private int totalCard;
 
 	public Utente() {
 		collezioni = new ArrayList<>();
@@ -117,5 +118,15 @@ public class Utente {
 	public void setTotalCardsValue(double total_cards_value) {
 		this.totalCardsValue = total_cards_value;
 	}
+
+	public int getTotalCard() {
+		return totalCard;
+	}
+
+	public void setTotalCard(int totalCard) {
+		this.totalCard = totalCard;
+	}
+	
+	
 
 }
