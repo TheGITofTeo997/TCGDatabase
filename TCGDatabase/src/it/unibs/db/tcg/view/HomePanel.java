@@ -47,6 +47,7 @@ public class HomePanel extends JPanel {
 	private JButton btnBack;
 	private JButton btnNewCollection;
 	private JButton btnRandomCard;
+	private JButton btnRanking;
 	private JPanel optionPanel;
 	private JPanel newCollectionPanel;
 	private JComboBox visibleList;
@@ -79,7 +80,7 @@ public class HomePanel extends JPanel {
 		textInformation.setFont(getFont().deriveFont(Font.ITALIC));
 		textInformation.setEditable(false);
 		textInformation.setLineWrap(true);
-		//textInformation.setOpaque(false);
+		// textInformation.setOpaque(false);
 		textInformation.setWrapStyleWord(true);
 		textInformation.setBackground(new Color(73, 75, 76));
 		textInformation.setForeground(Color.WHITE);
@@ -121,8 +122,30 @@ public class HomePanel extends JPanel {
 			public void mouseExited(MouseEvent e) {
 				textInformation.setText("");
 			}
-		});	
+		});
 		add(btnSearch);
+
+		btnRanking = new JButton("Ranking");
+		btnRanking.setBounds(225, 165, 100, 100);
+		btnRanking.setBackground(new Color(192, 192, 192));
+		btnRanking.setForeground(foregroundColor);
+		btnRanking.setBackground(null);
+		btnRanking.setIcon(new ImageIcon(new ImageIcon("resources//icon//ranking_icon.png").getImage()
+				.getScaledInstance(120, 120, Image.SCALE_SMOOTH)));
+		btnRanking.setFont(panelFont.deriveFont(Font.BOLD));
+		btnRanking.addMouseListener(new MouseAdapter() {
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				textInformation.setText("Visualizza le classifiche generali degli utenti");
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				textInformation.setText("");
+			}
+		});
+		add(btnRanking);
 
 		btnNewCollection = new JButton("Nuova collezione");
 		btnNewCollection.setBounds(350, 40, 100, 100);
@@ -188,7 +211,7 @@ public class HomePanel extends JPanel {
 			public void mouseExited(MouseEvent e) {
 				textInformation.setText("");
 			}
-		});	
+		});
 		add(btnOption);
 
 		ImageIcon pikachu = new ImageIcon("resources///pikachu.png");
@@ -200,7 +223,7 @@ public class HomePanel extends JPanel {
 			@Override
 			public void mouseEntered(MouseEvent e) {
 			}
-			
+
 			public void mouseClicked(MouseEvent e) {
 				textInformation.setText("Why are you clicking me?");
 			}
@@ -209,7 +232,7 @@ public class HomePanel extends JPanel {
 			public void mouseExited(MouseEvent e) {
 				textInformation.setText("");
 			}
-		});	
+		});
 		add(lblPikachuBackground);
 
 		btnOption.addActionListener(new ActionListener() {
@@ -337,7 +360,7 @@ public class HomePanel extends JPanel {
 	public void addRandomCardListener(ActionListener a) {
 		btnRandomCard.addActionListener(a);
 	}
-	
+
 	public void setTextInformationMessage(String text) {
 		textInformation.setText(text);
 	}
@@ -389,7 +412,10 @@ public class HomePanel extends JPanel {
 
 	public void addAccountListener(ActionListener a) {
 		btnViewProfile.addActionListener(a);
+	}
 
+	public void addRankingListener(ActionListener a) {
+		btnRanking.addActionListener(a);
 	}
 
 	public void addSearchListener(ActionListener a) {

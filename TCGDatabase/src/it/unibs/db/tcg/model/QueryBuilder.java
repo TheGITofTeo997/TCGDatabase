@@ -94,4 +94,11 @@ public class QueryBuilder {
 			+ " WHERE carta.Abbr_Espansione = ?";
 
 	protected static String GET_USERS_BY_NAME = "SELECT *" + " FROM utente" + " WHERE utente.Nome_Utente LIKE ?";
+	
+	protected static String GET_USER_RANKING_BY_TOTAL_CARDS_VALUE = "SELECT (utente.Nickname) AS Nickname, (utente.Avatar) as Avatar," + 
+			"           ( SELECT sum(Valore)" + 
+			"	FROM possiede JOIN composta ON possiede.Nome_Collezione = composta.Nome_Collezione JOIN carta ON composta.N_Carta = carta.Numero" + 
+			"	WHERE possiede.Nickname = utente.Nickname) AS ValoreTotale" + 
+			"    FROM utente " + 
+			"    ORDER BY ValoreTotale DESC";
 }

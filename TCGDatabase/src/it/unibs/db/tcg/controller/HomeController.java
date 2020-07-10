@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.SwingWorker;
@@ -39,6 +40,16 @@ public class HomeController extends Controller {
 				accountController.drawAccountPanel(user.getNickname());
 			}
 		});
+		
+		homePanel.addRankingListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				homePanel.setVisible(false);
+				RankingController rankingController = new RankingController(frame);
+				rankingController.drawRankingPanel(user);
+			}
+		});
+		
 
 		homePanel.addBackListener(new ActionListener() {
 			@Override
@@ -56,6 +67,7 @@ public class HomeController extends Controller {
 			public void actionPerformed(ActionEvent e) {
 				homePanel.setVisible(false);
 				SearchController searchController = new SearchController(frame);
+				List<Utente> usersRanking1 = connectorService.getRankingCardValue();
 				searchController.drawSearchPanel(user);
 
 			}
@@ -84,6 +96,8 @@ public class HomeController extends Controller {
 				homePanel.showRandomCardPopup(connectorService.getRandomCard());
 			}
 		});
+		
+		
 
 		lblEffect();
 

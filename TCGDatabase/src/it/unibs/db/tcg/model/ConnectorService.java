@@ -19,11 +19,11 @@ public class ConnectorService {
 	private Connector connector = new Connector("jdbc:mysql://localhost:3306/TCG_DB", "root", "");
 	// private Connector connector = new
 	// Connector("jdbc:mysql://localhost:4040/TCG_DB", "root", "");
-	
+
 	public boolean isReachable() {
 		return connector.isReachable();
 	}
-		
+
 	public Utente getUser(String nickname) {
 		connector.openConnection();
 		connector.submitParametrizedQuery(QueryBuilder.GET_USER_ATTRIBUTES);
@@ -167,7 +167,7 @@ public class ConnectorService {
 		}
 		return true;
 	}
-	
+
 	// da cambiare tipo Valore in TABLE Carta nel DB
 	public double getUserTotalCardsValue(String nickname) {
 		connector.openConnection();
@@ -184,7 +184,7 @@ public class ConnectorService {
 		} finally {
 			try {
 				if (set != null)
-					set.close(); 
+					set.close();
 				connector.closeStatement();
 				connector.closeConnection();
 			} catch (SQLException sqle) {
@@ -328,7 +328,7 @@ public class ConnectorService {
 					_n_stage_succ = set.getInt("N_Stage_Successivo");
 					_abilita = set.getString("Abilita");
 					_attr_spec = set.getString("Attributo_Speciale");
-					_regola = set.getString("Regola");					
+					_regola = set.getString("Regola");
 
 					c1 = createCartaPokemon(c);
 					c1.setDescrizione(_descr_pkmn);
@@ -344,15 +344,15 @@ public class ConnectorService {
 					connector.setStringParameter(2, c1.getAbbrEspansione());
 					ResultSet setNomiMosse = connector.executeQuery();
 					List<String> nomiMosse = new ArrayList<>();
-					while(setNomiMosse.next()) {
+					while (setNomiMosse.next()) {
 						nomiMosse.add(setNomiMosse.getString("Nome_Mossa"));
 					}
 					List<Mossa> mosse = new ArrayList<>();
-					for(int k = 0; k < nomiMosse.size(); k++) {
+					for (int k = 0; k < nomiMosse.size(); k++) {
 						connector.submitParametrizedQuery(QueryBuilder.GET_MOSSA_BY_NAME);
 						connector.setStringParameter(1, nomiMosse.get(k));
 						ResultSet setMosse = connector.executeQuery();
-						while(setMosse.next()) {
+						while (setMosse.next()) {
 							Mossa m = new Mossa(setMosse.getString("Nome_Mossa"));
 							int energia_richiesta = setMosse.getInt("Energia_Richiesta");
 							int danno = setMosse.getInt("Danno");
@@ -363,10 +363,10 @@ public class ConnectorService {
 							mosse.add(m);
 						}
 					}
-					
-					for(Mossa m : mosse)
+
+					for (Mossa m : mosse)
 						c1.addMossa(m);
-							
+
 					CartaPokemonBase c2 = createCartaPokemonBase(c1);
 					c2.setAbilita(_abilita);
 					return c2;
@@ -393,22 +393,21 @@ public class ConnectorService {
 					c1.setDebolezza(_debolezza);
 					c1.setStage(_stage);
 					c1.setStage_successivo(_n_stage_succ);
-					
-					
+
 					connector.submitParametrizedQuery(QueryBuilder.GET_MOSSE);
 					connector.setIntParameter(1, c1.getNumero());
 					connector.setStringParameter(2, c1.getAbbrEspansione());
 					ResultSet setNomiMosse2 = connector.executeQuery();
 					List<String> nomiMosse2 = new ArrayList<>();
-					while(setNomiMosse2.next()) {
+					while (setNomiMosse2.next()) {
 						nomiMosse2.add(setNomiMosse2.getString("Nome_Mossa"));
 					}
 					List<Mossa> mosse2 = new ArrayList<>();
-					for(int k = 0; k < nomiMosse2.size(); k++) {
+					for (int k = 0; k < nomiMosse2.size(); k++) {
 						connector.submitParametrizedQuery(QueryBuilder.GET_MOSSA_BY_NAME);
 						connector.setStringParameter(1, nomiMosse2.get(k));
 						ResultSet setMosse = connector.executeQuery();
-						while(setMosse.next()) {
+						while (setMosse.next()) {
 							Mossa m = new Mossa(setMosse.getString("Nome_Mossa"));
 							int energia_richiesta = setMosse.getInt("Energia_Richiesta");
 							int danno = setMosse.getInt("Danno");
@@ -419,13 +418,13 @@ public class ConnectorService {
 							mosse2.add(m);
 						}
 					}
-					
-					for(Mossa m : mosse2)
+
+					for (Mossa m : mosse2)
 						c1.addMossa(m);
 					CartaPokemonSpeciale c3 = createCartaPokemonSpeciale(c1);
 					c3.setAttributoSpeciale(_attr_spec);
 					c3.setRegola(_regola);
-					
+
 					return c3;
 				case 2:
 					CartaStrumento c4 = createCartaStrumento(c);
@@ -656,7 +655,7 @@ public class ConnectorService {
 		connector.closeStatement();
 		connector.closeConnection();
 	}
-	
+
 	public void updateCollectionName(String newCollectionName, String nickname, String oldCollectionName) {
 		connector.openConnection();
 		connector.submitParametrizedQuery(QueryBuilder.UPDATE_COLLECTION_NAME_COLLEZIONE_TABLE);
@@ -677,7 +676,7 @@ public class ConnectorService {
 		connector.closeStatement();
 		connector.closeConnection();
 	}
-	
+
 	public void updateCollectionVisibility(boolean visible, String nickname, String collectionName) {
 		int visibility = visible ? 1 : 0;
 		connector.openConnection();
@@ -689,7 +688,7 @@ public class ConnectorService {
 		connector.closeStatement();
 		connector.closeConnection();
 	}
-	
+
 	public boolean isThereCardInCollection(String nickname, String collectionName, int num_card, String abbr_esp) {
 		connector.openConnection();
 		connector.submitParametrizedQuery(QueryBuilder.IS_THERE_CARD_IN_COLLECTION);
@@ -715,7 +714,7 @@ public class ConnectorService {
 		}
 		return true;
 	}
-	
+
 	public void insertCardInCollection(String nickname, String collectionName, int num_card, String abbr_esp) {
 		connector.openConnection();
 		connector.submitParametrizedQuery(QueryBuilder.INSERT_CARD_IN_COMPOSTA);
@@ -727,7 +726,7 @@ public class ConnectorService {
 		connector.closeStatement();
 		connector.closeConnection();
 	}
-	
+
 	public void removeCardFromCollection(String collectionName, int num_card, String abbr_esp) {
 		connector.openConnection();
 		connector.submitParametrizedQuery(QueryBuilder.DELETE_CARD_FROM_COLLECTION);
@@ -738,7 +737,7 @@ public class ConnectorService {
 		connector.closeStatement();
 		connector.closeConnection();
 	}
-	
+
 	public ImageIcon getRandomCard() {
 		connector.openConnection();
 		connector.submitParametrizedQuery(QueryBuilder.GET_RANDOM_CARD);
@@ -746,12 +745,12 @@ public class ConnectorService {
 		ResultSet set = connector.executeQuery();
 		try {
 			while (set.next()) {
-			Blob b = set.getBlob("Immagine");
-			byte[] imageByte = b.getBytes(1, (int) b.length());
-			InputStream is = new ByteArrayInputStream(imageByte);
-			BufferedImage imag = ImageIO.read(is);
-			Image i = imag;
-			_immagine = new ImageIcon(i);
+				Blob b = set.getBlob("Immagine");
+				byte[] imageByte = b.getBytes(1, (int) b.length());
+				InputStream is = new ByteArrayInputStream(imageByte);
+				BufferedImage imag = ImageIO.read(is);
+				Image i = imag;
+				_immagine = new ImageIcon(i);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -784,7 +783,7 @@ public class ConnectorService {
 		connector.closeConnection();
 		connector.closeConnection();
 	}
-	
+
 	public void deleteCollection(String nickname, String nameCollection) {
 		connector.openConnection();
 		connector.submitParametrizedQuery(QueryBuilder.DELETE_COLLECTION_POSSIEDE_TABLE);
@@ -825,6 +824,35 @@ public class ConnectorService {
 		connector.execute();
 		connector.closeStatement();
 		connector.closeConnection();
+	}
+
+	public List<Utente> getRankingCardValue(){
+		List<Utente> result = new ArrayList<>();
+		connector.openConnection();
+		connector.submitParametrizedQuery(QueryBuilder.GET_USER_RANKING_BY_TOTAL_CARDS_VALUE);
+		ResultSet set = connector.executeQuery();
+		try {
+			while (set.next()) {
+				String nickname = set.getString("Nickname");
+				double valoreTotale = set.getDouble("ValoreTotale");
+				Blob b = set.getBlob("Avatar");
+				byte[] imageByte = b.getBytes(1, (int) b.length());
+				InputStream is = new ByteArrayInputStream(imageByte);
+				BufferedImage imag = ImageIO.read(is);
+				Image i = imag;
+				ImageIcon avatar = new ImageIcon(i);
+				Utente u = new Utente();
+				u.setNickname(nickname);
+				u.setAvatar(avatar);
+				u.setTotalCardsValue(valoreTotale);
+				result.add(u);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+		
 	}
 
 	private CartaEnergia createCartaEnergia(Carta c) {
@@ -868,11 +896,11 @@ public class ConnectorService {
 		result.setTipoEnergia(c.getTipoEnergia());
 		result.setPS(c.getPS());
 		result.setCostoRitirata(c.getCostoRitirata());
-		result.setResistenza(c.getResistenza()); 
-		result.setDebolezza(c.getDebolezza()); 
+		result.setResistenza(c.getResistenza());
+		result.setDebolezza(c.getDebolezza());
 		result.setStage(c.getStage());
 		result.setStage_successivo(c.getStage_successivo());
-		for(Mossa m : c.getMosse())
+		for (Mossa m : c.getMosse())
 			result.addMossa(m);
 		return result;
 	}
@@ -888,11 +916,11 @@ public class ConnectorService {
 		result.setTipoEnergia(c.getTipoEnergia());
 		result.setPS(c.getPS());
 		result.setCostoRitirata(c.getCostoRitirata());
-		result.setResistenza(c.getResistenza()); 
+		result.setResistenza(c.getResistenza());
 		result.setDebolezza(c.getDebolezza());
 		result.setStage(c.getStage());
 		result.setStage_successivo(c.getStage_successivo());
-		for(Mossa m : c.getMosse())
+		for (Mossa m : c.getMosse())
 			result.addMossa(m);
 		return result;
 	}
