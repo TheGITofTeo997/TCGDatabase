@@ -93,13 +93,13 @@ public class QueryBuilder {
 	protected static String GET_TOTAL_NUMBER_CARD_COLLECTION = "SELECT COUNT(*)" + " FROM composta"
 			+ " WHERE composta.Nickname = ? AND composta.Nome_Collezione = ?";
 
-	protected static String GET_NAME_PRE_STAGE_BY_NUM_AND_ABBR_EXP = "SELECT nome_stage_precedente" + " FROM evoluzione"
-			+ " WHERE stage_successivo IN ( SELECT Nome_Carta" + " FROM carta"
-			+ " WHERE Numero = ? AND Abbr_Espansione = ? " + " LIMIT 1)";
+	protected static String GET_NAME_PRE_STAGE_BY_NUM_AND_ABBR_EXP = "SELECT Stage_precedente" + " FROM evoluzione"
+			+ " WHERE Stage_successivo IN ( SELECT Nome_Carta" + " FROM carta"
+			+ " WHERE Numero = ? AND Abbr_Espansione = ?)";
 	
-	protected static String GET_NAME_NEXT_STAGE_BY_NUM_AND_ABBR_EXP = "SELECT nome_stage_successivo" + " FROM evoluzione"
-			+ " WHERE stage_successivo IN ( SELECT Nome_Carta" + " FROM carta"
-			+ " WHERE Numero = ? AND Abbr_Espansione = ? " + " LIMIT 1)";
+	protected static String GET_NAME_NEXT_STAGE_BY_NUM_AND_ABBR_EXP = "SELECT Stage_successivo" + " FROM evoluzione"
+			+ " WHERE Stage_precedente IN ( SELECT Nome_Carta" + " FROM carta"
+			+ " WHERE Numero = ? AND Abbr_Espansione = ?)";
 
 	protected static String GET_COUNT_OF_CARDS_PER_EXPANSION = "SELECT composta.Abbr_Espansione, espansione.Icona, espansione.Nome_Espansione, COUNT(*)"
 			+ " FROM composta JOIN espansione ON composta.Abbr_Espansione = espansione.Abbreviazione "

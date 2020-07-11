@@ -132,13 +132,13 @@ public class CartaPanel extends JPanel {
 		
 		
 		btnNextStage = new JButton("");
-		//btnNextStage.setVisible(false);
-		btnNextStage.setBounds(320, 505, 100, 50);
+		btnNextStage.setVisible(false);
+		btnNextStage.setBounds(420, 505, 100, 50);
 		add(btnNextStage);
 		
 		btnPreStage = new JButton("");
-		//btnPreStage.setVisible(false);
-		btnPreStage.setBounds(420, 505, 100, 50);
+		btnPreStage.setVisible(false);
+		btnPreStage.setBounds(320, 505, 100, 50);
 		add(btnPreStage);
 
 		lblPic = new JLabel("");

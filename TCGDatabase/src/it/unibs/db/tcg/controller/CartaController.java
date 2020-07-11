@@ -143,6 +143,38 @@ public class CartaController extends Controller {
 				usersController.drawUsersPanel(user, utenti);
 			}
 		});
+		
+		cardPanel.addNextStageActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				List<Carta> cardsName = connectorService.getCardsByName(next_stage);
+				cardPanel.setVisible(false);
+				CardsController cardsController = new CardsController(frame);
+				if (toVisit == null) {
+					if (fromSearchPanel)
+						cardsController.drawCardsPanel(user, title, cardsName, null, null, true);
+					else
+						cardsController.drawCardsPanel(user, title, cardsName, null, null, false);
+				} else
+					cardsController.drawCardsPanel(user, title, cardsName, utenti, toVisit, false);
+			}
+		});
+		
+		cardPanel.addPreStageActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				List<Carta> cardsName = connectorService.getCardsByName(pre_stage);
+				cardPanel.setVisible(false);
+				CardsController cardsController = new CardsController(frame);
+				if (toVisit == null) {
+					if (fromSearchPanel)
+						cardsController.drawCardsPanel(user, title, cardsName, null, null, true);
+					else
+						cardsController.drawCardsPanel(user, title, cardsName, null, null, false);
+				} else
+					cardsController.drawCardsPanel(user, title, cardsName, utenti, toVisit, false);
+			}
+		});
 
 		cardPanel.addBackListener(new ActionListener() {
 			@Override

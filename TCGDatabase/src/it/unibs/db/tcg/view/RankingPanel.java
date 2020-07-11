@@ -2,10 +2,12 @@ package it.unibs.db.tcg.view;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionListener;
 import java.util.List;
 
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -27,6 +29,7 @@ public class RankingPanel extends JPanel {
 	private static Color secondaryBackgroundColor;
 	private static Color foregroundColor;
 	private Font panelFont;
+	private JLabel lblGyaradosBackground;
 	private JButton btnBack;
 	private JList<Utente> list;
 
@@ -39,7 +42,19 @@ public class RankingPanel extends JPanel {
 		setForeground(foregroundColor);
 		panelFont = Preferences.getFont();
 		setFont(panelFont);
+		
+		btnBack = new JButton("Back");
+		btnBack.setBounds(650, 480, 90, 50);
+		btnBack.setFont(panelFont);
+		add(btnBack);
 
+		
+		ImageIcon gyarados = new ImageIcon("resources///gyarados.png");
+		gyarados.setImage(gyarados.getImage().getScaledInstance(300, 300, Image.SCALE_SMOOTH));
+		lblGyaradosBackground = new JLabel(gyarados);
+		lblGyaradosBackground.setBounds(562, 300, 300, 300);
+		add(lblGyaradosBackground);
+		
 		JLabel lblRankingCardValue = new JLabel("Patrimonio valore totale carte");
 		lblRankingCardValue.setForeground(foregroundColor);
 		lblRankingCardValue.setFont(panelFont.deriveFont(Font.BOLD));
@@ -60,15 +75,7 @@ public class RankingPanel extends JPanel {
 		lblRankingCardMaxValue.setBounds(50, 300, 300, 50);
 		lblRankingCardMaxValue.setHorizontalAlignment(SwingConstants.CENTER);
 		add(lblRankingCardMaxValue);
-		
-		
-		
-		
 
-		btnBack = new JButton("Back");
-		btnBack.setBounds(650, 480, 90, 50);
-		btnBack.setFont(panelFont);
-		add(btnBack);
 
 	}
 

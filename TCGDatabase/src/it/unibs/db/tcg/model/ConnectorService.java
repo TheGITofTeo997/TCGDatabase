@@ -14,11 +14,9 @@ import javax.swing.ImageIcon;
 
 public class ConnectorService {
 
-	// private Connector connector = new
-	// Connector("jdbc:mysql://192.168.1.124:3306/TCG_DB", "root", "R2mSDzoz");
+	// private Connector connector = new Connector("jdbc:mysql://192.168.1.124:3306/TCG_DB", "root", "R2mSDzoz");
 	private Connector connector = new Connector("jdbc:mysql://localhost:3306/TCG_DB", "root", "");
-	// private Connector connector = new
-	// Connector("jdbc:mysql://localhost:4040/TCG_DB", "root", "");
+	// private Connector connector = new Connector("jdbc:mysql://localhost:4040/TCG_DB", "root", "");
 
 	public boolean isReachable() {
 		return connector.isReachable();
@@ -561,7 +559,7 @@ public class ConnectorService {
 			for (String type : s.getCardType()) {
 				switch (type) {
 				case "Pokemon":
-					query += QueryBuilder.GET_CARDS_TYPE + " UNION " + QueryBuilder.GET_CARDS_TYPE + " INTERSECT ";
+					query += "(" + QueryBuilder.GET_CARDS_TYPE + " UNION " + QueryBuilder.GET_CARDS_TYPE + ") INTERSECT ";
 					intParametersMap.put(position, 0);
 					position++;
 					intParametersMap.put(position, 1);
@@ -608,7 +606,7 @@ public class ConnectorService {
 		position++;
 		intParametersMap.put(position, s.getUpperValueBarValue());
 		position++;
-
+		
 		connector.submitParametrizedQuery(query);
 		for (Entry<Integer, String> entry : stringParametersMap.entrySet())
 			connector.setStringParameter(entry.getKey(), entry.getValue());
@@ -761,6 +759,36 @@ public class ConnectorService {
 		}
 		return true;
 	}
+	
+	public List<Carta> getCardsByName(String name){
+		connector.openConnection();
+		connector.submitParametrizedQuery(QueryBuilder.GET_CARDS_BY_NAME);
+		connector.setStringParameter(1, name);
+		ResultSet set = connector.executeQuery();
+		List<Carta> result = new ArrayList<>();
+		if(set != null) {
+			try (set) {
+				if (set.next()) {
+					String nome_carta = set.getString("Nome_Carta");
+					String abbr_Espansione = set.getString("Abbr_Espansione");
+					int numero = set.getInt("Numero");
+					Blob b = set.getBlob("Immagine");
+					byte[] imageByte = b.getBytes(1, (int) b.length());
+					InputStream is = new ByteArrayInputStream(imageByte);
+					BufferedImage imag = ImageIO.read(is);
+					Image i = imag;
+					ImageIcon _immagine = new ImageIcon(i);
+					Carta c = new Carta(numero, abbr_Espansione);
+					c.setImmagine(_immagine);
+					c.setNome(nome_carta);
+					result.add(c);
+				}	
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
 
 	public void insertCardInCollection(String nickname, String collectionName, int num_card, String abbr_esp) {
 		connector.openConnection();
@@ -875,7 +903,7 @@ public class ConnectorService {
 		if (set != null) {
 			try {
 				while (set.next()) {
-					result = set.getString("Nome_stage_successivo");
+					result = set.getString("Stage_successivo");
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -894,7 +922,7 @@ public class ConnectorService {
 		if (set != null) {
 			try {
 				while (set.next()) {
-					result = set.getString("Nome_stage_precedente");
+					result = set.getString("Stage_precedente");
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
