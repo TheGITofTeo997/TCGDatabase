@@ -6,6 +6,7 @@ import java.io.*;
 import java.sql.*;
 import java.util.*;
 import java.util.Map.Entry;
+import java.util.stream.Collectors;
 import java.util.List;
 import java.sql.Date;
 
@@ -14,11 +15,9 @@ import javax.swing.ImageIcon;
 
 public class ConnectorService {
 
-	// private Connector connector = new
-	// Connector("jdbc:mysql://192.168.1.124:3306/TCG_DB", "root", "R2mSDzoz");
+	// private Connector connector = new Connector("jdbc:mysql://192.168.1.124:3306/TCG_DB", "root", "R2mSDzoz");
 	private Connector connector = new Connector("jdbc:mysql://localhost:3306/TCG_DB", "root", "");
-	// private Connector connector = new
-	// Connector("jdbc:mysql://localhost:4040/TCG_DB", "root", "");
+	// private Connector connector = new Connector("jdbc:mysql://localhost:4040/TCG_DB", "root", "");
 
 	public boolean isReachable() {
 		return connector.isReachable();
@@ -47,15 +46,18 @@ public class ConnectorService {
 				_avatar = new ImageIcon(i);
 				_dataRegistrazione = set.getDate("Data_Registrazione");
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			e.printStackTrace();
-		} finally {
+		}
+		finally {
 			try {
 				if (set != null)
 					set.close();
 				connector.closeStatement();
 				connector.closeConnection();
-			} catch (SQLException sqle) {
+			}
+			catch (SQLException sqle) {
 				sqle.printStackTrace();
 			}
 		}
@@ -79,15 +81,18 @@ public class ConnectorService {
 			while (set.next()) {
 				collections.add(set.getString("Nome_Collezione"));
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			e.printStackTrace();
-		} finally {
+		}
+		finally {
 			try {
 				if (set != null)
 					set.close();
 				connector.closeStatement();
 				connector.closeConnection();
-			} catch (SQLException sqle) {
+			}
+			catch (SQLException sqle) {
 				sqle.printStackTrace();
 			}
 		}
@@ -105,15 +110,18 @@ public class ConnectorService {
 			while (set.next()) {
 				collections.add(set.getString("Nome_Collezione"));
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			e.printStackTrace();
-		} finally {
+		}
+		finally {
 			try {
 				if (set != null)
 					set.close();
 				connector.closeStatement();
 				connector.closeConnection();
-			} catch (SQLException sqle) {
+			}
+			catch (SQLException sqle) {
 				sqle.printStackTrace();
 			}
 		}
@@ -129,15 +137,18 @@ public class ConnectorService {
 		try (set) {
 			if (set.next() == false)
 				return false;
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			e.printStackTrace();
-		} finally {
+		}
+		finally {
 			try {
 				if (set != null)
 					set.close();
 				connector.closeStatement();
 				connector.closeConnection();
-			} catch (SQLException sqle) {
+			}
+			catch (SQLException sqle) {
 				sqle.printStackTrace();
 			}
 		}
@@ -153,15 +164,18 @@ public class ConnectorService {
 		try (set) {
 			if (set.next() == false)
 				return false;
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			e.printStackTrace();
-		} finally {
+		}
+		finally {
 			try {
 				if (set != null)
 					set.close();
 				connector.closeStatement();
 				connector.closeConnection();
-			} catch (SQLException sqle) {
+			}
+			catch (SQLException sqle) {
 				sqle.printStackTrace();
 			}
 		}
@@ -179,15 +193,18 @@ public class ConnectorService {
 			while (set.next()) {
 				value += set.getInt(1);
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			e.printStackTrace();
-		} finally {
+		}
+		finally {
 			try {
 				if (set != null)
 					set.close();
 				connector.closeStatement();
 				connector.closeConnection();
-			} catch (SQLException sqle) {
+			}
+			catch (SQLException sqle) {
 				sqle.printStackTrace();
 			}
 		}
@@ -221,15 +238,18 @@ public class ConnectorService {
 				c.setNome(_nomeCarta);
 				cardsList.add(c);
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			e.printStackTrace();
-		} finally {
+		}
+		finally {
 			try {
 				if (set != null)
 					set.close();
 				connector.closeStatement();
 				connector.closeConnection();
-			} catch (SQLException sqle) {
+			}
+			catch (SQLException sqle) {
 				sqle.printStackTrace();
 			}
 		}
@@ -242,7 +262,6 @@ public class ConnectorService {
 		connector.setIntParameter(1, number);
 		connector.setStringParameter(2, abbr_espansione);
 		ResultSet set = connector.executeQuery();
-		Carta c = null;
 		String type = "";
 		try {
 			while (set.next()) {
@@ -256,15 +275,18 @@ public class ConnectorService {
 				else if (sel_carta == 3)
 					type = Strings.CARTA_ENERGIA;
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			e.printStackTrace();
-		} finally {
+		}
+		finally {
 			try {
 				if (set != null)
 					set.close();
 				connector.closeStatement();
 				connector.closeConnection();
-			} catch (SQLException sqle) {
+			}
+			catch (SQLException sqle) {
 				sqle.printStackTrace();
 			}
 		}
@@ -315,132 +337,135 @@ public class ConnectorService {
 
 				int sel_carta = set.getInt("SEL_Carta");
 				switch (sel_carta) {
-				case 0:
-					_descr_pkmn = set.getString("Descrizione_PKMN");
-					_tipo_energia = set.getString("Tipo_Energia");
-					_ps = set.getInt("PS");
-					_costo_ritirata = set.getInt("Costo_Ritirata");
-					_resistenza = set.getString("Resistenza");
-					_debolezza = set.getString("Debolezza");
-					_abilita = set.getString("Abilita");
-					_attr_spec = set.getString("Attributo_Speciale");
-					_regola = set.getString("Regola");
+					case 0:
+						_descr_pkmn = set.getString("Descrizione_PKMN");
+						_tipo_energia = set.getString("Tipo_Energia");
+						_ps = set.getInt("PS");
+						_costo_ritirata = set.getInt("Costo_Ritirata");
+						_resistenza = set.getString("Resistenza");
+						_debolezza = set.getString("Debolezza");
+						_abilita = set.getString("Abilita");
+						_attr_spec = set.getString("Attributo_Speciale");
+						_regola = set.getString("Regola");
 
-					c1 = createCartaPokemon(c);
-					c1.setDescrizione(_descr_pkmn);
-					c1.setTipoEnergia(_tipo_energia);
-					c1.setPS(_ps);
-					c1.setCostoRitirata(_costo_ritirata);
-					c1.setResistenza(_resistenza);
-					c1.setDebolezza(_debolezza);
-					connector.submitParametrizedQuery(QueryBuilder.GET_MOSSE);
-					connector.setIntParameter(1, c1.getNumero());
-					connector.setStringParameter(2, c1.getAbbrEspansione());
-					ResultSet setNomiMosse = connector.executeQuery();
-					List<String> nomiMosse = new ArrayList<>();
-					while (setNomiMosse.next()) {
-						nomiMosse.add(setNomiMosse.getString("Nome_Mossa"));
-					}
-					List<Mossa> mosse = new ArrayList<>();
-					for (int k = 0; k < nomiMosse.size(); k++) {
-						connector.submitParametrizedQuery(QueryBuilder.GET_MOSSA_BY_NAME);
-						connector.setStringParameter(1, nomiMosse.get(k));
-						ResultSet setMosse = connector.executeQuery();
-						while (setMosse.next()) {
-							Mossa m = new Mossa(setMosse.getString("Nome_Mossa"));
-							int energia_richiesta = setMosse.getInt("Energia_Richiesta");
-							int danno = setMosse.getInt("Danno");
-							String descr = setMosse.getString("Descrizione");
-							m.setEnergiaRichiesta(energia_richiesta);
-							m.setDanno(danno);
-							m.setDescrizione(descr);
-							mosse.add(m);
+						c1 = createCartaPokemon(c);
+						c1.setDescrizione(_descr_pkmn);
+						c1.setTipoEnergia(_tipo_energia);
+						c1.setPS(_ps);
+						c1.setCostoRitirata(_costo_ritirata);
+						c1.setResistenza(_resistenza);
+						c1.setDebolezza(_debolezza);
+						connector.submitParametrizedQuery(QueryBuilder.GET_MOSSE);
+						connector.setIntParameter(1, c1.getNumero());
+						connector.setStringParameter(2, c1.getAbbrEspansione());
+						ResultSet setNomiMosse = connector.executeQuery();
+						List<String> nomiMosse = new ArrayList<>();
+						while (setNomiMosse.next()) {
+							nomiMosse.add(setNomiMosse.getString("Nome_Mossa"));
 						}
-					}
-
-					for (Mossa m : mosse)
-						c1.addMossa(m);
-
-					CartaPokemonBase c2 = createCartaPokemonBase(c1);
-					c2.setAbilita(_abilita);
-					return c2;
-
-				case 1:
-					_descr_pkmn = set.getString("Descrizione_PKMN");
-					_tipo_energia = set.getString("Tipo_Energia");
-					_ps = set.getInt("PS");
-					_costo_ritirata = set.getInt("Costo_Ritirata");
-					_resistenza = set.getString("Resistenza");
-					_debolezza = set.getString("Debolezza");
-					_abilita = set.getString("Abilita");
-					_attr_spec = set.getString("Attributo_Speciale");
-					_regola = set.getString("Regola");
-
-					c1 = createCartaPokemon(c);
-					c1.setDescrizione(_descr_pkmn);
-					c1.setTipoEnergia(_tipo_energia);
-					c1.setPS(_ps);
-					c1.setCostoRitirata(_costo_ritirata);
-					c1.setResistenza(_resistenza);
-					c1.setDebolezza(_debolezza);
-
-					connector.submitParametrizedQuery(QueryBuilder.GET_MOSSE);
-					connector.setIntParameter(1, c1.getNumero());
-					connector.setStringParameter(2, c1.getAbbrEspansione());
-					ResultSet setNomiMosse2 = connector.executeQuery();
-					List<String> nomiMosse2 = new ArrayList<>();
-					while (setNomiMosse2.next()) {
-						nomiMosse2.add(setNomiMosse2.getString("Nome_Mossa"));
-					}
-					List<Mossa> mosse2 = new ArrayList<>();
-					for (int k = 0; k < nomiMosse2.size(); k++) {
-						connector.submitParametrizedQuery(QueryBuilder.GET_MOSSA_BY_NAME);
-						connector.setStringParameter(1, nomiMosse2.get(k));
-						ResultSet setMosse = connector.executeQuery();
-						while (setMosse.next()) {
-							Mossa m = new Mossa(setMosse.getString("Nome_Mossa"));
-							int energia_richiesta = setMosse.getInt("Energia_Richiesta");
-							int danno = setMosse.getInt("Danno");
-							String descr = setMosse.getString("Descrizione");
-							m.setEnergiaRichiesta(energia_richiesta);
-							m.setDanno(danno);
-							m.setDescrizione(descr);
-							mosse2.add(m);
+						List<Mossa> mosse = new ArrayList<>();
+						for (int k = 0; k < nomiMosse.size(); k++) {
+							connector.submitParametrizedQuery(QueryBuilder.GET_MOSSA_BY_NAME);
+							connector.setStringParameter(1, nomiMosse.get(k));
+							ResultSet setMosse = connector.executeQuery();
+							while (setMosse.next()) {
+								Mossa m = new Mossa(setMosse.getString("Nome_Mossa"));
+								int energia_richiesta = setMosse.getInt("Energia_Richiesta");
+								int danno = setMosse.getInt("Danno");
+								String descr = setMosse.getString("Descrizione");
+								m.setEnergiaRichiesta(energia_richiesta);
+								m.setDanno(danno);
+								m.setDescrizione(descr);
+								mosse.add(m);
+							}
 						}
-					}
 
-					for (Mossa m : mosse2)
-						c1.addMossa(m);
-					CartaPokemonSpeciale c3 = createCartaPokemonSpeciale(c1);
-					c3.setAttributoSpeciale(_attr_spec);
-					c3.setRegola(_regola);
+						for (Mossa m : mosse)
+							c1.addMossa(m);
 
-					return c3;
-				case 2:
-					CartaStrumento c4 = createCartaStrumento(c);
-					String _descr_strumento = set.getString("Descrizione_Strum");
-					String _effetto_strumento = set.getString("Effetto_Strum");
-					c4.setDescrizione(_descr_strumento);
-					c4.setEffetto(_effetto_strumento);
-					return c4;
+						CartaPokemonBase c2 = createCartaPokemonBase(c1);
+						c2.setAbilita(_abilita);
+						return c2;
 
-				case 3:
-					CartaEnergia c5 = createCartaEnergia(c);
-					String _tipo_carta_energia = set.getString("Tipo_Carta_Energia");
-					c5.setTipo(_tipo_carta_energia);
-					return c5;
+					case 1:
+						_descr_pkmn = set.getString("Descrizione_PKMN");
+						_tipo_energia = set.getString("Tipo_Energia");
+						_ps = set.getInt("PS");
+						_costo_ritirata = set.getInt("Costo_Ritirata");
+						_resistenza = set.getString("Resistenza");
+						_debolezza = set.getString("Debolezza");
+						_abilita = set.getString("Abilita");
+						_attr_spec = set.getString("Attributo_Speciale");
+						_regola = set.getString("Regola");
+
+						c1 = createCartaPokemon(c);
+						c1.setDescrizione(_descr_pkmn);
+						c1.setTipoEnergia(_tipo_energia);
+						c1.setPS(_ps);
+						c1.setCostoRitirata(_costo_ritirata);
+						c1.setResistenza(_resistenza);
+						c1.setDebolezza(_debolezza);
+
+						connector.submitParametrizedQuery(QueryBuilder.GET_MOSSE);
+						connector.setIntParameter(1, c1.getNumero());
+						connector.setStringParameter(2, c1.getAbbrEspansione());
+						ResultSet setNomiMosse2 = connector.executeQuery();
+						List<String> nomiMosse2 = new ArrayList<>();
+						while (setNomiMosse2.next()) {
+							nomiMosse2.add(setNomiMosse2.getString("Nome_Mossa"));
+						}
+						List<Mossa> mosse2 = new ArrayList<>();
+						for (int k = 0; k < nomiMosse2.size(); k++) {
+							connector.submitParametrizedQuery(QueryBuilder.GET_MOSSA_BY_NAME);
+							connector.setStringParameter(1, nomiMosse2.get(k));
+							ResultSet setMosse = connector.executeQuery();
+							while (setMosse.next()) {
+								Mossa m = new Mossa(setMosse.getString("Nome_Mossa"));
+								int energia_richiesta = setMosse.getInt("Energia_Richiesta");
+								int danno = setMosse.getInt("Danno");
+								String descr = setMosse.getString("Descrizione");
+								m.setEnergiaRichiesta(energia_richiesta);
+								m.setDanno(danno);
+								m.setDescrizione(descr);
+								mosse2.add(m);
+							}
+						}
+
+						for (Mossa m : mosse2)
+							c1.addMossa(m);
+						CartaPokemonSpeciale c3 = createCartaPokemonSpeciale(c1);
+						c3.setAttributoSpeciale(_attr_spec);
+						c3.setRegola(_regola);
+
+						return c3;
+					case 2:
+						CartaStrumento c4 = createCartaStrumento(c);
+						String _descr_strumento = set.getString("Descrizione_Strum");
+						String _effetto_strumento = set.getString("Effetto_Strum");
+						c4.setDescrizione(_descr_strumento);
+						c4.setEffetto(_effetto_strumento);
+						return c4;
+
+					case 3:
+						CartaEnergia c5 = createCartaEnergia(c);
+						String _tipo_carta_energia = set.getString("Tipo_Carta_Energia");
+						c5.setTipo(_tipo_carta_energia);
+						return c5;
 				}
 
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			e.printStackTrace();
-		} finally {
+		}
+		finally {
 			try {
 				if (set != null)
 					set.close();
 				connector.closeStatement();
 				connector.closeConnection();
-			} catch (SQLException sqle) {
+			}
+			catch (SQLException sqle) {
 				sqle.printStackTrace();
 			}
 		}
@@ -478,15 +503,18 @@ public class ConnectorService {
 				user.setDataRegistrazione(_dataRegistrazione);
 				usersList.add(user);
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			e.printStackTrace();
-		} finally {
+		}
+		finally {
 			try {
 				if (set != null)
 					set.close();
 				connector.closeStatement();
 				connector.closeConnection();
-			} catch (SQLException sqle) {
+			}
+			catch (SQLException sqle) {
 				sqle.printStackTrace();
 			}
 		}
@@ -521,15 +549,18 @@ public class ConnectorService {
 				c.setNome(_nomeCarta);
 				cardsList.add(c);
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			e.printStackTrace();
-		} finally {
+		}
+		finally {
 			try {
 				if (set != null)
 					set.close();
 				connector.closeStatement();
 				connector.closeConnection();
-			} catch (SQLException sqle) {
+			}
+			catch (SQLException sqle) {
 				sqle.printStackTrace();
 			}
 		}
@@ -540,8 +571,6 @@ public class ConnectorService {
 	private void createAndSubmitCardSearchQuery(CardSearchObject s) {
 		Map<Integer, String> stringParametersMap = new HashMap<>();
 		Map<Integer, Integer> intParametersMap = new HashMap<>();
-		boolean pokemonSelected = false;
-		boolean itemSelected = false;
 		int position = 1;
 		String query = "";
 		if (s.hasCardName()) {
@@ -563,69 +592,58 @@ public class ConnectorService {
 		}
 
 		if (s.hasCardType()) {
+			query += "(";
+			boolean dopoPrimoCiclo = false;
 			for (String type : s.getCardType()) {
+				if (dopoPrimoCiclo)
+					query += " UNION ";
 				switch (type) {
-				case "Pokemon":
-					pokemonSelected = true;
-					query += "(" + QueryBuilder.GET_CARDS_TYPE + " UNION " + QueryBuilder.GET_CARDS_TYPE
-							+ ") INTERSECT ";
-					intParametersMap.put(position, 0);
-					position++;
-					intParametersMap.put(position, 1);
-					position++;
-					query += QueryBuilder.GET_CARDS_BY_PS;
-					intParametersMap.put(position, s.getLowerPSValue());
-					position++;
-					intParametersMap.put(position, s.getUpperPSValue());
-					position++;
-					break;
-				case "Strumento":
-					itemSelected = true;
-					if (!query.equals("")) {
-						if (pokemonSelected)
-							query = "(" + query + " UNION " + QueryBuilder.GET_CARDS_TYPE + ") ";
-						else
-							query += QueryBuilder.GET_CARDS_TYPE;
-					} else
-						query = QueryBuilder.GET_CARDS_TYPE;
-					intParametersMap.put(position, 2);
-					position++;
-					break;
-				case "Energia":
-					if (!query.equals("")) {
-						if (pokemonSelected || itemSelected)
-							query = "(" + query + " UNION " + QueryBuilder.GET_CARDS_TYPE + ") ";
-						else
-							query += QueryBuilder.GET_CARDS_TYPE;
-
-					} else
-						query = QueryBuilder.GET_CARDS_TYPE;
-					intParametersMap.put(position, 3);
-					position++;
-					break;
+					case "Pokemon":
+						query += "((" + QueryBuilder.GET_CARDS_TYPE + " UNION " + QueryBuilder.GET_CARDS_TYPE
+								+ ") INTERSECT ";
+						intParametersMap.put(position, 0);
+						position++;
+						intParametersMap.put(position, 1);
+						position++;
+						query += QueryBuilder.GET_CARDS_BY_PS + ")";
+						intParametersMap.put(position, s.getLowerPSValue());
+						position++;
+						intParametersMap.put(position, s.getUpperPSValue());
+						position++;
+						break;
+					case "Strumento":
+						query += QueryBuilder.GET_CARDS_TYPE;
+						intParametersMap.put(position, 2);
+						position++;
+						break;
+					case "Energia":
+						query += QueryBuilder.GET_CARDS_TYPE;
+						intParametersMap.put(position, 3);
+						position++;
+						break;
 				}
+				dopoPrimoCiclo = true;
 			}
-			query += " INTERSECT ";
+			query += ") INTERSECT ";
 		}
 
 		if (s.hasEnergyType()) {
+			query += "(" + s.getEnergyType().stream().map(t -> QueryBuilder.GET_CARDS_BY_ENERGY_TYPE)
+					.collect(Collectors.joining(" UNION ")) + ") INTERSECT ";
 			for (String type : s.getEnergyType()) {
-				query += QueryBuilder.GET_CARDS_BY_ENERGY_TYPE + " UNION ";
 				stringParametersMap.put(position, type);
 				position++;
 			}
-			query = query.substring(0, query.length() - 7);
-			query += " INTERSECT ";
 		}
 		if (s.hasRarityType()) {
-			for (String type : s.getRarityType()) {
-				query += QueryBuilder.GET_CARDS_BY_RARITY + " UNION ";
-				stringParametersMap.put(position, type);
+			query += "(" + s.getRarityType().stream().map(t -> QueryBuilder.GET_CARDS_BY_RARITY)
+					.collect(Collectors.joining(" UNION ")) + ") INTERSECT ";
+			for (String rarity : s.getRarityType()) {
+				stringParametersMap.put(position, rarity);
 				position++;
 			}
-			query = query.substring(0, query.length() - 7);
-			query += " INTERSECT ";
 		}
+
 		query += QueryBuilder.GET_CARDS_BY_ECONOMIC_VALUE;
 		intParametersMap.put(position, s.getLowerValueBarValue());
 		position++;
@@ -633,7 +651,6 @@ public class ConnectorService {
 		position++;
 
 		connector.submitParametrizedQuery(query);
-		System.out.println(query);
 		for (Entry<Integer, String> entry : stringParametersMap.entrySet())
 			connector.setStringParameter(entry.getKey(), entry.getValue());
 		for (Entry<Integer, Integer> entry : intParametersMap.entrySet())
@@ -705,7 +722,8 @@ public class ConnectorService {
 				ImageIcon _immagine = new ImageIcon(i);
 				result.put(_immagine, abbr_esp + " | " + name_esp + " : " + num + " carte");
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			e.printStackTrace();
 		}
 		return result;
@@ -723,7 +741,8 @@ public class ConnectorService {
 				String nickname = set.getString("Nickname");
 				result.add(nickname);
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			e.printStackTrace();
 		}
 		return result;
@@ -752,7 +771,8 @@ public class ConnectorService {
 			if (set.next() == false) {
 				number = set.getInt(1);
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			e.printStackTrace();
 		}
 		connector.closeStatement();
@@ -771,15 +791,18 @@ public class ConnectorService {
 		try (set) {
 			if (set.next() == false)
 				return false;
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			e.printStackTrace();
-		} finally {
+		}
+		finally {
 			try {
 				if (set != null)
 					set.close();
 				connector.closeStatement();
 				connector.closeConnection();
-			} catch (SQLException sqle) {
+			}
+			catch (SQLException sqle) {
 				sqle.printStackTrace();
 			}
 		}
@@ -809,7 +832,8 @@ public class ConnectorService {
 					c.setNome(nome_carta);
 					result.add(c);
 				}
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
@@ -853,15 +877,18 @@ public class ConnectorService {
 				Image i = imag;
 				_immagine = new ImageIcon(i);
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			e.printStackTrace();
-		} finally {
+		}
+		finally {
 			try {
 				if (set != null)
 					set.close();
 				connector.closeStatement();
 				connector.closeConnection();
-			} catch (SQLException sqle) {
+			}
+			catch (SQLException sqle) {
 				sqle.printStackTrace();
 			}
 		}
@@ -901,12 +928,14 @@ public class ConnectorService {
 		connector.setStringParameter(1, user.getNickname());
 		if (user.getNomeUtente().length() > 0) {
 			connector.setStringParameter(2, user.getNomeUtente());
-		} else {
+		}
+		else {
 			connector.setStringParameter(2, "");
 		}
 		if (user.getMail().length() > 0) {
 			connector.setStringParameter(3, user.getMail());
-		} else {
+		}
+		else {
 			connector.setStringParameter(3, "");
 		}
 		connector.setImageParameter(4, user.getAvatar());
@@ -931,7 +960,8 @@ public class ConnectorService {
 				while (set.next()) {
 					result = set.getString("Stage_successivo");
 				}
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
@@ -950,7 +980,8 @@ public class ConnectorService {
 				while (set.next()) {
 					result = set.getString("Stage_precedente");
 				}
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
@@ -978,7 +1009,8 @@ public class ConnectorService {
 				u.setTotalCardsValue(valoreTotale);
 				result.add(u);
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			e.printStackTrace();
 		}
 
@@ -1007,7 +1039,8 @@ public class ConnectorService {
 				u.setTotalCard(totale);
 				result.add(u);
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			e.printStackTrace();
 		}
 
@@ -1036,7 +1069,8 @@ public class ConnectorService {
 				u.setMaxCardValue(valoreMax);
 				result.add(u);
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			e.printStackTrace();
 		}
 		return result;
