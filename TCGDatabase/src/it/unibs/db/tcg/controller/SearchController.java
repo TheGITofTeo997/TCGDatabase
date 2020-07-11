@@ -10,6 +10,7 @@ import javax.swing.SwingWorker;
 import it.unibs.db.tcg.model.CardSearchObject;
 import it.unibs.db.tcg.model.Carta;
 import it.unibs.db.tcg.model.Utente;
+import it.unibs.db.tcg.model.util.LogWriter;
 import it.unibs.db.tcg.view.SearchPanel;
 
 public class SearchController extends Controller {
@@ -31,6 +32,7 @@ public class SearchController extends Controller {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				searchPanel.setVisible(false);
+				LogWriter.write("Apertura homePanel");
 				HomeController homeController = new HomeController(frame);
 				homeController.drawHomePanel(user.getNickname());
 			}
@@ -41,6 +43,7 @@ public class SearchController extends Controller {
 			public void actionPerformed(ActionEvent e) {
 				String name = searchPanel.getUserNameField();
 				searchPanel.setVisible(false);
+				LogWriter.write("Ottenimento dei risultati di ricerca utenti. Apertura usersPanel");
 				UsersController usersController = new UsersController(frame);
 				usersController.drawUsersPanel(user, connectorService.getSearchResult(name));
 			}
@@ -71,7 +74,8 @@ public class SearchController extends Controller {
 				s.setCardType(cardType);
 				s.setEnergyType(energyType);
 				s.setRarityType(rarityType);
-
+				
+				LogWriter.write("Ottenimento dei risultati di ricerca carte. Apertura cardsPanel");
 				List<Carta> carte_trovate = connectorService.getSearchResult(s);
 				searchPanel.setVisible(false);
 				CardsController cardsController = new CardsController(frame);

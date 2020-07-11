@@ -9,6 +9,7 @@ import javax.swing.event.ListSelectionListener;
 
 import it.unibs.db.tcg.model.Collezione;
 import it.unibs.db.tcg.model.Utente;
+import it.unibs.db.tcg.model.util.LogWriter;
 import it.unibs.db.tcg.view.AccountPanel;
 
 public class AccountController extends Controller {
@@ -22,8 +23,9 @@ public class AccountController extends Controller {
 	}
 
 	public void drawAccountPanel(String username) {
-
+		LogWriter.write("Ottenimento informazioni generali dell'utente " + username + " dal db");
 		Utente user = connectorService.getUser(username);
+		LogWriter.write("Ottenimento delle collezioni dell'utente " + username);
 		user.setCollections(connectorService.getUserCollections(user.getNickname()));
 
 		accountPanel = new AccountPanel();
@@ -35,6 +37,7 @@ public class AccountController extends Controller {
 		accountPanel.setAvatar(user.getAvatar());
 		accountPanel.setUserName(user.getNomeUtente());
 		accountPanel.setRegistrationDate(user.getDataRegistrazione().toString());
+		LogWriter.write("Richiesta del valore totale delle carte dell'utente al db");
 		accountPanel.setTotalValue(connectorService.getUserTotalCardsValue(user.getNickname()));
 		user.setCollections(connectorService.getUserCollections(user.getNickname()));
 		accountPanel.setCollections(user.getDefaultListModelCollections());
@@ -45,6 +48,7 @@ public class AccountController extends Controller {
 				if (!e.getValueIsAdjusting()) {
 					String collection = user.getDefaultListModelCollections().get(accountPanel.getListSelectedIndex());
 					Collezione c = new Collezione(collection);
+					LogWriter.write("Richiesta al database delle carte della collezione " + collection);
 					c.setCarteCollezione(connectorService.getCardsFromCollection(user.getNickname(), collection));
 					accountPanel.setVisible(false);
 					CardsController cardsController = new CardsController(frame);
@@ -58,6 +62,7 @@ public class AccountController extends Controller {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				accountPanel.setVisible(false);
+				LogWriter.write("Apertura editPanel");
 				EditController editController = new EditController(frame);
 				editController.drawEditPanel(user);
 			}
@@ -67,6 +72,7 @@ public class AccountController extends Controller {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				accountPanel.setVisible(false);
+				LogWriter.write("Apertura della home dell'utente");
 				HomeController homeController = new HomeController(frame);
 				homeController.drawHomePanel(user.getNickname());
 			}

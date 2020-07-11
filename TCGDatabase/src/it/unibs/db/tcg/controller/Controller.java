@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 
 import it.unibs.db.tcg.model.ConnectorService;
 import it.unibs.db.tcg.model.Strings;
+import it.unibs.db.tcg.model.util.LogWriter;
 
 public class Controller {
 
@@ -38,6 +39,7 @@ public class Controller {
 					frame.getContentPane().setLayout(null);
 					frame.setVisible(true);
 					frame.setIconImage(new ImageIcon("resources//icon//icon.png").getImage());
+					LogWriter.write("Apertura LoginPanel");
 					loginController = new LoginController(frame);
 					loginController.drawLoginPanel();
 				} catch (Exception e) {

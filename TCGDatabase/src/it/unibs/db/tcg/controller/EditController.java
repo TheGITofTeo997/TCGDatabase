@@ -11,6 +11,7 @@ import javax.swing.JFrame;
 
 import it.unibs.db.tcg.model.Strings;
 import it.unibs.db.tcg.model.Utente;
+import it.unibs.db.tcg.model.util.LogWriter;
 import it.unibs.db.tcg.view.EditPanel;
 
 public class EditController extends Controller {
@@ -39,6 +40,7 @@ public class EditController extends Controller {
 				String result = editPanel.showEditPopup();
 				if (result != null) {
 					if (result.matches(Strings.USERNAME_REGEX) && result.length() > 2) {
+						LogWriter.write("Richiesta update username dell'utente " + user.getNickname() + ". Nuovo username: " + result);
 						connectorService.updateUserName(user.getNickname(), result);
 						user.setNomeUtente(result);
 						editPanel.setUserName(result);
@@ -57,6 +59,7 @@ public class EditController extends Controller {
 					Pattern p = Pattern.compile(Strings.MAIL_REGEX, Pattern.CASE_INSENSITIVE);
 					Matcher matcher = p.matcher(result);
 					if (matcher.find()) {
+						LogWriter.write("Richiesta update email dell'utente " + user.getNickname() + ". Nuova mail: " + result);
 						connectorService.updateMail(user.getNickname(), result);
 						user.setMail(result);
 						editPanel.setMail(result);
@@ -73,6 +76,7 @@ public class EditController extends Controller {
 			public void actionPerformed(ActionEvent e) {
 				ImageIcon icon = editPanel.chooseAvatar();
 				if (icon != null) {
+					LogWriter.write("Richiesta update avatar");
 					editPanel.setAvatar(icon);
 					user.setAvatar(icon);
 					connectorService.updateAvatar(user.getNickname(), icon);
@@ -85,6 +89,7 @@ public class EditController extends Controller {
 		editPanel.addDeleteAvatarListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (editPanel.showConfirmPopup("Vuoi eliminare definitivamente l'avatar del profilo?")) {
+					LogWriter.write("Eliminazione dell'avatar attuale dell'utente, inserimento avatar di default");
 					ImageIcon icon = new ImageIcon("resources//default_avatar.jpg");
 					editPanel.setAvatar(icon);
 					user.setAvatar(icon);
@@ -106,6 +111,7 @@ public class EditController extends Controller {
 				if (selectedCollection != null) {
 					String newCollectionName = editPanel.showEditPopup();
 					if(newCollectionName != null) {
+						LogWriter.write("Modifica del nome della collezione " + selectedCollection + ". Nuovo nome collezione: " + newCollectionName);
 						user.getCollezioneByNome(selectedCollection).setNomeCollezione(newCollectionName);
 						connectorService.updateCollectionName(newCollectionName, user.getNickname(), selectedCollection);
 						editPanel.showCorrectPopup();
@@ -132,6 +138,7 @@ public class EditController extends Controller {
 						boolean flag;
 						if(visible.equals("Visibile")) flag = true;
 						else flag = false;
+						LogWriter.write("Cambiamento visibilità della collezione " + selectedCollection);
 						connectorService.updateCollectionVisibility(flag, user.getNickname(), selectedCollection);
 						editPanel.showCorrectPopup();
 					}
@@ -153,6 +160,7 @@ public class EditController extends Controller {
 				if (selectedCollection != null) {
 					if (editPanel.showConfirmPopup(
 							"Sei sicuro di voler eliminare la collezione " + selectedCollection + " ?")) {
+						LogWriter.write("Cancellazione definitiva della collezione " + selectedCollection);
 						connectorService.deleteCollection(user.getNickname(), selectedCollection);
 					}
 				}
@@ -165,6 +173,7 @@ public class EditController extends Controller {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				editPanel.setVisible(false);
+				LogWriter.write("Apertura accountPanel");
 				AccountController accountController = new AccountController(frame);
 				accountController.drawAccountPanel(user.getNickname());
 			}

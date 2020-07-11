@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 
 import it.unibs.db.tcg.model.ConnectorService;
 import it.unibs.db.tcg.model.Utente;
+import it.unibs.db.tcg.model.util.LogWriter;
 import it.unibs.db.tcg.view.HomePanel;
 import it.unibs.db.tcg.view.RankingPanel;
 
@@ -22,7 +23,9 @@ public class RankingController extends Controller {
 	public void drawRankingPanel(Utente user) {
 		rankingPanel = new RankingPanel();
 		rankingPanel.setBounds(0, 0, 800, 600);
+		LogWriter.write("Richiesta classifica utenti per totale valore delle carte");
 		rankingPanel.setRankingCardValueList(connectorService.getRankingCardValue());
+		LogWriter.write("Richiesta classifica utenti per totale numero di carte possedute");
 		rankingPanel.setRankingTotalCardList(connectorService.getRankingTotalCardNumber());
 		frame.getContentPane().add(rankingPanel);
 
@@ -30,6 +33,7 @@ public class RankingController extends Controller {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				rankingPanel.setVisible(false);
+				LogWriter.write("Aperture homePanel");
 				HomeController homeController = new HomeController(frame);
 				homeController.drawHomePanel(user.getNickname());
 			}

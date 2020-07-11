@@ -10,6 +10,7 @@ import javax.swing.event.ListSelectionListener;
 
 import it.unibs.db.tcg.model.Carta;
 import it.unibs.db.tcg.model.Utente;
+import it.unibs.db.tcg.model.util.LogWriter;
 import it.unibs.db.tcg.view.UsersPanel;
 
 public class UsersController extends Controller {
@@ -33,6 +34,7 @@ public class UsersController extends Controller {
 				if (!e.getValueIsAdjusting()) {
 					Utente u = utenti.get(usersPanel.getListSelectedIndex());
 					usersPanel.setVisible(false);
+					LogWriter.write("Richiesta informazioni generali dell'utente " + u.getNickname() + " per visualizzazione profilo");
 					String nickname = u.getNickname();
 					u.setTotalCardsValue(connectorService.getUserTotalCardsValue(nickname));
 					u.setCollections(connectorService.getPublicUserCollections(nickname));
@@ -47,6 +49,7 @@ public class UsersController extends Controller {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				usersPanel.setVisible(false);
+				LogWriter.write("Apertura searchPanel");
 				SearchController searchController = new SearchController(frame);
 				searchController.drawSearchPanel(user);
 			}

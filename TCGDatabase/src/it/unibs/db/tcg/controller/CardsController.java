@@ -14,6 +14,7 @@ import javax.swing.event.ListSelectionListener;
 
 import it.unibs.db.tcg.model.Carta;
 import it.unibs.db.tcg.model.Utente;
+import it.unibs.db.tcg.model.util.LogWriter;
 import it.unibs.db.tcg.view.CardsPanel;
 
 public class CardsController extends Controller {
@@ -39,9 +40,11 @@ public class CardsController extends Controller {
 			public void valueChanged(ListSelectionEvent e) {
 				if (!e.getValueIsAdjusting()) {
 					Carta c = cardsName.get(cardsPanel.getListSelectedIndex());
+					LogWriter.write("Ottenimento attributi della carta " + c.getNumero() + " Espansione:" + c.getAbbrEspansione());
 					Carta card = connectorService.getCardFromNumberAndAbbrEspansione(c.getNumero(),
 							c.getAbbrEspansione());
 					cardsPanel.setVisible(false);
+					LogWriter.write("Apertura cartaPanel");
 					CartaController cartaController = new CartaController(frame);
 					if (toVisit == null) {
 						if(fromSearchPanel) cartaController.drawCartaPanel(user, title, cardsName, card, null, null, true);
@@ -59,12 +62,15 @@ public class CardsController extends Controller {
 			public void actionPerformed(ActionEvent e) {
 				cardsPanel.setVisible(false);
 				if (fromSearchPanel) {
+					LogWriter.write("Apertura searchPanel");
 					SearchController searchController = new SearchController(frame);
 					searchController.drawSearchPanel(user);
 				} else if (toVisit == null) {
+					LogWriter.write("Apertura accountPanel");
 					AccountController accountController = new AccountController(frame);
 					accountController.drawAccountPanel(user.getNickname());
 				} else {
+					LogWriter.write("Apertura visitorAccountPanel");
 					VisitorAccountController visitorAccountController = new VisitorAccountController(frame);
 					visitorAccountController.drawVisitorAccountPanel(user, utenti, toVisit);
 				}

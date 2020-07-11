@@ -1,15 +1,13 @@
 package it.unibs.db.tcg.controller;
 
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 import javax.swing.SwingWorker;
 
-
+import it.unibs.db.tcg.model.util.LogWriter;
 import it.unibs.db.tcg.view.LoginPanel;
-
 
 public class LoginController extends Controller {
 
@@ -33,6 +31,7 @@ public class LoginController extends Controller {
 					loginPanel.showErrorPopup();
 				else {
 					loginPanel.setVisible(false);
+					LogWriter.write("Login utente : " + loginPanel.getLoginField());
 					HomeController homeController = new HomeController(frame);
 					homeController.drawHomePanel(loginPanel.getLoginField());
 				}
@@ -43,6 +42,7 @@ public class LoginController extends Controller {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				loginPanel.setVisible(false);
+				LogWriter.write("Apertura pannello di registrazione");
 				RegistrationController registrationController = new RegistrationController(frame);
 				registrationController.drawRegistrationPanel();
 			}
@@ -51,13 +51,14 @@ public class LoginController extends Controller {
 		loginPanel.addRefreshDatabaseStatusListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				LogWriter.write("Refresh Database Status");
 				checkDatabaseStatus();
 			}
 		});
 
 		checkDatabaseStatus();
 	}
-	
+
 	private void checkDatabaseStatus() {
 		SwingWorker<Void, Void> backgroundThread1 = new SwingWorker<Void, Void>() {
 			boolean flag;
@@ -71,6 +72,13 @@ public class LoginController extends Controller {
 
 			@Override
 			protected void done() {
+				String status;
+				if (flag)
+					status = "Operational";
+				else
+					status = "Unreachable";
+
+				LogWriter.write("Database status: " + status);
 				loginPanel.setDatabaseStatus(flag);
 				loginPanel.setBtnLoginEnabled(flag);
 				loginPanel.setBtnRegisterEnabled(flag);

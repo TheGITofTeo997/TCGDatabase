@@ -10,6 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.SwingWorker;
 
 import it.unibs.db.tcg.model.Utente;
+import it.unibs.db.tcg.model.util.LogWriter;
 import it.unibs.db.tcg.view.HomePanel;
 
 public class HomeController extends Controller {
@@ -36,6 +37,7 @@ public class HomeController extends Controller {
 			public void actionPerformed(ActionEvent e) {
 				homePanel.setVisible(false);
 				user.setTotalCardsValue(connectorService.getUserTotalCardsValue(user.getNickname()));
+				LogWriter.write("Apertura accountPanel");
 				AccountController accountController = new AccountController(frame);
 				accountController.drawAccountPanel(user.getNickname());
 			}
@@ -45,6 +47,7 @@ public class HomeController extends Controller {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				homePanel.setVisible(false);
+				LogWriter.write("Apertura rankingPanel");
 				RankingController rankingController = new RankingController(frame);
 				rankingController.drawRankingPanel(user);
 			}
@@ -56,6 +59,7 @@ public class HomeController extends Controller {
 			public void actionPerformed(ActionEvent e) {
 				if (homePanel.showConfirmDialog() == 0) {
 					homePanel.setVisible(false);
+					LogWriter.write("L'utente " + user.getNickname() + " ha effettuato il logout. Apertura loginPanel");
 					LoginController loginController = new LoginController(frame);
 					loginController.drawLoginPanel();
 				}
@@ -66,8 +70,8 @@ public class HomeController extends Controller {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				homePanel.setVisible(false);
+				LogWriter.write("Apertura searchPanel");
 				SearchController searchController = new SearchController(frame);
-				List<Utente> usersRanking1 = connectorService.getRankingCardValue();
 				searchController.drawSearchPanel(user);
 
 			}
@@ -83,6 +87,7 @@ public class HomeController extends Controller {
 						int num = 0;
 						if (visible.equals("Visibile"))
 							num = 1;
+						LogWriter.write("Creazione della nuova collezione " + name);
 						connectorService.createCollection(user.getNickname(), name, num);
 					} else
 						homePanel.showErrorPopup();
@@ -93,6 +98,7 @@ public class HomeController extends Controller {
 		homePanel.addRandomCardListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				LogWriter.write("Ottenimento di una carta random dal db");
 				homePanel.showRandomCardPopup(connectorService.getRandomCard());
 			}
 		});

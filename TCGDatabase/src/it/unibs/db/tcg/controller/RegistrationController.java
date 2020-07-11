@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 
 import it.unibs.db.tcg.model.Strings;
 import it.unibs.db.tcg.model.Utente;
+import it.unibs.db.tcg.model.util.LogWriter;
 import it.unibs.db.tcg.view.RegistrationPanel;
 
 public class RegistrationController extends Controller {
@@ -29,6 +30,7 @@ public class RegistrationController extends Controller {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				registrationPanel.setVisible(false);
+				LogWriter.write("Aperture loginPanel");
 				LoginController loginController = new LoginController(frame);
 				loginController.drawLoginPanel();
 			}
@@ -54,8 +56,10 @@ public class RegistrationController extends Controller {
 						user.setNomeUtente(name);
 						user.setMail(mail);
 						user.setAvatar(((ImageIcon) icon));
+						LogWriter.write("Registrazione dell'utente " + user.getNickname() + ". Mail per contatto: " + user.getMail());
 						connectorService.createUser(user);
 						registrationPanel.setVisible(false);
+						LogWriter.write("Apertura accountPanel");
 						AccountController accountController = new AccountController(frame);
 						accountController.drawAccountPanel(user.getNickname());
 					}

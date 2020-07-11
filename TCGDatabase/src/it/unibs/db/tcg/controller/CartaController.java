@@ -15,6 +15,7 @@ import it.unibs.db.tcg.model.CartaPokemonSpeciale;
 import it.unibs.db.tcg.model.CartaStrumento;
 import it.unibs.db.tcg.model.Strings;
 import it.unibs.db.tcg.model.Utente;
+import it.unibs.db.tcg.model.util.LogWriter;
 import it.unibs.db.tcg.view.CartaPanel;
 
 public class CartaController extends Controller {
@@ -39,7 +40,7 @@ public class CartaController extends Controller {
 				cardPanel.setVisibleRemoveCardButton();
 			}
 		}
-
+		LogWriter.write("Richiesta del tipo della carta al db");
 		String cardType = connectorService.getCardType(c.getNumero(), c.getAbbrEspansione());
 		switch (cardType) {
 		case Strings.CARTA_POKEMON_BASE:
@@ -60,11 +61,16 @@ public class CartaController extends Controller {
 		cardPanel.addAddToCollectionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				LogWriter.write("Ottenimento delle collezioni possedute dall'utente");
+				user.setCollections(connectorService.getUserCollections(user.getNickname()));
 				cardPanel.createCollectionListPopup(user.getDefaultListModelCollections());
 				String selectedCollection = cardPanel.showCollectionsListPopup();
 				if (selectedCollection != null) {
 					if (!connectorService.isThereCardInCollection(user.getNickname(), selectedCollection, c.getNumero(),
 							c.getAbbrEspansione())) {
+						LogWriter.write("Inserimento della carta " + c.getNumero() + "Espansione: "
+								+ c.getAbbrEspansione() + " nella collezione " + selectedCollection);
+						;
 						connectorService.insertCardInCollection(user.getNickname(), selectedCollection, c.getNumero(),
 								c.getAbbrEspansione());
 						cardPanel.showCorrectInsertPopup();
@@ -93,6 +99,8 @@ public class CartaController extends Controller {
 				if (selectedCollection != null) {
 					if (connectorService.isThereCardInCollection(user.getNickname(), selectedCollection, c.getNumero(),
 							c.getAbbrEspansione())) {
+						LogWriter.write("Rimozione della carta " + c.getNumero() + "Espansione: "
+								+ c.getAbbrEspansione() + "dalla collezione " + selectedCollection);
 						connectorService.removeCardFromCollection(selectedCollection, c.getNumero(),
 								c.getAbbrEspansione());
 						cardPanel.setVisible(false);
@@ -112,16 +120,19 @@ public class CartaController extends Controller {
 
 			}
 		});
-		
+
 		cardPanel.addBtnWhoListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				LogWriter.write("Richiesta nickname dei possessori della carta " + c.getNumero() + "Espansione: "
+						+ c.getAbbrEspansione());
 				List<String> nickname_utenti = connectorService.getUsersByCard(c.getNumero(), c.getAbbrEspansione());
 				List<Utente> utenti = new ArrayList<>();
-				for(String nickname : nickname_utenti) {
+				for (String nickname : nickname_utenti) {
 					utenti.add(connectorService.getUser(nickname));
 				}
 				cardPanel.setVisible(false);
+				LogWriter.write("Apertura usersPanel");
 				UsersController usersController = new UsersController(frame);
 				usersController.drawUsersPanel(user, utenti);
 			}
@@ -132,11 +143,13 @@ public class CartaController extends Controller {
 			public void actionPerformed(ActionEvent e) {
 				cardPanel.setVisible(false);
 				CardsController cardsController = new CardsController(frame);
+				LogWriter.write("Apertura cardsPanel");
 				if (toVisit == null) {
-					if(fromSearchPanel) cardsController.drawCardsPanel(user, title, cardsName, null, null, true);
-					else cardsController.drawCardsPanel(user, title, cardsName, null, null, false);
-				}			
-				else
+					if (fromSearchPanel)
+						cardsController.drawCardsPanel(user, title, cardsName, null, null, true);
+					else
+						cardsController.drawCardsPanel(user, title, cardsName, null, null, false);
+				} else
 					cardsController.drawCardsPanel(user, title, cardsName, utenti, toVisit, false);
 			}
 		});
