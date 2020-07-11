@@ -91,6 +91,8 @@ public class CartaPanel extends JPanel {
 	private JButton btnAddToCollection;
 	private JButton btnRemoveCard;
 	private JButton btnWho;
+	private JButton btnNextStage;
+	private JButton btnPreStage;
 	private JList collectionsList;
 
 	public CartaPanel() {
@@ -127,6 +129,17 @@ public class CartaPanel extends JPanel {
 		btnBack = new JButton("Back");
 		btnBack.setBounds(650, 505, 90, 50);
 		add(btnBack);
+		
+		
+		btnNextStage = new JButton("");
+		//btnNextStage.setVisible(false);
+		btnNextStage.setBounds(320, 505, 100, 50);
+		add(btnNextStage);
+		
+		btnPreStage = new JButton("");
+		//btnPreStage.setVisible(false);
+		btnPreStage.setBounds(420, 505, 100, 50);
+		add(btnPreStage);
 
 		lblPic = new JLabel("");
 		lblPic.setBounds(60, 50, 250, 350);
@@ -677,6 +690,24 @@ public class CartaPanel extends JPanel {
 
 	public void setVisibleRemoveCardButton() {
 		btnRemoveCard.setVisible(true);
+	}
+	
+	public void setBtnNextStageText(String text) {
+		btnNextStage.setVisible(true);
+		btnNextStage.setText(text);
+	}
+	
+	public void addNextStageActionListener(ActionListener a) {
+		btnNextStage.addActionListener(a);
+	}
+	
+	public void setBtnPreStageText(String text) {
+		btnPreStage.setVisible(true);
+		btnPreStage.setText(text);
+	}
+	
+	public void addPreStageActionListener(ActionListener a) {
+		btnPreStage.addActionListener(a);
 	}
 
 	public void callBackDoClick() {

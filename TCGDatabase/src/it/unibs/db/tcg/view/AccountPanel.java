@@ -1,14 +1,20 @@
 package it.unibs.db.tcg.view;
 
-
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionListener;
+
+import it.unibs.db.tcg.model.Carta;
+import it.unibs.db.tcg.view.Renderer;
 
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionListener;
+import java.util.List;
+import java.util.Map;
 import java.awt.event.ActionEvent;
 
 public class AccountPanel extends JPanel {
@@ -30,6 +36,7 @@ public class AccountPanel extends JPanel {
 	private JButton btnEdit;
 	private JButton btnBack;
 	private JList<String> list;
+	private JList<String> listExp;
 	private JLabel lblTotalValue;
 
 	private JPanel collectionsPanel;
@@ -205,6 +212,12 @@ public class AccountPanel extends JPanel {
 		lblTotalValue.setBounds(400, 230, 400, 50);
 		informationPanel.add(lblTotalValue);
 
+		JLabel lblSExp = new JLabel("Numero carte per espansione");
+		lblSExp.setFont(panelFont);
+		lblSExp.setForeground(foregroundColor);
+		lblSExp.setBounds(165, 250, 300, 50);
+		collectionsPanel.add(lblSExp);
+
 	}
 
 	public void setNickname(String nickname) {
@@ -236,26 +249,62 @@ public class AccountPanel extends JPanel {
 	}
 
 	public void setCollections(DefaultListModel<String> collectionsName) {
-		list = new JList(collectionsName);
-		list.setBounds(165, 50, 600, 350);
+		list = new JList();
+		list.setModel(collectionsName);
+		list.setBounds(165, 50, 600, 200);
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		list.setBackground(null);
+		list.setBackground(backgroundColor);
 		list.setFont(panelFont);
 		list.setForeground(foregroundColor);
 		list.setFixedCellWidth(list.getWidth());
 		list.setFixedCellHeight(50);
-		list.setCellRenderer(new DefaultListCellRenderer(){
-            @Override
-            public Component getListCellRendererComponent(JList<?> list,
-                    Object value, int index, boolean isSelected,
-                    boolean cellHasFocus) {
-                JLabel listCellRendererComponent = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected,cellHasFocus);
-                listCellRendererComponent.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0,Color.WHITE));
-                return listCellRendererComponent;
-            }
-        });
-		
-		collectionsPanel.add(list);
+		list.setCellRenderer(new DefaultListCellRenderer() {
+			@Override
+			public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected,
+					boolean cellHasFocus) {
+				JLabel listCellRendererComponent = (JLabel) super.getListCellRendererComponent(list, value, index,
+						isSelected, cellHasFocus);
+				listCellRendererComponent.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.WHITE));
+				return listCellRendererComponent;
+			}
+		});
+
+		JScrollPane scrollPane = new JScrollPane(this, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollPane.setViewportView(list);
+		scrollPane.setBounds(165, 50, 600, 200);
+		Border empty = new EmptyBorder(0, 0, 0, 0);
+		scrollPane.setBorder(empty);
+		collectionsPanel.add(scrollPane);
+	}
+
+	public void setExpList(Map<ImageIcon, String> map) {
+		listExp = new JList();
+		DefaultListModel dm = new DefaultListModel();
+		for (ImageIcon i : map.keySet()) {
+			dm.addElement(new ResultRow(i, map.get(i)));
+		}
+		listExp.setCellRenderer(new Renderer());
+		listExp.setModel(dm);
+		listExp.setBounds(165, 300, 350, 200);
+		listExp.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		listExp.setBackground(backgroundColor);
+		listExp.setFont(panelFont);
+		listExp.setForeground(foregroundColor);
+		listExp.setFixedCellWidth(list.getWidth());
+		listExp.setFixedCellHeight(50);
+
+		JScrollPane scrollPaneExp = new JScrollPane(this, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollPaneExp.setViewportView(listExp);
+		scrollPaneExp.setBackground(null);
+		scrollPaneExp.setBounds(165, 300, 350, 200);
+
+		scrollPaneExp.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.BLACK));
+		//Border empty = new EmptyBorder(0, 0, 0, 0);
+		//scrollPaneExp.setBorder(empty);
+
+		collectionsPanel.add(scrollPaneExp);
 	}
 
 	public void setTotalValue(double value) {

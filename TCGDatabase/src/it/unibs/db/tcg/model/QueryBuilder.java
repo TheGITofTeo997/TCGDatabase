@@ -54,7 +54,7 @@ public class QueryBuilder {
 	protected static String CREATE_USER = "INSERT INTO utente(utente.Nickname, utente.Nome_Utente, utente.Mail, utente.Avatar , utente.Data_Registrazione)"
 			+ "VALUES(?,?,?,?,?)";
 
-	protected static String INSERT_CARD_IN_COMPOSTA = "INSERT INTO composta(composta.Nickname, composta.Nome_Collezione, composta.N_Carta, composta.Abbr_Espansione)\n"
+	protected static String INSERT_CARD_IN_COMPOSTA = "INSERT INTO composta(composta.Nickname, composta.Nome_Collezione, composta.N_Carta, composta.Abbr_Espansione)"
 			+ "VALUES(?, ?, ?, ?)";
 
 	protected static String CREATE_COLLECTION_COLLECTION_TABLE = "INSERT INTO collezione(collezione.Nickname, collezione.Nome_Collezione, collezione.Visibile, collezione.Data_Inizio)"
@@ -89,6 +89,21 @@ public class QueryBuilder {
 	protected static String GET_USERS_BY_CARD = "SELECT DISTINCT composta.Nickname"
 			+ " FROM composta JOIN collezione ON (composta.Nome_Collezione = collezione.Nome_Collezione AND composta.Nickname = collezione.Nickname) "
 			+ " WHERE composta.N_Carta = ? AND composta.Abbr_Espansione = ? AND collezione.Visibile = 1";
+
+	protected static String GET_TOTAL_NUMBER_CARD_COLLECTION = "SELECT COUNT(*)" + " FROM composta"
+			+ " WHERE composta.Nickname = ? AND composta.Nome_Collezione = ?";
+
+	protected static String GET_NAME_PRE_STAGE_BY_NUM_AND_ABBR_EXP = "SELECT nome_stage_precedente" + " FROM evoluzione"
+			+ " WHERE stage_successivo IN ( SELECT Nome_Carta" + " FROM carta"
+			+ " WHERE Numero = ? AND Abbr_Espansione = ? " + " LIMIT 1)";
+	
+	protected static String GET_NAME_NEXT_STAGE_BY_NUM_AND_ABBR_EXP = "SELECT nome_stage_successivo" + " FROM evoluzione"
+			+ " WHERE stage_successivo IN ( SELECT Nome_Carta" + " FROM carta"
+			+ " WHERE Numero = ? AND Abbr_Espansione = ? " + " LIMIT 1)";
+
+	protected static String GET_COUNT_OF_CARDS_PER_EXPANSION = "SELECT composta.Abbr_Espansione, espansione.Icona, espansione.Nome_Espansione, COUNT(*)"
+			+ " FROM composta JOIN espansione ON composta.Abbr_Espansione = espansione.Abbreviazione "
+			+ " WHERE composta.Nickname = ?" + " GROUP BY Abbr_Espansione";
 
 	protected static String GET_USER_RANKING_BY_TOTAL_CARDS_VALUE = "SELECT (utente.Nickname) AS Nickname, (utente.Avatar) as Avatar,"
 			+ "           ( SELECT sum(Valore)"

@@ -11,8 +11,6 @@ public class CartaPokemon extends Carta {
 	private String debolezza;
 	private int PS;
 	private int costoRitirata;
-	private int stage;
-	private int stage_successivo;
 	private ArrayList<Mossa> mosse;
 
 	public CartaPokemon(int numero, String abbrEspansione) {
@@ -66,22 +64,6 @@ public class CartaPokemon extends Carta {
 
 	public void setCostoRitirata(int costoRitirata) {
 		this.costoRitirata = costoRitirata;
-	}
-
-	public int getStage() {
-		return stage;
-	}
-
-	public void setStage(int stage) {
-		this.stage = stage;
-	}
-
-	public int getStage_successivo() {
-		return stage_successivo;
-	}
-
-	public void setStage_successivo(int stage_successivo) {
-		this.stage_successivo = stage_successivo;
 	}
 
 	public List<Mossa> getMosse() {

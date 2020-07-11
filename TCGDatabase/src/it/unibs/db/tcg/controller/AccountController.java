@@ -30,8 +30,6 @@ public class AccountController extends Controller {
 
 		accountPanel = new AccountPanel();
 		accountPanel.setBounds(0, 0, 800, 600);
-		frame.getContentPane().add(accountPanel);
-
 		accountPanel.setNickname(user.getNickname());
 		accountPanel.setMail(user.getMail());
 		accountPanel.setAvatar(user.getAvatar());
@@ -41,6 +39,11 @@ public class AccountController extends Controller {
 		accountPanel.setTotalValue(connectorService.getUserTotalCardsValue(user.getNickname()));
 		user.setCollections(connectorService.getUserCollections(user.getNickname()));
 		accountPanel.setCollections(user.getDefaultListModelCollections());
+		LogWriter.write("Richiesta del numero di carte di ogni espansione dell'utente al db");
+		accountPanel.setExpList(connectorService.getCountOfCardsPerExpansion(user.getNickname()));
+		frame.getContentPane().add(accountPanel);
+
+
 
 		accountPanel.addCollectionListener(new ListSelectionListener() {
 			@Override

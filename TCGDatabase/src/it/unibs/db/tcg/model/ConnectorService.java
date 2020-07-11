@@ -285,8 +285,6 @@ public class ConnectorService {
 		int _costo_ritirata;
 		String _resistenza;
 		String _debolezza;
-		int _stage;
-		int _n_stage_succ;
 		String _abilita;
 		String _attr_spec;
 		String _regola;
@@ -324,8 +322,6 @@ public class ConnectorService {
 					_costo_ritirata = set.getInt("Costo_Ritirata");
 					_resistenza = set.getString("Resistenza");
 					_debolezza = set.getString("Debolezza");
-					_stage = set.getInt("Stage");
-					_n_stage_succ = set.getInt("N_Stage_Successivo");
 					_abilita = set.getString("Abilita");
 					_attr_spec = set.getString("Attributo_Speciale");
 					_regola = set.getString("Regola");
@@ -337,8 +333,6 @@ public class ConnectorService {
 					c1.setCostoRitirata(_costo_ritirata);
 					c1.setResistenza(_resistenza);
 					c1.setDebolezza(_debolezza);
-					c1.setStage(_stage);
-					c1.setStage_successivo(_n_stage_succ);
 					connector.submitParametrizedQuery(QueryBuilder.GET_MOSSE);
 					connector.setIntParameter(1, c1.getNumero());
 					connector.setStringParameter(2, c1.getAbbrEspansione());
@@ -378,8 +372,6 @@ public class ConnectorService {
 					_costo_ritirata = set.getInt("Costo_Ritirata");
 					_resistenza = set.getString("Resistenza");
 					_debolezza = set.getString("Debolezza");
-					_stage = set.getInt("Stage");
-					_n_stage_succ = set.getInt("N_Stage_Successivo");
 					_abilita = set.getString("Abilita");
 					_attr_spec = set.getString("Attributo_Speciale");
 					_regola = set.getString("Regola");
@@ -391,8 +383,6 @@ public class ConnectorService {
 					c1.setCostoRitirata(_costo_ritirata);
 					c1.setResistenza(_resistenza);
 					c1.setDebolezza(_debolezza);
-					c1.setStage(_stage);
-					c1.setStage_successivo(_n_stage_succ);
 
 					connector.submitParametrizedQuery(QueryBuilder.GET_MOSSE);
 					connector.setIntParameter(1, c1.getNumero());
@@ -672,6 +662,31 @@ public class ConnectorService {
 		connector.closeConnection();
 	}
 
+	public Map<ImageIcon, String> getCountOfCardsPerExpansion(String nickname) {
+		Map<ImageIcon, String> result = new HashMap<>();
+		connector.openConnection();
+		connector.submitParametrizedQuery(QueryBuilder.GET_COUNT_OF_CARDS_PER_EXPANSION);
+		connector.setStringParameter(1, nickname);
+		ResultSet set = connector.executeQuery();
+		try {
+			while (set.next()) {
+				String abbr_esp = set.getString("Abbr_Espansione");
+				String name_esp = set.getString("Nome_Espansione");
+				int num = set.getInt(4);
+				Blob b = set.getBlob("Icona");
+				byte[] imageByte = b.getBytes(1, (int) b.length());
+				InputStream is = new ByteArrayInputStream(imageByte);
+				BufferedImage imag = ImageIO.read(is);
+				Image i = imag;
+				ImageIcon _immagine = new ImageIcon(i);
+				result.put(_immagine, abbr_esp + " | " + name_esp + " : " + num + " carte");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
 	public List<String> getUsersByCard(int num, String abbr_exp) {
 		connector.openConnection();
 		connector.submitParametrizedQuery(QueryBuilder.GET_USERS_BY_CARD);
@@ -700,6 +715,25 @@ public class ConnectorService {
 		connector.execute();
 		connector.closeStatement();
 		connector.closeConnection();
+	}
+
+	public int getCollectionTotalNumberCards(String nickname, String collectionName) {
+		connector.openConnection();
+		connector.submitParametrizedQuery(QueryBuilder.GET_TOTAL_NUMBER_CARD_COLLECTION);
+		connector.setStringParameter(1, nickname);
+		connector.setStringParameter(2, collectionName);
+		ResultSet set = connector.executeQuery();
+		int number = 0;
+		try (set) {
+			if (set.next() == false) {
+				number = set.getInt(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		connector.closeStatement();
+		connector.closeConnection();
+		return number;
 	}
 
 	public boolean isThereCardInCollection(String nickname, String collectionName, int num_card, String abbr_esp) {
@@ -831,6 +865,44 @@ public class ConnectorService {
 		connector.closeConnection();
 	}
 
+	public String getNameNextStageByNumAndAbbrExp(int num, String abbr_esp) {
+		connector.openConnection();
+		connector.submitParametrizedQuery(QueryBuilder.GET_NAME_NEXT_STAGE_BY_NUM_AND_ABBR_EXP);
+		connector.setIntParameter(1, num);
+		connector.setStringParameter(2, abbr_esp);
+		ResultSet set = connector.executeQuery();
+		String result = null;
+		if (set != null) {
+			try {
+				while (set.next()) {
+					result = set.getString("Nome_stage_successivo");
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+
+	public String getNamePreStageByNumAndAbbrExp(int num, String abbr_esp) {
+		connector.openConnection();
+		connector.submitParametrizedQuery(QueryBuilder.GET_NAME_PRE_STAGE_BY_NUM_AND_ABBR_EXP);
+		connector.setIntParameter(1, num);
+		connector.setStringParameter(2, abbr_esp);
+		ResultSet set = connector.executeQuery();
+		String result = null;
+		if (set != null) {
+			try {
+				while (set.next()) {
+					result = set.getString("Nome_stage_precedente");
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+
 	public List<Utente> getRankingCardValue() {
 		List<Utente> result = new ArrayList<>();
 		connector.openConnection();
@@ -959,8 +1031,6 @@ public class ConnectorService {
 		result.setCostoRitirata(c.getCostoRitirata());
 		result.setResistenza(c.getResistenza());
 		result.setDebolezza(c.getDebolezza());
-		result.setStage(c.getStage());
-		result.setStage_successivo(c.getStage_successivo());
 		for (Mossa m : c.getMosse())
 			result.addMossa(m);
 		return result;
@@ -979,8 +1049,6 @@ public class ConnectorService {
 		result.setCostoRitirata(c.getCostoRitirata());
 		result.setResistenza(c.getResistenza());
 		result.setDebolezza(c.getDebolezza());
-		result.setStage(c.getStage());
-		result.setStage_successivo(c.getStage_successivo());
 		for (Mossa m : c.getMosse())
 			result.addMossa(m);
 		return result;

@@ -32,8 +32,14 @@ public class CartaController extends Controller {
 			Utente toVisit, boolean fromSearchPanel) {
 		cardPanel = new CartaPanel();
 		cardPanel.setBounds(0, 0, 800, 600);
+		LogWriter.write("Richiesta del nome del pokemon allo stage precedente");
+		String pre_stage = connectorService.getNamePreStageByNumAndAbbrExp(c.getNumero(), c.getAbbrEspansione());
+		LogWriter.write("Richiesta del nome del pokemon allo stage successivo");
+		String next_stage = connectorService.getNameNextStageByNumAndAbbrExp(c.getNumero(), c.getAbbrEspansione());
+		if(pre_stage != null) cardPanel.setBtnPreStageText(pre_stage);
+		if(next_stage != null) cardPanel.setBtnNextStageText(next_stage);
 		frame.getContentPane().add(cardPanel);
-
+		
 		for (String collection : connectorService.getUserCollections(user.getNickname())) {
 			if (connectorService.isThereCardInCollection(user.getNickname(), collection, c.getNumero(),
 					c.getAbbrEspansione())) {

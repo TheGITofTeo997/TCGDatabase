@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.util.List;
 
+import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -15,6 +16,7 @@ import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
+import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionListener;
 
@@ -35,6 +37,7 @@ public class CardsPanel extends JPanel {
 	private JButton btnGroupByNumber;
 	private JButton btnGroupByName;
 	private JButton btnGroupByExp;
+	private JLabel lblTotalCards;
 
 	public CardsPanel() {
 		setLayout(null);
@@ -49,9 +52,27 @@ public class CardsPanel extends JPanel {
 		lblTitle = new JLabel("default");
 		lblTitle.setForeground(foregroundColor);
 		lblTitle.setFont(panelFont.deriveFont(Font.BOLD));
-		lblTitle.setBounds(0, 0, WIDTH, 50);
+		lblTitle.setBounds(0, 0, 400, 40);
 		lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTitle.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.WHITE));
 		add(lblTitle);
+		
+		JLabel lblSTotalCards = new JLabel("Carte totali:");
+		lblSTotalCards.setForeground(foregroundColor);
+		lblSTotalCards.setFont(panelFont);
+		lblSTotalCards.setBounds(400, 0, 150, 40);
+		lblSTotalCards.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.WHITE));
+		lblSTotalCards.setHorizontalAlignment(SwingConstants.CENTER);
+		add(lblSTotalCards);
+		
+		lblTotalCards = new JLabel("");
+		lblTotalCards.setForeground(foregroundColor);
+		lblTotalCards.setFont(panelFont);
+		lblTotalCards.setVisible(false);
+		lblTotalCards.setBounds(550, 0, 250, 40);
+		lblTotalCards.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.WHITE));
+		lblTotalCards.setHorizontalAlignment(SwingConstants.LEFT);
+		add(lblTotalCards);
 
 		btnBack = new JButton("Back");
 		btnBack.setBounds(650, 450, 90, 50);
@@ -141,6 +162,11 @@ public class CardsPanel extends JPanel {
 
 	public void setTitleText(String title) {
 		lblTitle.setText(title);
+	}
+
+	public void setlblTotalCardsText(int num) {
+		lblTotalCards.setVisible(true);
+		lblTotalCards.setText("" + num);
 	}
 
 	public void addCardListener(ListSelectionListener a) {

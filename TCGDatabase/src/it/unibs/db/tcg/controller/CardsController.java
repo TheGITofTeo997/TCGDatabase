@@ -27,30 +27,35 @@ public class CardsController extends Controller {
 		this.frame = frame;
 	}
 
-	public void drawCardsPanel(Utente user, String title, List<Carta> cardsName, List<Utente> utenti, Utente toVisit,
-			boolean fromSearchPanel) {
+	public void drawCardsPanel(Utente user, String title, List<Carta> cardsName,
+			List<Utente> utenti, Utente toVisit, boolean fromSearchPanel) {
 		cardsPanel = new CardsPanel();
 		cardsPanel.setBounds(0, 0, 800, 600);
 		cardsPanel.setTitleText(title);
 		cardsPanel.setCardList(cardsName);
 		frame.getContentPane().add(cardsPanel);
 
+		cardsPanel.setlblTotalCardsText(cardsName.size());
+
 		cardsPanel.addCardListener(new ListSelectionListener() {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
 				if (!e.getValueIsAdjusting()) {
 					Carta c = cardsName.get(cardsPanel.getListSelectedIndex());
-					LogWriter.write("Ottenimento attributi della carta " + c.getNumero() + " Espansione:" + c.getAbbrEspansione());
+					LogWriter.write("Ottenimento attributi della carta " + c.getNumero() + " Espansione:"
+							+ c.getAbbrEspansione());
 					Carta card = connectorService.getCardFromNumberAndAbbrEspansione(c.getNumero(),
 							c.getAbbrEspansione());
 					cardsPanel.setVisible(false);
 					LogWriter.write("Apertura cartaPanel");
 					CartaController cartaController = new CartaController(frame);
 					if (toVisit == null) {
-						if(fromSearchPanel) cartaController.drawCartaPanel(user, title, cardsName, card, null, null, true);
-						else cartaController.drawCartaPanel(user, title, cardsName, card, null, null, false);
+						if (fromSearchPanel)
+							cartaController.drawCartaPanel(user, title, cardsName, card, null, null, true);
+						else
+							cartaController.drawCartaPanel(user, title, cardsName, card, null, null, false);
 					}
-						
+
 					else
 						cartaController.drawCartaPanel(user, title, cardsName, card, utenti, toVisit, false);
 				}
