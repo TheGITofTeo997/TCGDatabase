@@ -27,6 +27,8 @@ public class RankingController extends Controller {
 		rankingPanel.setRankingCardValueList(connectorService.getRankingCardValue());
 		LogWriter.write("Richiesta classifica utenti per totale numero di carte possedute");
 		rankingPanel.setRankingTotalCardList(connectorService.getRankingTotalCardNumber());
+		LogWriter.write("Richiesta classifica utenti per massimo valore carta posseduta");
+		rankingPanel.setRankingCardMaxValueList(connectorService.getRankingMaxCardValue());
 		frame.getContentPane().add(rankingPanel);
 
 		rankingPanel.addBackListener(new ActionListener() {

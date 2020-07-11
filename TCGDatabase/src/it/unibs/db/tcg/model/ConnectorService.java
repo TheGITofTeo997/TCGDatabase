@@ -671,8 +671,8 @@ public class ConnectorService {
 		connector.closeStatement();
 		connector.closeConnection();
 	}
-	
-	public List<String> getUsersByCard(int num, String abbr_exp){
+
+	public List<String> getUsersByCard(int num, String abbr_exp) {
 		connector.openConnection();
 		connector.submitParametrizedQuery(QueryBuilder.GET_USERS_BY_CARD);
 		connector.setIntParameter(1, num);
@@ -701,7 +701,7 @@ public class ConnectorService {
 		connector.closeStatement();
 		connector.closeConnection();
 	}
-	
+
 	public boolean isThereCardInCollection(String nickname, String collectionName, int num_card, String abbr_esp) {
 		connector.openConnection();
 		connector.submitParametrizedQuery(QueryBuilder.IS_THERE_CARD_IN_COLLECTION);
@@ -831,7 +831,7 @@ public class ConnectorService {
 		connector.closeConnection();
 	}
 
-	public List<Utente> getRankingCardValue(){
+	public List<Utente> getRankingCardValue() {
 		List<Utente> result = new ArrayList<>();
 		connector.openConnection();
 		connector.submitParametrizedQuery(QueryBuilder.GET_USER_RANKING_BY_TOTAL_CARDS_VALUE);
@@ -855,12 +855,12 @@ public class ConnectorService {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		return result;
-		
+
 	}
-	
-	public List<Utente> getRankingTotalCardNumber(){
+
+	public List<Utente> getRankingTotalCardNumber() {
 		List<Utente> result = new ArrayList<>();
 		connector.openConnection();
 		connector.submitParametrizedQuery(QueryBuilder.GET_USER_RANKING_BY_TOTAL_CARDS_NUMBER);
@@ -884,9 +884,36 @@ public class ConnectorService {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		return result;
-		
+
+	}
+
+	public List<Utente> getRankingMaxCardValue() {
+		List<Utente> result = new ArrayList<>();
+		connector.openConnection();
+		connector.submitParametrizedQuery(QueryBuilder.GET_USER_RANKING_BY_MAX_CARD_VALUE);
+		ResultSet set = connector.executeQuery();
+		try {
+			while (set.next()) {
+				String nickname = set.getString("Nickname");
+				double valoreMax = set.getDouble("ValoreMax");
+				Blob b = set.getBlob("Avatar");
+				byte[] imageByte = b.getBytes(1, (int) b.length());
+				InputStream is = new ByteArrayInputStream(imageByte);
+				BufferedImage imag = ImageIO.read(is);
+				Image i = imag;
+				ImageIcon avatar = new ImageIcon(i);
+				Utente u = new Utente();
+				u.setNickname(nickname);
+				u.setAvatar(avatar);
+				u.setMaxCardValue(valoreMax);
+				result.add(u);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 	private CartaEnergia createCartaEnergia(Carta c) {

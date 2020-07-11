@@ -101,4 +101,10 @@ public class QueryBuilder {
 			+ "				FROM collezione JOIN composta ON collezione.Nome_Collezione = composta.Nome_Collezione JOIN carta ON composta.N_Carta = carta.Numero "
 			+ "				WHERE collezione.Nickname = utente.Nickname) AS TotaleCarte" + " FROM utente "
 			+ "			    ORDER BY TotaleCarte DESC";
+
+	public static String GET_USER_RANKING_BY_MAX_CARD_VALUE = "SELECT (utente.Nickname) AS Nickname, (utente.Avatar) as Avatar,"
+			+ "			          ( SELECT max(Valore) "
+			+ "						FROM collezione JOIN composta ON collezione.Nome_Collezione = composta.Nome_Collezione JOIN carta ON composta.N_Carta = carta.Numero"
+			+ "						WHERE collezione.Nickname = utente.Nickname) AS ValoreMax    " + " FROM utente "
+			+ " ORDER BY ValoreMax DESC";
 }

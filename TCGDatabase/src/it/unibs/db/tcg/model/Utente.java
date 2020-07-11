@@ -13,6 +13,7 @@ public class Utente {
 	private ArrayList<Collezione> collezioni;
 	private double totalCardsValue;
 	private int totalCard;
+	private double maxCardValue;
 
 	public Utente() {
 		collezioni = new ArrayList<>();
@@ -126,6 +127,16 @@ public class Utente {
 	public void setTotalCard(int totalCard) {
 		this.totalCard = totalCard;
 	}
+
+	public double getMaxCardValue() {
+		return maxCardValue;
+	}
+
+	public void setMaxCardValue(double maxCardValue) {
+		this.maxCardValue = maxCardValue;
+	}
+	
+	
 	
 	
 
