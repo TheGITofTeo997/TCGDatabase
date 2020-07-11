@@ -14,9 +14,11 @@ import javax.swing.ImageIcon;
 
 public class ConnectorService {
 
-	// private Connector connector = new Connector("jdbc:mysql://192.168.1.124:3306/TCG_DB", "root", "R2mSDzoz");
+	// private Connector connector = new
+	// Connector("jdbc:mysql://192.168.1.124:3306/TCG_DB", "root", "R2mSDzoz");
 	private Connector connector = new Connector("jdbc:mysql://localhost:3306/TCG_DB", "root", "");
-	// private Connector connector = new Connector("jdbc:mysql://localhost:4040/TCG_DB", "root", "");
+	// private Connector connector = new
+	// Connector("jdbc:mysql://localhost:4040/TCG_DB", "root", "");
 
 	public boolean isReachable() {
 		return connector.isReachable();
@@ -538,6 +540,8 @@ public class ConnectorService {
 	private void createAndSubmitCardSearchQuery(CardSearchObject s) {
 		Map<Integer, String> stringParametersMap = new HashMap<>();
 		Map<Integer, Integer> intParametersMap = new HashMap<>();
+		boolean pokemonSelected = false;
+		boolean itemSelected = false;
 		int position = 1;
 		String query = "";
 		if (s.hasCardName()) {
@@ -545,44 +549,65 @@ public class ConnectorService {
 			stringParametersMap.put(position, s.getCardName() + "%");
 			position++;
 		}
+
 		if (s.hasExp()) {
 			query += QueryBuilder.GET_CARDS_BY_EXP + " INTERSECT ";
 			stringParametersMap.put(position, s.getExp());
 			position++;
 		}
+
 		if (s.hasCardIllustrator()) {
 			query += QueryBuilder.GET_CARDS_BY_ILLUSTRATOR + " INTERSECT ";
 			stringParametersMap.put(position, s.getCardIllustrator() + "%");
 			position++;
 		}
+
 		if (s.hasCardType()) {
 			for (String type : s.getCardType()) {
 				switch (type) {
 				case "Pokemon":
-					query += "(" + QueryBuilder.GET_CARDS_TYPE + " UNION " + QueryBuilder.GET_CARDS_TYPE + ") INTERSECT ";
+					pokemonSelected = true;
+					query += "(" + QueryBuilder.GET_CARDS_TYPE + " UNION " + QueryBuilder.GET_CARDS_TYPE
+							+ ") INTERSECT ";
 					intParametersMap.put(position, 0);
 					position++;
 					intParametersMap.put(position, 1);
 					position++;
-					query += QueryBuilder.GET_CARDS_BY_PS + " INTERSECT ";
+					query += QueryBuilder.GET_CARDS_BY_PS;
 					intParametersMap.put(position, s.getLowerPSValue());
 					position++;
 					intParametersMap.put(position, s.getUpperPSValue());
 					position++;
 					break;
 				case "Strumento":
-					query += QueryBuilder.GET_CARDS_TYPE + " INTERSECT ";
+					itemSelected = true;
+					if (!query.equals("")) {
+						if (pokemonSelected)
+							query = "(" + query + " UNION " + QueryBuilder.GET_CARDS_TYPE + ") ";
+						else
+							query += QueryBuilder.GET_CARDS_TYPE;
+					} else
+						query = QueryBuilder.GET_CARDS_TYPE;
 					intParametersMap.put(position, 2);
 					position++;
 					break;
 				case "Energia":
-					query += QueryBuilder.GET_CARDS_TYPE + " INTERSECT ";
+					if (!query.equals("")) {
+						if (pokemonSelected || itemSelected)
+							query = "(" + query + " UNION " + QueryBuilder.GET_CARDS_TYPE + ") ";
+						else
+							query += QueryBuilder.GET_CARDS_TYPE;
+
+					} else
+						query = QueryBuilder.GET_CARDS_TYPE;
 					intParametersMap.put(position, 3);
 					position++;
 					break;
 				}
 			}
+			query += " INTERSECT ";
 		}
+
 		if (s.hasEnergyType()) {
 			for (String type : s.getEnergyType()) {
 				query += QueryBuilder.GET_CARDS_BY_ENERGY_TYPE + " UNION ";
@@ -606,8 +631,9 @@ public class ConnectorService {
 		position++;
 		intParametersMap.put(position, s.getUpperValueBarValue());
 		position++;
-		
+
 		connector.submitParametrizedQuery(query);
+		System.out.println(query);
 		for (Entry<Integer, String> entry : stringParametersMap.entrySet())
 			connector.setStringParameter(entry.getKey(), entry.getValue());
 		for (Entry<Integer, Integer> entry : intParametersMap.entrySet())
@@ -759,14 +785,14 @@ public class ConnectorService {
 		}
 		return true;
 	}
-	
-	public List<Carta> getCardsByName(String name){
+
+	public List<Carta> getCardsByName(String name) {
 		connector.openConnection();
 		connector.submitParametrizedQuery(QueryBuilder.GET_CARDS_BY_NAME);
 		connector.setStringParameter(1, name);
 		ResultSet set = connector.executeQuery();
 		List<Carta> result = new ArrayList<>();
-		if(set != null) {
+		if (set != null) {
 			try (set) {
 				if (set.next()) {
 					String nome_carta = set.getString("Nome_Carta");
@@ -782,7 +808,7 @@ public class ConnectorService {
 					c.setImmagine(_immagine);
 					c.setNome(nome_carta);
 					result.add(c);
-				}	
+				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

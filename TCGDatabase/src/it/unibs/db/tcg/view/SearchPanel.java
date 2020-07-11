@@ -51,6 +51,7 @@ public class SearchPanel extends JPanel {
 	private JLabel lblValueLowerRange;
 	private JLabel lblValueUpperRange;
 	private JPanel energyTypePanel;
+	private JButton btnEnergyType;
 	private JCheckBox erbaBox;
 	private JCheckBox fuocoBox;
 	private JCheckBox acquaBox;
@@ -275,8 +276,9 @@ public class SearchPanel extends JPanel {
 		energyCheckBox.setBackground(null);
 		cardPanel.add(energyCheckBox);
 
-		JButton btnEnergyType = new JButton("Tipo Energia");
+		btnEnergyType = new JButton("Tipo Energia");
 		btnEnergyType.setBounds(10, 240, 200, 50);
+		btnEnergyType.setVisible(false);
 		btnEnergyType.setFont(panelFont);
 		cardPanel.add(btnEnergyType);
 
@@ -318,11 +320,13 @@ public class SearchPanel extends JPanel {
 					PSRange.setVisible(true);
 					lblPSLowerRange.setVisible(true);
 					lblPSUpperRange.setVisible(true);
+					btnEnergyType.setVisible(true);
 				} else {
 					cardSLblPS.setVisible(false);
 					PSRange.setVisible(false);
 					lblPSLowerRange.setVisible(false);
 					lblPSUpperRange.setVisible(false);
+					btnEnergyType.setVisible(false);
 				}
 			}
 		});
