@@ -694,11 +694,6 @@ public class ConnectorService {
 		connector.setStringParameter(2, nickname);
 		connector.setStringParameter(3, oldCollectionName);
 		connector.execute();
-		connector.submitParametrizedQuery(QueryBuilder.UPDATE_COLLECTION_NAME_COMPOSTA_TABLE);
-		connector.setStringParameter(1, newCollectionName);
-		connector.setStringParameter(2, nickname);
-		connector.setStringParameter(3, oldCollectionName);
-		connector.execute();
 		connector.closeStatement();
 		connector.closeConnection();
 	}
@@ -910,10 +905,6 @@ public class ConnectorService {
 
 	public void deleteCollection(String nickname, String nameCollection) {
 		connector.openConnection();
-		connector.submitParametrizedQuery(QueryBuilder.DELETE_COLLECTION_COMPOSTA_TABLE);
-		connector.setStringParameter(1, nickname);
-		connector.setStringParameter(2, nameCollection);
-		connector.execute();
 		connector.submitParametrizedQuery(QueryBuilder.DELETE_COLLECTION_COLLECTION_TABLE);
 		connector.setStringParameter(1, nickname);
 		connector.setStringParameter(2, nameCollection);

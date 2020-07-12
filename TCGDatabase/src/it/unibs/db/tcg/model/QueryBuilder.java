@@ -19,11 +19,9 @@ public class QueryBuilder {
 
 	protected static String DELETE_CARD_FROM_COLLECTION = "DELETE FROM composta WHERE Nome_Collezione = ? AND N_Carta = ? AND Abbr_Espansione = ?";
 
-	protected static String DELETE_COLLECTION_COMPOSTA_TABLE = "DELETE FROM composta WHERE composta.Nickname = ? AND composta.Nome_Collezione = ?";
-
 	protected static String DELETE_COLLECTION_COLLECTION_TABLE = "DELETE FROM collezione WHERE collezione.Nickname = ? AND collezione.Nome_Collezione = ?";
 
-	protected static String GET_PUBLIC_USER_COLLECTIONS = " SELECT Nome_Collezione" + " FROM collezione"
+	protected static String GET_PUBLIC_USER_COLLECTIONS = "SELECT Nome_Collezione" + " FROM collezione"
 			+ " WHERE Nickname = ? AND Visibile = 1";
 
 	protected static String GET_CARD = "SELECT * FROM carta WHERE carta.Numero = ? AND carta.Abbr_Espansione = ?";
@@ -45,17 +43,13 @@ public class QueryBuilder {
 	protected static String UPDATE_COLLECTION_NAME_COLLEZIONE_TABLE = "UPDATE collezione "
 			+ "SET Nome_Collezione = ? WHERE Nickname = ? AND Nome_Collezione = ?";
 
-	protected static String UPDATE_COLLECTION_NAME_COMPOSTA_TABLE = "UPDATE composta "
-			+ "SET Nome_Collezione = ? WHERE Nickname = ? AND Nome_Collezione = ?";
-
 	protected static String UPDATE_COLLECTION_VISIBILITY = "UPDATE collezione " + " SET collezione.Visibile = ? "
 			+ " WHERE collezione.Nickname = ? AND collezione.Nome_Collezione = ? ";
 
 	protected static String CREATE_USER = "INSERT INTO utente(utente.Nickname, utente.Nome_Utente, utente.Mail, utente.Avatar , utente.Data_Registrazione)"
 			+ "VALUES(?,?,?,?,?)";
 
-	protected static String INSERT_CARD_IN_COMPOSTA = "INSERT INTO composta(composta.Nickname, composta.Nome_Collezione, composta.N_Carta, composta.Abbr_Espansione)"
-			+ "VALUES(?, ?, ?, ?)";
+	protected static String INSERT_CARD_IN_COMPOSTA = "INSERT INTO composta(composta.Nickname, composta.Nome_Collezione, composta.N_Carta, composta.Abbr_Espansione)" + "VALUES(?, ?, ?, ?)";
 
 	protected static String CREATE_COLLECTION_COLLECTION_TABLE = "INSERT INTO collezione(collezione.Nickname, collezione.Nome_Collezione, collezione.Visibile, collezione.Data_Inizio)"
 			+ "VALUES(?, ?, ?, ?)";
@@ -96,7 +90,7 @@ public class QueryBuilder {
 	protected static String GET_NAME_PRE_STAGE_BY_NUM_AND_ABBR_EXP = "SELECT Stage_precedente" + " FROM evoluzione"
 			+ " WHERE Stage_successivo IN ( SELECT Nome_Carta" + " FROM carta"
 			+ " WHERE Numero = ? AND Abbr_Espansione = ?)";
-	
+
 	protected static String GET_NAME_NEXT_STAGE_BY_NUM_AND_ABBR_EXP = "SELECT Stage_successivo" + " FROM evoluzione"
 			+ " WHERE Stage_precedente IN ( SELECT Nome_Carta" + " FROM carta"
 			+ " WHERE Numero = ? AND Abbr_Espansione = ?)";
@@ -106,7 +100,7 @@ public class QueryBuilder {
 			+ " WHERE composta.Nickname = ?" + " GROUP BY Abbr_Espansione";
 
 	protected static String GET_USER_RANKING_BY_TOTAL_CARDS_VALUE = "SELECT (utente.Nickname) AS Nickname, (utente.Avatar) as Avatar,"
-			+ "           ( SELECT sum(Valore)"
+			+ "( SELECT sum(Valore)"
 			+ "	FROM collezione JOIN composta ON collezione.Nome_Collezione = composta.Nome_Collezione JOIN carta ON composta.N_Carta = carta.Numero"
 			+ "	WHERE collezione.Nickname = utente.Nickname) AS ValoreTotale" + "    FROM utente "
 			+ "    ORDER BY ValoreTotale DESC";
@@ -118,8 +112,8 @@ public class QueryBuilder {
 			+ "			    ORDER BY TotaleCarte DESC";
 
 	public static String GET_USER_RANKING_BY_MAX_CARD_VALUE = "SELECT (utente.Nickname) AS Nickname, (utente.Avatar) as Avatar,"
-			+ "			          ( SELECT max(Valore) "
-			+ "						FROM collezione JOIN composta ON collezione.Nome_Collezione = composta.Nome_Collezione JOIN carta ON composta.N_Carta = carta.Numero"
-			+ "						WHERE collezione.Nickname = utente.Nickname) AS ValoreMax    " + " FROM utente "
+			+ "	 ( SELECT max(Valore) "
+			+ "	FROM collezione JOIN composta ON collezione.Nome_Collezione = composta.Nome_Collezione JOIN carta ON composta.N_Carta = carta.Numero"
+			+ "	WHERE collezione.Nickname = utente.Nickname) AS ValoreMax    " + " FROM utente "
 			+ " ORDER BY ValoreMax DESC";
 }

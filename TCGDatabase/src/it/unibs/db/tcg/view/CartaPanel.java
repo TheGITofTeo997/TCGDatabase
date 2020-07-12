@@ -197,9 +197,9 @@ public class CartaPanel extends JPanel {
 		pokemonPanel.add(pkmnSlblIllustrator);
 
 		pkmnlblIllustrator = new JLabel("");
-		pkmnlblIllustrator.setBounds(360, 40, 120, 40);
+		pkmnlblIllustrator.setBounds(360, 40, 110, 40);
 		pkmnlblIllustrator.setForeground(foregroundColor);
-		pkmnlblIllustrator.setFont(panelFont);
+		pkmnlblIllustrator.setFont(panelFont.deriveFont(12));
 		pokemonPanel.add(pkmnlblIllustrator);
 
 		JLabel pkmnSlblEnergyType = new JLabel("Tipo Energia");
@@ -223,9 +223,9 @@ public class CartaPanel extends JPanel {
 		pokemonPanel.add(pkmnSlblRarity);
 
 		pkmnlblRarity = new JLabel("");
-		pkmnlblRarity.setBounds(360, 80, 120, 40);
+		pkmnlblRarity.setBounds(360, 80, 110, 40);
 		pkmnlblRarity.setForeground(foregroundColor);
-		pkmnlblRarity.setFont(panelFont);
+		pkmnlblRarity.setFont(panelFont.deriveFont(12));
 		pokemonPanel.add(pkmnlblRarity);
 
 		JLabel pkmnSlblValue = new JLabel("Valore");
@@ -261,7 +261,7 @@ public class CartaPanel extends JPanel {
 		pokemonPanel.add(pkmnSlblResistenza);
 
 		pkmnlblResistenza = new JLabel("");
-		pkmnlblResistenza.setBounds(360, 120, 120, 40);
+		pkmnlblResistenza.setBounds(360, 120, 110, 40);
 		pkmnlblResistenza.setForeground(foregroundColor);
 		pkmnlblResistenza.setFont(panelFont);
 		pokemonPanel.add(pkmnlblResistenza);
@@ -287,13 +287,14 @@ public class CartaPanel extends JPanel {
 		pokemonPanel.add(pkmnSlblAbilita);
 
 		pkmnlblAbilita = new JLabel("");
-		pkmnlblAbilita.setBounds(360, 160, 120, 40);
+		pkmnlblAbilita.setBounds(360, 160, 110, 40);
 		pkmnlblAbilita.setForeground(foregroundColor);
 		pkmnlblAbilita.setFont(panelFont);
 		pokemonPanel.add(pkmnlblAbilita);
 
 		pkmnSlblAttributoSpeciale = new JLabel("Attr. Spec.");
 		pkmnSlblAttributoSpeciale.setBounds(0, 200, 85, 75);
+		pkmnSlblAttributoSpeciale.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.WHITE));
 		pkmnSlblAttributoSpeciale.setForeground(foregroundColor);
 		pkmnSlblAttributoSpeciale.setFont(panelFont.deriveFont(Font.BOLD));
 		pokemonPanel.add(pkmnSlblAttributoSpeciale);
@@ -306,6 +307,7 @@ public class CartaPanel extends JPanel {
 
 		pkmnSlblRule = new JLabel("Regola");
 		pkmnSlblRule.setBounds(120, 200, 60, 75);
+		pkmnSlblRule.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.WHITE));
 		pkmnSlblRule.setForeground(foregroundColor);
 		pkmnSlblRule.setFont(panelFont.deriveFont(Font.BOLD));
 		pokemonPanel.add(pkmnSlblRule);
@@ -313,7 +315,7 @@ public class CartaPanel extends JPanel {
 		pkmnTextRule = new JTextArea("");
 		pkmnTextRule.setBounds(180, 200, 300, 75);
 		pkmnTextRule.setForeground(foregroundColor);
-		pkmnTextRule.setFont(panelFont);
+		pkmnTextRule.setFont(panelFont.deriveFont(14));
 		pkmnTextRule.setAlignmentY(CENTER_ALIGNMENT);
 		pkmnTextRule.setEditable(false);
 		pkmnTextRule.setLineWrap(true);
@@ -324,7 +326,7 @@ public class CartaPanel extends JPanel {
 		pkmnTextDescrizione = new JTextArea("");
 		pkmnTextDescrizione.setBounds(0, 275, 200, 225);
 		pkmnTextDescrizione.setForeground(foregroundColor);
-		pkmnTextDescrizione.setFont(panelFont.deriveFont(Font.ITALIC));
+		pkmnTextDescrizione.setFont(panelFont.deriveFont(Font.ITALIC).deriveFont(14));
 		pkmnTextDescrizione.setEditable(false);
 		pkmnTextDescrizione.setLineWrap(true);
 		pkmnTextDescrizione.setOpaque(false);
@@ -346,7 +348,7 @@ public class CartaPanel extends JPanel {
 		pkmnDescrizioneMossa1 = new JTextArea("");
 		pkmnDescrizioneMossa1.setBounds(210, 305, 280, 80);
 		pkmnDescrizioneMossa1.setForeground(foregroundColor);
-		pkmnDescrizioneMossa1.setFont(panelFont);
+		pkmnDescrizioneMossa1.setFont(panelFont.deriveFont(14));
 		pkmnDescrizioneMossa1.setEditable(false);
 		pkmnDescrizioneMossa1.setLineWrap(true);
 		pkmnDescrizioneMossa1.setOpaque(false);
@@ -368,7 +370,7 @@ public class CartaPanel extends JPanel {
 		pkmnDescrizioneMossa2 = new JTextArea("");
 		pkmnDescrizioneMossa2.setBounds(210, 415, 280, 80);
 		pkmnDescrizioneMossa2.setForeground(foregroundColor);
-		pkmnDescrizioneMossa2.setFont(panelFont);
+		pkmnDescrizioneMossa2.setFont(panelFont.deriveFont(14));
 		pkmnDescrizioneMossa2.setEditable(false);
 		pkmnDescrizioneMossa2.setLineWrap(true);
 		pkmnDescrizioneMossa2.setOpaque(false);
