@@ -10,6 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.SwingWorker;
 
 import it.unibs.db.tcg.model.Utente;
+import it.unibs.db.tcg.model.util.FileLoader;
 import it.unibs.db.tcg.model.util.LogWriter;
 import it.unibs.db.tcg.view.HomePanel;
 
@@ -100,6 +101,14 @@ public class HomeController extends Controller {
 			public void actionPerformed(ActionEvent e) {
 				LogWriter.write("Ottenimento di una carta random dal db");
 				homePanel.showRandomCardPopup(connectorService.getRandomCard());
+			}
+		});
+		
+		homePanel.addHelpListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				LogWriter.write("Apertura file di Help");
+				FileLoader.openGuida();
 			}
 		});
 		

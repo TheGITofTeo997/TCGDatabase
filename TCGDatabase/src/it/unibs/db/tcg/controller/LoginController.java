@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import javax.swing.SwingWorker;
 
+import it.unibs.db.tcg.model.util.FileLoader;
 import it.unibs.db.tcg.model.util.LogWriter;
 import it.unibs.db.tcg.view.LoginPanel;
 
@@ -55,9 +56,18 @@ public class LoginController extends Controller {
 				checkDatabaseStatus();
 			}
 		});
+		
+		loginPanel.addHelpListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				LogWriter.write("Apertura file di Help");
+				FileLoader.openGuida();
+			}
+		});
 
 		checkDatabaseStatus();
 	}
+	
 
 	private void checkDatabaseStatus() {
 		SwingWorker<Void, Void> backgroundThread1 = new SwingWorker<Void, Void>() {

@@ -48,11 +48,13 @@ public class HomePanel extends JPanel {
 	private JButton btnNewCollection;
 	private JButton btnRandomCard;
 	private JButton btnRanking;
+	private JButton btnHelp;
 	private JPanel optionPanel;
 	private JPanel newCollectionPanel;
 	private JComboBox visibleList;
 	private JTextField nameText;
 	private JTextArea textInformation;
+	
 
 	private JLabel lblPikachuBackground;
 
@@ -124,6 +126,28 @@ public class HomePanel extends JPanel {
 			}
 		});
 		add(btnSearch);
+		
+		btnHelp = new JButton("");
+		btnHelp.setBounds(350, 165, 100, 100);
+		btnHelp.setBackground(new Color(192, 192, 192));
+		btnHelp.setForeground(foregroundColor);
+		btnHelp.setBackground(null);
+		btnHelp.setIcon(new ImageIcon(new ImageIcon("resources//icon//help_icon.png").getImage()
+				.getScaledInstance(120, 120, Image.SCALE_SMOOTH)));
+		btnHelp.setFont(panelFont.deriveFont(Font.BOLD));
+		btnHelp.addMouseListener(new MouseAdapter() {
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				textInformation.setText("Apri la guida utente");
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				textInformation.setText("");
+			}
+		});
+		add(btnHelp);
 
 		btnRanking = new JButton("Ranking");
 		btnRanking.setBounds(225, 165, 100, 100);
@@ -355,6 +379,10 @@ public class HomePanel extends JPanel {
 
 	public void addNewCollectionListener(ActionListener a) {
 		btnNewCollection.addActionListener(a);
+	}
+	
+	public void addHelpListener(ActionListener a) {
+		btnHelp.addActionListener(a);
 	}
 
 	public void addRandomCardListener(ActionListener a) {

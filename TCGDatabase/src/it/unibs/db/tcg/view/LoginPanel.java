@@ -35,6 +35,7 @@ public class LoginPanel extends JPanel implements KeyListener {
 	private JLabel lblStatus;
 	private JLabel lblStatusText;
 	private JButton btnRefreshDatabaseStatus;
+	private JButton btnHelp;
 
 	public LoginPanel() {
 		setLayout(null);
@@ -109,9 +110,20 @@ public class LoginPanel extends JPanel implements KeyListener {
 				Image.SCALE_SMOOTH);
 		lblCharizardBackgroundLogin.setIcon(icon);
 		add(lblCharizardBackgroundLogin);
-
+		
+		
+		btnHelp = new JButton("");
+		btnHelp.setBounds(10, 400, 90, 90);
+		btnHelp.setBackground(new Color(192, 192, 192));
+		btnHelp.setForeground(foregroundColor);
+		btnHelp.setBackground(null);
+		btnHelp.setIcon(new ImageIcon(new ImageIcon("resources//icon//help_icon.png").getImage()
+				.getScaledInstance(110, 110, Image.SCALE_SMOOTH)));
+		btnHelp.setFont(panelFont.deriveFont(Font.BOLD));
+		add(btnHelp);
+		
 		btnRefreshDatabaseStatus = new JButton("Refresh");
-		btnRefreshDatabaseStatus.setBounds(10, 501, 89, 23);
+		btnRefreshDatabaseStatus.setBounds(10, 500, 90, 25);
 		add(btnRefreshDatabaseStatus);
 
 	}
@@ -154,6 +166,10 @@ public class LoginPanel extends JPanel implements KeyListener {
 	
 	public void setBtnRegisterEnabled(boolean flag) {
 		btnRegister.setEnabled(flag);
+	}
+	
+	public void addHelpListener(ActionListener a) {
+		btnHelp.addActionListener(a);
 	}
 
 	public void addRegistrationListener(ActionListener a) {
