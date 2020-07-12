@@ -15,6 +15,7 @@ import java.util.List;
 
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -75,6 +76,7 @@ public class HomePanel extends JPanel {
 		image = image.getScaledInstance(lblAvatar.getWidth(), lblAvatar.getHeight(), Image.SCALE_SMOOTH);
 		icon = new ImageIcon(image);
 		lblAvatar.setIcon(icon);
+		lblAvatar.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.WHITE));
 		add(lblAvatar);
 
 		textInformation = new JTextArea("Benvenuto nella tua home di TCG Database");

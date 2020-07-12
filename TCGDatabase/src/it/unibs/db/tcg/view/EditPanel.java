@@ -64,7 +64,7 @@ public class EditPanel extends JPanel {
 
 		lblAvatar = new JLabel("");
 		lblAvatar.setBounds(5, 5, 250, 300);
-		ImageIcon icon = new ImageIcon("resources//iLTd4oI.png");
+		ImageIcon icon = new ImageIcon("resources//default_avatar.png");
 		Image image = icon.getImage();
 		icon = new ImageIcon(image);
 		image = image.getScaledInstance(lblAvatar.getWidth(), lblAvatar.getHeight(), Image.SCALE_SMOOTH);
@@ -110,11 +110,11 @@ public class EditPanel extends JPanel {
 		add(lblsecond);
 
 		btnEditName = new JButton("Edit");
-		btnEditName.setBounds(700, 60, 90, 50);
+		btnEditName.setBounds(700, 60, 80, 50);
 		add(btnEditName);
 
 		btnEditMail = new JButton("Edit");
-		btnEditMail.setBounds(700, 115, 90, 50);
+		btnEditMail.setBounds(700, 115, 80, 50);
 		add(btnEditMail);
 
 		btnEditCollection = new JButton("Opzioni collezione");

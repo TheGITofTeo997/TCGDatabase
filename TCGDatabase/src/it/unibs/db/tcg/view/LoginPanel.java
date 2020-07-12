@@ -71,7 +71,7 @@ public class LoginPanel extends JPanel implements KeyListener {
 		
 		lblStatusText = new JLabel("");
 		lblStatusText.setForeground(Color.WHITE);
-		lblStatusText.setBounds(130, 525, 125, 30);
+		lblStatusText.setBounds(130, 528, 125, 30);
 		add(lblStatusText);
 
 		JLabel lblLogin = new JLabel("Nickname");

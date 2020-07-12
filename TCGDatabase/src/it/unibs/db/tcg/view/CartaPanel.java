@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -129,13 +130,12 @@ public class CartaPanel extends JPanel {
 		btnBack = new JButton("Back");
 		btnBack.setBounds(650, 505, 90, 50);
 		add(btnBack);
-		
-		
+
 		btnNextStage = new JButton("");
 		btnNextStage.setVisible(false);
 		btnNextStage.setBounds(420, 505, 100, 50);
 		add(btnNextStage);
-		
+
 		btnPreStage = new JButton("");
 		btnPreStage.setVisible(false);
 		btnPreStage.setBounds(320, 505, 100, 50);
@@ -158,19 +158,19 @@ public class CartaPanel extends JPanel {
 		pokemonPanel.add(pkmnlblExp);
 
 		pkmnlblName = new JLabel("");
-		pkmnlblName.setBounds(70, 0, 215, 40);
+		pkmnlblName.setBounds(70, 0, 200, 40);
 		pkmnlblName.setForeground(foregroundColor);
 		pkmnlblName.setFont(panelFont.deriveFont(Font.BOLD));
 		pokemonPanel.add(pkmnlblName);
 
 		JLabel pkmnSlblPS = new JLabel("PS");
-		pkmnSlblPS.setBounds(285, 0, 30, 40);
+		pkmnSlblPS.setBounds(270, 0, 30, 40);
 		pkmnSlblPS.setForeground(foregroundColor);
 		pkmnSlblPS.setFont(panelFont.deriveFont(Font.BOLD));
 		pokemonPanel.add(pkmnSlblPS);
 
 		pkmnlblPS = new JLabel("");
-		pkmnlblPS.setBounds(305, 0, 40, 40);
+		pkmnlblPS.setBounds(290, 0, 40, 40);
 		pkmnlblPS.setForeground(foregroundColor);
 		pkmnlblPS.setHorizontalAlignment(SwingConstants.CENTER);
 		pkmnlblPS.setFont(panelFont.deriveFont(Font.BOLD));
@@ -178,6 +178,7 @@ public class CartaPanel extends JPanel {
 
 		JLabel pkmnSlblType = new JLabel("Tipo Carta");
 		pkmnSlblType.setBounds(0, 40, 120, 40);
+		pkmnSlblType.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.WHITE));
 		pkmnSlblType.setForeground(foregroundColor);
 		pkmnSlblType.setFont(panelFont.deriveFont(Font.BOLD));
 		pokemonPanel.add(pkmnSlblType);
@@ -191,6 +192,7 @@ public class CartaPanel extends JPanel {
 		JLabel pkmnSlblIllustrator = new JLabel("Illustratore");
 		pkmnSlblIllustrator.setBounds(240, 40, 120, 40);
 		pkmnSlblIllustrator.setForeground(foregroundColor);
+		pkmnSlblIllustrator.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.WHITE));
 		pkmnSlblIllustrator.setFont(panelFont.deriveFont(Font.BOLD));
 		pokemonPanel.add(pkmnSlblIllustrator);
 
@@ -202,6 +204,7 @@ public class CartaPanel extends JPanel {
 
 		JLabel pkmnSlblEnergyType = new JLabel("Tipo Energia");
 		pkmnSlblEnergyType.setBounds(0, 80, 100, 40);
+		pkmnSlblEnergyType.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.WHITE));
 		pkmnSlblEnergyType.setForeground(foregroundColor);
 		pkmnSlblEnergyType.setFont(panelFont.deriveFont(Font.BOLD));
 		pokemonPanel.add(pkmnSlblEnergyType);
@@ -214,6 +217,7 @@ public class CartaPanel extends JPanel {
 
 		JLabel pkmnSlblRarity = new JLabel("Rarità");
 		pkmnSlblRarity.setBounds(240, 80, 120, 40);
+		pkmnSlblRarity.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.WHITE));
 		pkmnSlblRarity.setForeground(foregroundColor);
 		pkmnSlblRarity.setFont(panelFont.deriveFont(Font.BOLD));
 		pokemonPanel.add(pkmnSlblRarity);
@@ -238,6 +242,7 @@ public class CartaPanel extends JPanel {
 
 		JLabel pkmnSlblDebolezza = new JLabel("Debolezza");
 		pkmnSlblDebolezza.setBounds(0, 120, 120, 40);
+		pkmnSlblDebolezza.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.WHITE));
 		pkmnSlblDebolezza.setForeground(foregroundColor);
 		pkmnSlblDebolezza.setFont(panelFont.deriveFont(Font.BOLD));
 		pokemonPanel.add(pkmnSlblDebolezza);
@@ -250,6 +255,7 @@ public class CartaPanel extends JPanel {
 
 		JLabel pkmnSlblResistenza = new JLabel("Resistenza");
 		pkmnSlblResistenza.setBounds(240, 120, 120, 40);
+		pkmnSlblResistenza.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.WHITE));
 		pkmnSlblResistenza.setForeground(foregroundColor);
 		pkmnSlblResistenza.setFont(panelFont.deriveFont(Font.BOLD));
 		pokemonPanel.add(pkmnSlblResistenza);
@@ -262,6 +268,7 @@ public class CartaPanel extends JPanel {
 
 		JLabel pkmnSlblCostoRitirata = new JLabel("Costo Ritirata");
 		pkmnSlblCostoRitirata.setBounds(0, 160, 120, 40);
+		pkmnSlblCostoRitirata.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.WHITE));
 		pkmnSlblCostoRitirata.setForeground(foregroundColor);
 		pkmnSlblCostoRitirata.setFont(panelFont.deriveFont(Font.BOLD));
 		pokemonPanel.add(pkmnSlblCostoRitirata);
@@ -274,6 +281,7 @@ public class CartaPanel extends JPanel {
 
 		pkmnSlblAbilita = new JLabel("Abilità");
 		pkmnSlblAbilita.setBounds(240, 160, 120, 40);
+		pkmnSlblAbilita.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.WHITE));
 		pkmnSlblAbilita.setForeground(foregroundColor);
 		pkmnSlblAbilita.setFont(panelFont.deriveFont(Font.BOLD));
 		pokemonPanel.add(pkmnSlblAbilita);
@@ -532,18 +540,18 @@ public class CartaPanel extends JPanel {
 		btnAddToCollection = new JButton("Aggiungi a una collezione");
 		btnAddToCollection.setBounds(60, 410, 100, 100);
 		btnAddToCollection.setToolTipText("Aggiungi questa carta ad una collezione");
-		btnAddToCollection.setIcon(new ImageIcon(new ImageIcon("resources//icon//add_card_to_collection_icon.png").getImage()
-				.getScaledInstance(130, 130, Image.SCALE_SMOOTH)));
+		btnAddToCollection.setIcon(new ImageIcon(new ImageIcon("resources//icon//add_card_to_collection_icon.png")
+				.getImage().getScaledInstance(130, 130, Image.SCALE_SMOOTH)));
 		add(btnAddToCollection);
 
 		btnRemoveCard = new JButton("Rimuovi da una collezione");
 		btnRemoveCard.setBounds(210, 410, 100, 100);
 		btnRemoveCard.setToolTipText("Rimuovi questa carta da una collezione");
-		btnRemoveCard.setIcon(new ImageIcon(new ImageIcon("resources//icon//remove_card_from_collection_icon.png").getImage()
-				.getScaledInstance(130, 130, Image.SCALE_SMOOTH)));
+		btnRemoveCard.setIcon(new ImageIcon(new ImageIcon("resources//icon//remove_card_from_collection_icon.png")
+				.getImage().getScaledInstance(130, 130, Image.SCALE_SMOOTH)));
 		btnRemoveCard.setVisible(false);
 		add(btnRemoveCard);
-		
+
 		btnWho = new JButton("Chi ha questa carta?");
 		btnWho.setBounds(60, 515, 250, 40);
 		btnWho.setFont(panelFont);
@@ -555,7 +563,7 @@ public class CartaPanel extends JPanel {
 	public void addAddToCollectionListener(ActionListener a) {
 		btnAddToCollection.addActionListener(a);
 	}
-	
+
 	public void addBtnWhoListener(ActionListener a) {
 		btnWho.addActionListener(a);
 	}
@@ -691,21 +699,21 @@ public class CartaPanel extends JPanel {
 	public void setVisibleRemoveCardButton() {
 		btnRemoveCard.setVisible(true);
 	}
-	
+
 	public void setBtnNextStageText(String text) {
 		btnNextStage.setVisible(true);
 		btnNextStage.setText(text);
 	}
-	
+
 	public void addNextStageActionListener(ActionListener a) {
 		btnNextStage.addActionListener(a);
 	}
-	
+
 	public void setBtnPreStageText(String text) {
 		btnPreStage.setVisible(true);
 		btnPreStage.setText(text);
 	}
-	
+
 	public void addPreStageActionListener(ActionListener a) {
 		btnPreStage.addActionListener(a);
 	}

@@ -114,6 +114,7 @@ public class AccountPanel extends JPanel {
 		icon = new ImageIcon(image);
 		image = image.getScaledInstance(lblAvatar.getWidth(), lblAvatar.getHeight(), Image.SCALE_SMOOTH);
 		lblAvatar.setIcon(icon);
+		lblAvatar.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.WHITE));
 		informationPanel.add(lblAvatar);
 
 		lblNickname = new JLabel("Nickname");
@@ -141,6 +142,7 @@ public class AccountPanel extends JPanel {
 		informationPanel.add(lblRegistrationDate);
 
 		JLabel lblfirst = new JLabel("Nome ");
+		lblfirst.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.WHITE));
 		lblfirst.setFont(panelFont);
 		lblfirst.setForeground(foregroundColor);
 		lblfirst.setBounds(290, 60, 100, 50);
@@ -148,12 +150,14 @@ public class AccountPanel extends JPanel {
 
 		JLabel lblsecond = new JLabel("Mail ");
 		lblsecond.setFont(panelFont);
+		lblsecond.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.WHITE));
 		lblsecond.setForeground(foregroundColor);
 		lblsecond.setBounds(290, 115, 100, 50);
 		informationPanel.add(lblsecond);
 
 		JLabel lblthird = new JLabel("Registrato il");
 		lblthird.setFont(panelFont);
+		lblthird.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.WHITE));
 		lblthird.setForeground(foregroundColor);
 		lblthird.setBounds(290, 170, 100, 50);
 		informationPanel.add(lblthird);
@@ -180,6 +184,7 @@ public class AccountPanel extends JPanel {
 		Image image2 = icon2.getImage();
 		icon2 = new ImageIcon(image2);
 		image2 = image.getScaledInstance(lblAvatarSmall.getWidth(), lblAvatarSmall.getHeight(), Image.SCALE_SMOOTH);
+		lblAvatarSmall.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.WHITE));
 		lblAvatarSmall.setIcon(icon2);
 		collectionsPanel.add(lblAvatarSmall);
 
@@ -202,6 +207,7 @@ public class AccountPanel extends JPanel {
 
 		JLabel lblfourth = new JLabel("Valore tot.");
 		lblfourth.setForeground(Color.WHITE);
+		lblfourth.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.WHITE));
 		lblfourth.setFont(panelFont);
 		lblfourth.setBounds(290, 230, 100, 50);
 		informationPanel.add(lblfourth);
