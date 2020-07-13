@@ -202,15 +202,15 @@ public class AccountPanel extends JPanel {
 		informationPanel.add(btnBack);
 
 		JLabel lblfourth = new JLabel("Valore tot.");
-		lblfourth.setForeground(Color.WHITE);
+		lblfourth.setForeground(foregroundColor);
 		lblfourth.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.WHITE));
 		lblfourth.setFont(panelFont);
 		lblfourth.setBounds(290, 230, 100, 50);
 		informationPanel.add(lblfourth);
-
+		
 		lblTotalValue = new JLabel("0");
-		lblTotalValue.setForeground(Color.WHITE);
-		lblTotalValue.setFont(new Font("Serif", Font.PLAIN, 18));
+		lblTotalValue.setForeground(foregroundColor);
+		lblTotalValue.setFont(panelFont);
 		lblTotalValue.setBounds(400, 230, 400, 50);
 		informationPanel.add(lblTotalValue);
 

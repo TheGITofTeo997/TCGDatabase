@@ -132,18 +132,21 @@ public class VisitorAccountPanel extends JPanel {
 		informationPanel.add(lblRegistrationDate);
 
 		JLabel lblfirst = new JLabel("Nome ");
+		lblfirst.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.WHITE));
 		lblfirst.setFont(panelFont);
 		lblfirst.setForeground(foregroundColor);
 		lblfirst.setBounds(290, 60, 100, 50);
 		informationPanel.add(lblfirst);
 
 		JLabel lblsecond = new JLabel("Mail ");
+		lblsecond.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.WHITE));
 		lblsecond.setFont(panelFont);
 		lblsecond.setForeground(foregroundColor);
 		lblsecond.setBounds(290, 115, 100, 50);
 		informationPanel.add(lblsecond);
 
 		JLabel lblthird = new JLabel("Registrato il");
+		lblthird.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.WHITE));
 		lblthird.setFont(panelFont);
 		lblthird.setForeground(foregroundColor);
 		lblthird.setBounds(290, 170, 100, 50);
@@ -184,14 +187,15 @@ public class VisitorAccountPanel extends JPanel {
 		informationPanel.add(btnBack);
 
 		JLabel lblfourth = new JLabel("Valore tot.");
-		lblfourth.setForeground(Color.WHITE);
+		lblfourth.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.WHITE));
+		lblfourth.setForeground(foregroundColor);
 		lblfourth.setFont(panelFont);
 		lblfourth.setBounds(290, 230, 100, 50);
 		informationPanel.add(lblfourth);
 
 		lblTotalValue = new JLabel("0");
-		lblTotalValue.setForeground(Color.WHITE);
-		lblTotalValue.setFont(new Font("Serif", Font.PLAIN, 18));
+		lblTotalValue.setForeground(foregroundColor);
+		lblTotalValue.setFont(panelFont);
 		lblTotalValue.setBounds(400, 230, 400, 50);
 		informationPanel.add(lblTotalValue);
 
