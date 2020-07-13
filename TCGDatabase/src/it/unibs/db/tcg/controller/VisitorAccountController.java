@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import it.unibs.db.tcg.model.Carta;
 import it.unibs.db.tcg.model.Collezione;
 import it.unibs.db.tcg.model.Utente;
 import it.unibs.db.tcg.model.util.LogWriter;
@@ -43,10 +44,12 @@ public class VisitorAccountController extends Controller {
 							.get(visitorAccountPanel.getListSelectedIndex());
 					Collezione c = new Collezione(collection);
 					LogWriter.write("Ottenimento delle carte della collezione " + collection + " dell'utente " + toVisit.getNickname());
-					c.setCarteCollezione(connectorService.getCardsFromCollection(toVisit.getNickname(), collection));
+					List<Carta> listaCarte = connectorService.getCardsFromCollection(toVisit.getNickname(), collection);
+					c.setCarteCollezione(listaCarte);
+					toVisit.getCollezioneByNome(collection).setCarteCollezione(listaCarte);
 					visitorAccountPanel.setVisible(false);
 					CardsController cardsController = new CardsController(frame);
-					cardsController.drawCardsPanel(user, "Carte della Collezione " + collection, c.getCardsList(),
+					cardsController.drawUserCardsPanel(user, "Carte della Collezione " + collection, collection, c.getCardsList(),
 							utenti, toVisit, false);
 				}
 			}

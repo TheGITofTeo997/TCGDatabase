@@ -2,11 +2,13 @@ package it.unibs.db.tcg.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import it.unibs.db.tcg.model.Carta;
 import it.unibs.db.tcg.model.Collezione;
 import it.unibs.db.tcg.model.Utente;
 import it.unibs.db.tcg.model.util.LogWriter;
@@ -52,15 +54,17 @@ public class AccountController extends Controller {
 					String collection = user.getDefaultListModelCollections().get(accountPanel.getListSelectedIndex());
 					Collezione c = new Collezione(collection);
 					LogWriter.write("Richiesta al database delle carte della collezione " + collection);
+					List<Carta> listaCarte = connectorService.getCardsFromCollection(user.getNickname(), collection);
+					user.getCollezioneByNome(collection).setCarteCollezione(listaCarte);
 					c.setCarteCollezione(connectorService.getCardsFromCollection(user.getNickname(), collection));
 					accountPanel.setVisible(false);
 					CardsController cardsController = new CardsController(frame);
-					cardsController.drawCardsPanel(user, "Carte della Collezione " + collection, c.getCardsList(), null,
+					cardsController.drawUserCardsPanel(user, "Carte della Collezione " + collection, collection, c.getCardsList(), null,
 							null, false);
 				}
 			}
 		});
-
+		
 		accountPanel.addEditListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

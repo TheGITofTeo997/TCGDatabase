@@ -13,7 +13,7 @@ public class QueryBuilder {
 			+ " WHERE collezione.Nickname = ? AND composta.Nome_Collezione = ?"
 			+ " AND composta.N_Carta = ? AND composta.Abbr_Espansione = ?";
 
-	protected static String GET_COLLECTION_CARDS = "SELECT carta.Abbr_Espansione, Numero, Nome_Carta, Immagine FROM collezione JOIN composta ON collezione.Nome_Collezione = composta.Nome_Collezione JOIN carta ON composta.N_Carta = carta.Numero WHERE collezione.Nickname = ? AND collezione.Nome_Collezione = ? ORDER BY Abbr_Espansione, Numero";
+	protected static String GET_COLLECTION_CARDS = "SELECT carta.Abbr_Espansione, Numero, Nome_Carta, Immagine FROM collezione JOIN composta ON collezione.Nome_Collezione = composta.Nome_Collezione JOIN carta ON composta.N_Carta = carta.Numero AND composta.Abbr_Espansione = carta.Abbr_Espansione WHERE collezione.Nickname = ? AND collezione.Nome_Collezione = ? ORDER BY Abbr_Espansione, Numero";
 
 	protected static String GET_RANDOM_CARD = "SELECT carta.Immagine FROM carta" + " ORDER BY RAND()" + " LIMIT 1";
 
@@ -49,7 +49,8 @@ public class QueryBuilder {
 	protected static String CREATE_USER = "INSERT INTO utente(utente.Nickname, utente.Nome_Utente, utente.Mail, utente.Avatar , utente.Data_Registrazione)"
 			+ "VALUES(?,?,?,?,?)";
 
-	protected static String INSERT_CARD_IN_COMPOSTA = "INSERT INTO composta(composta.Nickname, composta.Nome_Collezione, composta.N_Carta, composta.Abbr_Espansione)" + "VALUES(?, ?, ?, ?)";
+	protected static String INSERT_CARD_IN_COMPOSTA = "INSERT INTO composta(composta.Nickname, composta.Nome_Collezione, composta.N_Carta, composta.Abbr_Espansione)"
+			+ "VALUES(?, ?, ?, ?)";
 
 	protected static String CREATE_COLLECTION_COLLECTION_TABLE = "INSERT INTO collezione(collezione.Nickname, collezione.Nome_Collezione, collezione.Visibile, collezione.Data_Inizio)"
 			+ "VALUES(?, ?, ?, ?)";
@@ -99,6 +100,52 @@ public class QueryBuilder {
 			+ " FROM composta JOIN espansione ON composta.Abbr_Espansione = espansione.Abbreviazione "
 			+ " WHERE composta.Nickname = ?" + " GROUP BY Abbr_Espansione";
 
+	protected static String GET_COLLECTION_COUNT_OF_CARDS_PER_EXPANSION = "SELECT composta.Abbr_Espansione, espansione.Icona, espansione.Nome_Espansione, COUNT(*)"
+			+ " FROM composta JOIN espansione ON composta.Abbr_Espansione = espansione.Abbreviazione"
+			+ " WHERE composta.Nickname = ? AND composta.Nome_Collezione = ?" + " GROUP BY Abbr_Espansione";
+
+	protected static String GET_COLLECTION_COUNT_OF_CARDS_PER_RARITY = "SELECT carta.Rarita, COUNT(*)"
+			+ " FROM composta JOIN carta ON composta.Abbr_Espansione = carta.Abbr_Espansione AND composta.N_Carta = carta.Numero"
+			+ " WHERE composta.Nickname = ? AND composta.Nome_Collezione = ?" + " GROUP BY carta.Rarita";
+
+	protected static String GET_MAX_CARD_VALUE_IN_COLLECTION = "SELECT carta.Nome_Carta, carta.Abbr_Espansione, carta.Valore"
+			+ " FROM carta" + " WHERE carta.valore IN (" + " SELECT max(carta.Valore)"
+			+ " FROM carta JOIN composta ON carta.Numero = composta.N_Carta AND carta.Abbr_Espansione = composta.Abbr_Espansione"
+			+ " WHERE composta.Nickname = ? AND composta.Nome_Collezione = ?)";
+
+	protected static String GET_MIN_CARD_VALUE_IN_COLLECTION = "SELECT carta.Nome_Carta, carta.Abbr_Espansione, carta.Valore"
+			+ " FROM carta" + " WHERE carta.valore IN (" + " SELECT min(carta.Valore)"
+			+ " FROM carta JOIN composta ON carta.Numero = composta.N_Carta AND carta.Abbr_Espansione = composta.Abbr_Espansione"
+			+ " WHERE composta.Nickname = ? AND composta.Nome_Collezione = ?)";
+
+	protected static String GET_AVG_CARD_VALUE_IN_COLLECTION = "SELECT avg(carta.Valore)"
+			+ " FROM carta JOIN composta ON carta.Numero = composta.N_Carta AND carta.Abbr_Espansione = composta.Abbr_Espansione"
+			+ " WHERE composta.Nickname = ? AND composta.Nome_Collezione = ?";
+
+	protected static String GET_COLLECTION_TOTAL_VALUE = "SELECT sum(carta.Valore)"
+			+ " FROM carta JOIN composta ON carta.Numero = composta.N_Carta AND carta.Abbr_Espansione = composta.Abbr_Espansione"
+			+ " WHERE composta.Nickname = ? AND composta.Nome_Collezione = ?";
+
+	protected static String GET_COLLECTION_CARD_NUMBER = "SELECT COUNT(*)" + " FROM composta"
+			+ " WHERE composta.Nickname = ? AND composta.Nome_Collezione = ?";
+
+	protected static String GET_COLLECTION_START_DATE = "SELECT Data_Inizio" + " FROM collezione"
+			+ " WHERE collezione.Nickname = ? AND collezione.Nome_Collezione = ?";
+
+	protected static String IS_COLLECTION_COMPLETE = "SELECT COUNT(*)" + 
+			" FROM composta" + 
+			" WHERE composta.Nickname = ? AND composta.Nome_Collezione = ? AND ((SELECT COUNT(*)" + 
+			"		FROM  (SELECT DISTINCT Abbr_Espansione" + 
+			"		FROM composta" + 
+			"		WHERE composta.Nickname = ? AND composta.Nome_Collezione = ?) AS P) =" + 
+			"			(SELECT COUNT(*)" + 
+			"			FROM espansione" + 
+			"			WHERE (espansione.Abbreviazione, espansione.N_Carte) IN" + 
+			"				(SELECT composta.Abbr_Espansione, COUNT(*)" + 
+			"				FROM composta JOIN espansione ON composta.Abbr_Espansione = espansione.Abbreviazione" + 
+			"				WHERE composta.Nickname = ? AND composta.Nome_Collezione = ?" + 
+			"				GROUP BY Abbr_Espansione)))";
+	
 	protected static String GET_USER_RANKING_BY_TOTAL_CARDS_VALUE = "SELECT (utente.Nickname) AS Nickname, (utente.Avatar) as Avatar,"
 			+ "( SELECT sum(Valore)"
 			+ "	FROM collezione JOIN composta ON collezione.Nome_Collezione = composta.Nome_Collezione JOIN carta ON composta.N_Carta = carta.Numero"

@@ -210,6 +210,28 @@ public class ConnectorService {
 		}
 		return value;
 	}
+	
+	
+	public boolean isCollectionComplete(String nickname, String collectionName) {
+		connector.openConnection();
+		connector.submitParametrizedQuery(QueryBuilder.IS_COLLECTION_COMPLETE);
+		for(int i = 1; i <= 6; i++) {
+			connector.setStringParameter(i, nickname);
+			i++;
+			connector.setStringParameter(i, collectionName);
+		}
+		ResultSet set = connector.executeQuery();
+		int num = 0;
+		try {
+			while (set.next()) {
+				num = set.getInt(1);
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return num != 0;
+	}
 
 	public List<Carta> getCardsFromCollection(String nickname, String collectionName) {
 		connector.openConnection();
@@ -773,6 +795,167 @@ public class ConnectorService {
 		connector.closeStatement();
 		connector.closeConnection();
 		return number;
+	}
+	
+	public Map<ImageIcon, String> getCollectionCountOfCardsPerExpansion(String nickname, String collectionName) {
+		Map<ImageIcon, String> result = new HashMap<>();
+		connector.openConnection();
+		connector.submitParametrizedQuery(QueryBuilder.GET_COLLECTION_COUNT_OF_CARDS_PER_EXPANSION);
+		connector.setStringParameter(1, nickname);
+		connector.setStringParameter(2, collectionName);
+		ResultSet set = connector.executeQuery();
+		try {
+			while (set.next()) {
+				String abbr_esp = set.getString("Abbr_Espansione");
+				String name_esp = set.getString("Nome_Espansione");
+				int num = set.getInt(4);
+				Blob b = set.getBlob("Icona");
+				byte[] imageByte = b.getBytes(1, (int) b.length());
+				InputStream is = new ByteArrayInputStream(imageByte);
+				BufferedImage imag = ImageIO.read(is);
+				Image i = imag;
+				ImageIcon _immagine = new ImageIcon(i);
+				result.put(_immagine, abbr_esp + " | " + name_esp + " : " + num + " carte");
+			}
+			set.close();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	public Map<String, Integer> getCollectionCountOfCardsPerRarity(String nickname, String collectionName) {
+		Map<String, Integer> result = new HashMap<>();
+		connector.openConnection();
+		connector.submitParametrizedQuery(QueryBuilder.GET_COLLECTION_COUNT_OF_CARDS_PER_RARITY);
+		connector.setStringParameter(1, nickname);
+		connector.setStringParameter(2, collectionName);
+		ResultSet set = connector.executeQuery();
+		try {
+			while (set.next()) {
+				result.put(set.getString(1), set.getInt(2));
+			}
+			set.close();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	public String getMaxCardValueInCollection(String nickname, String collectionName) {
+		String result = "";
+		connector.openConnection();
+		connector.submitParametrizedQuery(QueryBuilder.GET_MAX_CARD_VALUE_IN_COLLECTION);
+		connector.setStringParameter(1, nickname);
+		connector.setStringParameter(2, collectionName);
+		ResultSet set = connector.executeQuery();
+		try {
+			while (set.next()) {
+				result = set.getString(1) + " (Espansione: " + set.getString(2) + ") Valore: " + set.getInt(3);
+			}
+			set.close();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	public String getMinCardValueInCollection(String nickname, String collectionName) {
+		String result = "";
+		connector.openConnection();
+		connector.submitParametrizedQuery(QueryBuilder.GET_MIN_CARD_VALUE_IN_COLLECTION);
+		connector.setStringParameter(1, nickname);
+		connector.setStringParameter(2, collectionName);
+		ResultSet set = connector.executeQuery();
+		try {
+			while (set.next()) {
+				result = set.getString(1) + " (Espansione: " + set.getString(2) + ") Valore: " + set.getInt(3);
+			}
+			set.close();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	public int getAvgCardValueInCollection(String nickname, String collectionName) {
+		int result = 0;
+		connector.openConnection();
+		connector.submitParametrizedQuery(QueryBuilder.GET_AVG_CARD_VALUE_IN_COLLECTION);
+		connector.setStringParameter(1, nickname);
+		connector.setStringParameter(2, collectionName);
+		ResultSet set = connector.executeQuery();
+		try {
+			while (set.next()) {
+				result = set.getInt(1);
+			}
+			set.close();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	public int getTotalCollectionValue(String nickname, String collectionName) {
+		int result = 0;
+		connector.openConnection();
+		connector.submitParametrizedQuery(QueryBuilder.GET_COLLECTION_TOTAL_VALUE);
+		connector.setStringParameter(1, nickname);
+		connector.setStringParameter(2, collectionName);
+		ResultSet set = connector.executeQuery();
+		try {
+			while (set.next()) {
+				result = set.getInt(1);
+			}
+			set.close();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	public int getTotalCollectionCardsNumber(String nickname, String collectionName) {
+		int result = 0;
+		connector.openConnection();
+		connector.submitParametrizedQuery(QueryBuilder.GET_COLLECTION_CARD_NUMBER);
+		connector.setStringParameter(1, nickname);
+		connector.setStringParameter(2, collectionName);
+		ResultSet set = connector.executeQuery();
+		try {
+			while (set.next()) {
+				result = set.getInt(1);
+			}
+			set.close();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	public String getCollectionStartDate(String nickname, String collectionName) {
+		String result = "";
+		connector.openConnection();
+		connector.submitParametrizedQuery(QueryBuilder.GET_COLLECTION_START_DATE);
+		connector.setStringParameter(1, nickname);
+		connector.setStringParameter(2, collectionName);
+		ResultSet set = connector.executeQuery();
+		try {
+			while (set.next()) {
+				result = set.getDate(1).toString();
+			}
+			set.close();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 	public boolean isThereCardInCollection(String nickname, String collectionName, int num_card, String abbr_esp) {
