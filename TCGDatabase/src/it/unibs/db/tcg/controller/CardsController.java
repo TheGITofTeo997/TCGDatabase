@@ -210,7 +210,7 @@ public class CardsController extends Controller {
 				}
 				List<Carta> cardsName = Arrays.asList(item);
 				cardsPanel.setVisible(false);
-				drawCardsPanel(user, title, cardsName, utenti, toVisit, fromSearchPanel);
+				drawUserCardsPanel(user, title, collection, cardsName, utenti, toVisit, fromSearchPanel);
 			}
 
 		});
@@ -225,7 +225,7 @@ public class CardsController extends Controller {
 				});
 
 				cardsPanel.setVisible(false);
-				drawCardsPanel(user, title, cardsName, utenti, toVisit, fromSearchPanel);
+				drawUserCardsPanel(user, title, collection, cardsName, utenti, toVisit, fromSearchPanel);
 
 			}
 		});
@@ -241,7 +241,7 @@ public class CardsController extends Controller {
 				});
 
 				cardsPanel.setVisible(false);
-				drawCardsPanel(user, title, cardsName, utenti, toVisit, fromSearchPanel);
+				drawUserCardsPanel(user, title, collection, cardsName, utenti, toVisit, fromSearchPanel);
 
 			}
 		});
