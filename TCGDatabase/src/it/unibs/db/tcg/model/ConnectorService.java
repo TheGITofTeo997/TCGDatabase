@@ -15,9 +15,9 @@ import javax.swing.ImageIcon;
 
 public class ConnectorService {
 
-	// private Connector connector = new Connector("jdbc:mysql://192.168.1.124:3306/TCG_DB", "root", "R2mSDzoz");
+	private Connector connector = new Connector("jdbc:mysql://192.168.1.124:3306/tcg_db", "tcg", "pippo123456");
 	// private Connector connector = new Connector("jdbc:mysql://localhost:3306/TCG_DB", "tcg", "pippo123456");
-	private Connector connector = new Connector("jdbc:mysql://localhost:4040/TCG_DB", "root", "");
+	// private Connector connector = new Connector("jdbc:mysql://localhost:4040/TCG_DB", "root", "");
 
 	public boolean isReachable() {
 		return connector.isReachable();

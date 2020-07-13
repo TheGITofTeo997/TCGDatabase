@@ -5,6 +5,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 import it.unibs.db.tcg.controller.*;
 
+@SuppressWarnings("unused")
 public class TCGMain {
 
 	public static void main(String[] args) {

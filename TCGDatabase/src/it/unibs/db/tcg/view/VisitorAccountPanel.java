@@ -12,9 +12,6 @@ import java.awt.event.ActionEvent;
 
 public class VisitorAccountPanel extends JPanel {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -4259378117098818102L;
 	private static final int WIDTH = 800;
 	private static final int HEIGHT = 600;

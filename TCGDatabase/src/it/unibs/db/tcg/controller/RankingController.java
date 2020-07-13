@@ -2,14 +2,11 @@ package it.unibs.db.tcg.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
 
 import javax.swing.JFrame;
 
-import it.unibs.db.tcg.model.ConnectorService;
 import it.unibs.db.tcg.model.Utente;
 import it.unibs.db.tcg.model.util.LogWriter;
-import it.unibs.db.tcg.view.HomePanel;
 import it.unibs.db.tcg.view.RankingPanel;
 
 public class RankingController extends Controller {

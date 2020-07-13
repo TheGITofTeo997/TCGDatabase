@@ -5,15 +5,11 @@ import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionListener;
 
-import it.unibs.db.tcg.model.Carta;
-import it.unibs.db.tcg.view.Renderer;
-
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionListener;
-import java.util.List;
 import java.util.Map;
 import java.awt.event.ActionEvent;
 

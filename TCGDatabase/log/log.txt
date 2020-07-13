@@ -1,0 +1,36 @@
+[13/07/2020 16:46:56] Apertura LoginPanel
+[13/07/2020 16:47:10] Apertura LoginPanel
+[13/07/2020 16:47:11] Database status: Unreachable
+[13/07/2020 16:47:33] Apertura LoginPanel
+[13/07/2020 16:47:34] Database status: Operational
+[13/07/2020 16:47:36] Login utente : Matteo
+[13/07/2020 16:47:38] Apertura accountPanel
+[13/07/2020 16:47:38] Ottenimento informazioni generali dell'utente Matteo dal db
+[13/07/2020 16:47:38] Ottenimento delle collezioni dell'utente Matteo
+[13/07/2020 16:47:38] Richiesta del valore totale delle carte dell'utente al db
+[13/07/2020 16:47:38] Richiesta del numero di carte di ogni espansione dell'utente al db
+[13/07/2020 16:47:40] Richiesta al database delle carte della collezione Collezione di Matteo
+[13/07/2020 16:47:47] Ottenimento attributi della carta 1 Espansione:SI
+[13/07/2020 16:47:47] Apertura cartaPanel
+[13/07/2020 16:47:47] Richiesta del nome del pokemon allo stage precedente
+[13/07/2020 16:47:47] Richiesta del nome del pokemon allo stage successivo
+[13/07/2020 16:47:47] Richiesta del tipo della carta al db
+[13/07/2020 16:47:49] Apertura cardsPanel
+[13/07/2020 16:47:51] Ottenimento attributi della carta 214 Espansione:LOT
+[13/07/2020 16:47:51] Apertura cartaPanel
+[13/07/2020 16:47:51] Richiesta del nome del pokemon allo stage precedente
+[13/07/2020 16:47:51] Richiesta del nome del pokemon allo stage successivo
+[13/07/2020 16:47:51] Richiesta del tipo della carta al db
+[13/07/2020 16:47:55] Richiesta nickname dei possessori della carta 214Espansione: LOT
+[13/07/2020 16:47:55] Apertura usersPanel
+[13/07/2020 16:47:57] Apertura searchPanel
+[13/07/2020 16:47:58] Apertura homePanel
+[13/07/2020 16:52:47] Apertura LoginPanel
+[13/07/2020 16:52:47] Database status: Operational
+[13/07/2020 16:52:49] Login utente : Matteo
+[13/07/2020 16:52:52] Apertura rankingPanel
+[13/07/2020 16:52:52] Richiesta classifica utenti per totale valore delle carte
+[13/07/2020 16:52:52] Richiesta classifica utenti per totale numero di carte possedute
+[13/07/2020 16:52:52] Richiesta classifica utenti per massimo valore carta posseduta
+[13/07/2020 16:52:58] Aperture homePanel
+[13/07/2020 16:52:59] Ottenimento di una carta random dal db

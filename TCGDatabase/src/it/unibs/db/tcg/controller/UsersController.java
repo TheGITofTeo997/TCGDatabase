@@ -8,7 +8,6 @@ import javax.swing.JFrame;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import it.unibs.db.tcg.model.Carta;
 import it.unibs.db.tcg.model.Utente;
 import it.unibs.db.tcg.model.util.LogWriter;
 import it.unibs.db.tcg.view.UsersPanel;
