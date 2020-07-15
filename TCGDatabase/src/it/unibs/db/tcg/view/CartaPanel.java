@@ -59,7 +59,7 @@ public class CartaPanel extends JPanel {
 	private JLabel itemlblIllustrator;
 	private JLabel itemlblRarity;
 	private JTextArea itemTextDescription;
-	private JLabel itemlblEffect;
+	private JTextArea itemlblEffect;
 
 	private JLabel pkmnlblNum;
 	private JLabel pkmnlblExp;
@@ -454,10 +454,14 @@ public class CartaPanel extends JPanel {
 		itemTextDescription.setWrapStyleWord(true);
 		itemPanel.add(itemTextDescription);
 
-		itemlblEffect = new JLabel("");
+		itemlblEffect = new JTextArea("");
 		itemlblEffect.setBounds(200, 275, 200, 225);
 		itemlblEffect.setForeground(foregroundColor);
-		itemlblEffect.setFont(panelFont);
+		itemlblEffect.setFont(panelFont.deriveFont(Font.ITALIC));
+		itemlblEffect.setEditable(false);
+		itemlblEffect.setLineWrap(true);
+		itemlblEffect.setOpaque(false);
+		itemlblEffect.setWrapStyleWord(true);
 		itemPanel.add(itemlblEffect);
 
 		/* ENERGY PANEL */
